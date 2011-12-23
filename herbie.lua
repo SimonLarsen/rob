@@ -3,17 +3,8 @@ Herbie.__index = Herbie
 setmetatable(Herbie,Player)
 
 function Herbie.create(x,y,player)
-	local self = {}
+	local self = Player.create(x,y,player)
 	setmetatable(self,Herbie)
-
-	self.x = x
-	self.y = y
-	self.xdir = 1 -- 1 = right, -1 = left
-	self.ydir = 1 -- 1 = down, -1 = up
-	self.frame = 0
-	self.moving = false
-	self.player = player
-
 	return self
 end
 

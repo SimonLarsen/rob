@@ -4,15 +4,23 @@ require("drawing")
 require("player")
 require("herbie")
 require("jamal")
+require("entity")
 
 function love.load()
+	love.graphics.setMode(WIDTH,HEIGHT)
 	love.graphics.setBackgroundColor(0,0,0)
 	love.graphics.setLineWidth(SCALE)
-	genMap()
 	loadImages()
 
-	pl1 = Herbie.create(64,80,1)
-	pl2 = Jamal.create(64,24,2)
+	entities = {}
+	for i=0,MAPH-1 do
+		entities[i] = {}
+	end
+	--genMap()
+	loadMapFromImage("maps/level0.png")
+
+	pl1 = Herbie.create(32,24,1)
+	pl2 = Jamal.create(48,24,2)
 end
 
 function love.update(dt)
@@ -20,7 +28,11 @@ function love.update(dt)
 	pl2:update(dt)
 end
 
-function genMap()
+function loadMapFromImage(filename)
+	local mapData = love.image.newImageData(filename)
+	MAPW = mapData:getWidth()
+	MAPH = mapData:getHeight()
+
 	map = {}
 	for i = -1,MAPW do
 		map[i] = {}
@@ -28,15 +40,34 @@ function genMap()
 
 	for ix = 0, MAPW-1 do
 		for iy = 0, MAPH-1 do
-			if iy == 0 or ix == 0 or iy == MAPH-1 or ix == MAPW-1 then
-				map[ix][iy] = 5
-			elseif iy < 6 then
-				map[ix][iy] = 2
-			elseif iy == 6 then
-				map[ix][iy] = 5
-			else
+			r,g,b = mapData:getPixel(ix,iy)
+			if r == 255 and g == 255 and b == 255 then
+				map[ix][iy] = 10
+			elseif r == 127 and g == 0 and b == 0 then
+				map[ix][iy] = 1
+			elseif r == 255 and g == 255 and b == 0 then
 				map[ix][iy] = 3
+			elseif r == 102 and g == 102 and b == 102 then
+				map[ix][iy] = 2
+			elseif r == 0 and g == 0 and b == 255 then
+				map[ix][iy] = 1
+				if map[ix-1][iy] == 10 then
+					table.insert(entities[iy],Door.create(ix,iy,0))
+				else
+					table.insert(entities[iy],Door.create(ix,iy,1))
+				end
+			else
+				map[ix][iy] = 0
 			end
 		end
+	end
+end
+
+function love.keypressed(k,uni)
+	if k == 'escape' then
+		love.event.push('q')
+	else
+		pl1:keypressed(k)
+		pl2:keypressed(k)
 	end
 end
