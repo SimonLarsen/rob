@@ -24,9 +24,18 @@ function love.draw()
 		end
 
 		if iy == pl1y then
-			pl1:draw()
-		end
-		if iy == pl2y then
+			if iy == pl2y then
+				if pl1.y < pl2.y then
+					pl1:draw()
+					pl2:draw()
+				else
+					pl2:draw()
+					pl1:draw()
+				end
+			else
+				pl1:draw()
+			end
+		elseif iy == pl2y then
 			pl2:draw()
 		end
 

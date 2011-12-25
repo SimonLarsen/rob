@@ -5,6 +5,7 @@ require("player")
 require("herbie")
 require("jamal")
 require("entity")
+require("decor")
 
 function love.load()
 	love.graphics.setMode(WIDTH,HEIGHT)
@@ -61,6 +62,17 @@ function loadMapFromImage(filename)
 			end
 		end
 	end
+	table.insert(entities[12],Table.create(3,12))
+	table.insert(entities[12],Table.create(8,12))
+	table.insert(entities[15],Table.create(3,15))
+	table.insert(entities[15],Table.create(8,15))
+	table.insert(entities[18],Table.create(3,18))
+	table.insert(entities[18],Table.create(8,18))
+
+	table.insert(entities[22],Safe.create(17,22))
+
+	table.insert(entities[11],Painting.create(2,11,0))
+	table.insert(entities[11],Painting.create(4,11,1))
 end
 
 function love.keypressed(k,uni)

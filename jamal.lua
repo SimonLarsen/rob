@@ -14,7 +14,7 @@ function Jamal:draw()
 	else
 		love.graphics.drawq(imgSprites,quadJamal[0],self.x,self.y,0,self.xdir,1,5.5,26)
 	end
-	love.graphics.setColor(255,0,0)
-	love.graphics.circle("fill",self.x,self.y,1,8)
-	love.graphics.setColor(255,255,255)
+	if self.actiontype > 0 then
+		love.graphics.drawq(imgSprites,quadAction[self.actiontype],self.x,self.y,0,1,1,4.5,36)
+	end
 end

@@ -36,4 +36,16 @@ function loadImages()
 	quadTable      = lg.newQuad( 0,160,32,16,tilew,tileh)
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
+
+	-- decor quads
+	quadPainting = {}
+	for i = 0,3 do
+		quadPainting[i] = lg.newQuad(i*16,176,16,16,tilew,tileh)
+	end
+
+	-- action quads
+	quadAction = {}
+	for i = 1,3 do
+		quadAction[i] = lg.newQuad((i-1)*16,64,9,9,sprw,sprh)
+	end
 end

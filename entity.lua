@@ -1,5 +1,6 @@
 Entity = {}
 Entity.__index = Entity
+Entity.actiontype = 0
 
 function Entity.create(x,y)
 	local self = {}
@@ -25,6 +26,8 @@ end
 
 Door = {}
 Door.__index = Door
+Door.actiontype = 1
+
 setmetatable(Door,Entity)
 
 function Door.create(x,y,dir)
@@ -57,7 +60,11 @@ function Door:getCollisionBox()
 	if self.open then
 		return {x = 0, y = 0, w = 0, h = 0}
 	else
-		return {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
+		if self.dir == 0 then
+			return {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
+		else
+			return {x = self.x*CELLW, y = self.y*CELLH, w = 3, h = CELLH}
+		end
 	end
 end
 
@@ -96,6 +103,7 @@ end
 
 Safe = {}
 Safe.__index = Safe
+Safe.actiontype = 2
 setmetatable(Safe,Entity)
 
 function Safe.create(x,y)
@@ -125,4 +133,26 @@ end
 
 function Safe:action()
 	self.open = not self.open
+end
+
+Painting = {}
+Painting.__index = Painting
+Painting.actiontype = 3
+setmetatable(Painting,Entity)
+
+function Painting.create(x,y,id)
+	local self = Entity.create(x,y)
+	setmetatable(self,Painting)
+
+	self.id = id
+
+	return self
+end
+
+function Painting:draw()
+	love.graphics.drawq(imgTiles,quadPainting[self.id],self.x*CELLW,(self.y-3)*CELLH)
+end
+
+function Painting:action()
+	self.id = (self.id+1)%4
 end
