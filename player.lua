@@ -76,7 +76,7 @@ end
 function Player:collideEntities()
 	for iy = 0, MAPH-1 do
 		for i=1,#entities[iy] do
-			if self:collideBox(entities[iy][i]:getCollisionBox()) then
+			if entities[iy][i].solid and self:collideBox(entities[iy][i]:getCollisionBox()) then
 				return true
 			end
 		end
@@ -96,7 +96,7 @@ end
 function Player:findActionEntity()
 	for iy = 0, MAPH-1 do
 		for i = 1, #entities[iy] do
-			if self:collideBox(entities[iy][i]:getActionBox()) then
+			if entities[iy][i].interactive and self:collideBox(entities[iy][i]:getActionBox()) then
 				return entities[iy][i]
 			end
 		end
