@@ -45,9 +45,9 @@ function loadImages()
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
 	quadTable = {}
-	for i=0,2 do
-		quadTable[i] = lg.newQuad(16+i*16,16,16,17,tilew,tileh)
-	end
+	quadTable[0] = lg.newQuad(16,16,16,17,tilew,tileh)
+	quadTable[1] = lg.newQuad(24,16,16,17,tilew,tileh)
+	quadTable[2] = lg.newQuad(32,16,16,17,tilew,tileh)
 
 	-- decor quads
 	quadPainting = {}
