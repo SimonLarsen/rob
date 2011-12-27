@@ -6,23 +6,28 @@ function love.draw()
 	local cy = (pl1.y+pl2.y)/2
 	lg.translate(-cx+(WIDTH/2)/SCALE, -cy+(HEIGHT/2)/SCALE)
 
-	local pl1x,pl1y = math.floor(pl1.x/CELLW), math.floor(pl1.y/CELLH)
-	local pl2x,pl2y = math.floor(pl2.x/CELLW), math.floor(pl2.y/CELLH)
+	local pl1y, pl2y = math.floor(pl1.y/CELLH), math.floor(pl2.y/CELLH)
 
 	lg.setColor(255,255,255)
 	for iy = 0,MAPH-1 do
 		for ix = 0,MAPW-1 do
-			if map[ix][iy] >= 10 then
+			if map[ix][iy] == 10 then
 				drawWall(ix,iy)
+			elseif map[ix][iy] == 11 then
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH)
+			elseif map[ix][iy] == 12 then
+				drawTable(ix,iy)
 			else
 				lg.drawq(imgTiles,quadTiles[map[ix][iy]],ix*CELLW,iy*CELLH)
 			end
 		end
 
+		-- draw entities
 		for i=1,#entities[iy] do
 			entities[iy][i]:draw()
 		end
 
+		-- draw players
 		if iy == pl1y then
 			if iy == pl2y then
 				if pl1.y < pl2.y then
@@ -39,8 +44,13 @@ function love.draw()
 			pl2:draw()
 		end
 
+		-- draw robots
+		for i=1,#robots do
+			if math.floor(robots[i].y/CELLH) == iy then
+				robots[i]:draw()
+			end
+		end
 	end
-	rob:draw()
 end
 
 function drawWall(x,y)
@@ -66,4 +76,16 @@ function drawWall(x,y)
 		lg.rectangle("fill",topx+1,topy+CELLH-1,CELLW-2,1) end
 
 	lg.setColor(255,255,255)
+end
+
+function drawTable(x,y)
+	if x > 0 and map[x-1][y] == 12 then
+		if x < MAPH-1 and map[x+1][y] == 12 then
+			lg.drawq(imgTiles,quadTable[1],x*CELLW,y*CELLH-9)
+		else
+			lg.drawq(imgTiles,quadTable[2],x*CELLW,y*CELLH-9)
+		end
+	else
+		lg.drawq(imgTiles,quadTable[0],x*CELLW,y*CELLH-9)
+	end
 end

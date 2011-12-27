@@ -80,24 +80,6 @@ function Door:action()
 	end
 end
 
-Table = { solid = true, interactive = false }
-Table.__index = Table
-setmetatable(Table,Entity)
-
-function Table.create(x,y)
-	local self = Entity.create(x,y)
-	setmetatable(self,Table)
-	return self
-end
-
-function Table:draw()
-	love.graphics.drawq(imgTiles,quadTable,self.x*CELLW,(self.y-1)*CELLH)
-end
-
-function Table:getCollisionBox()
-	return {x = self.x*CELLW+1, y = self.y*CELLH+3, w = CELLW+CELLW-2, h = CELLH-5}
-end
-
 Safe = { actiontype = 1, solid = true, interactive = true }
 Safe.__index = Safe
 setmetatable(Safe,Entity)
@@ -178,24 +160,6 @@ end
 
 function Painting:getActionBox()
 	return {x = self.x*CELLW+4, y = self.y*CELLH, w = CELLW-8, h = CELLH}
-end
-
-Crate = { solid = true, interactive = false }
-Crate.__index = Crate
-setmetatable(Crate,Entity)
-
-function Crate.create(x,y)
-	local self = Entity.create(x,y)
-	setmetatable(self,Crate)
-	return self	
-end
-
-function Crate:draw()
-	love.graphics.drawq(imgTiles,quadCrate,self.x*CELLW,(self.y-2)*CELLH)
-end
-
-function Crate:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH+1, w = CELLW, h = CELLH-2}
 end
 
 Vent = { actiontype = 4, solid = false, interactive = true }

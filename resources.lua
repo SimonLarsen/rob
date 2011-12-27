@@ -38,13 +38,16 @@ function loadImages()
 	-- entity quads
 	quadDoorOpen   = lg.newQuad(32,128,16,32,tilew,tileh)
 	quadDoorClosed = lg.newQuad(16,128,16,32,tilew,tileh)
-	quadTable      = lg.newQuad( 0,160,32,16,tilew,tileh)
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
-	quadCrate      = lg.newQuad(80,128,16,24,tilew,tileh)
+	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
+	quadTable = {}
+	for i=0,2 do
+		quadTable[i] = lg.newQuad(16+i*16,16,16,17,tilew,tileh)
+	end
 
 	-- decor quads
 	quadPainting = {}
@@ -72,15 +75,19 @@ function loadMapFromImage(filename)
 	for ix = 0, MAPW-1 do
 		for iy = 0, MAPH-1 do
 			r,g,b = mapData:getPixel(ix,iy)
-			if r == 255 and g == 255 and b == 255 then
+			if r == 255 and g == 255 and b == 255 then -- wall
 				map[ix][iy] = 10
-			elseif r == 127 and g == 0 and b == 0 then
+			elseif r == 127 and g == 0 and b == 0 then -- dark floor
 				map[ix][iy] = 1
-			elseif r == 255 and g == 255 and b == 0 then
-				map[ix][iy] = 3
-			elseif r == 102 and g == 102 and b == 102 then
+			elseif r == 102 and g == 102 and b == 102 then -- tiles
 				map[ix][iy] = 2
-			elseif r == 0 and g == 0 and b == 255 then
+			elseif r == 255 and g == 255 and b == 0 then -- wooden floor
+				map[ix][iy] = 3
+			elseif r == 255 and g == 128 and b == 0 then -- wood crate
+				map[ix][iy] = 11
+			elseif r == 128 and g == 64 and b == 0 then -- table
+				map[ix][iy] = 12
+			elseif r == 0 and g == 0 and b == 255 then	-- door
 				map[ix][iy] = 1
 				if map[ix-1][iy] == 10 then
 					table.insert(entities[iy],Door.create(ix,iy,0))
@@ -92,10 +99,6 @@ function loadMapFromImage(filename)
 			end
 		end
 	end
-	table.insert(entities[13],Table.create(3,13))
-	table.insert(entities[13],Table.create(8,13))
-	table.insert(entities[16],Table.create(3,16))
-	table.insert(entities[16],Table.create(8,16))
 
 	table.insert(entities[22],Safe.create(17,22))
 
@@ -104,18 +107,9 @@ function loadMapFromImage(filename)
 
 	table.insert(entities[11],Cabinet.create(10,11))
 
-	table.insert(entities[3],Crate.create(16,3))
-	table.insert(entities[3],Crate.create(15,3))
-
-	table.insert(entities[6],Crate.create(16,6))
-	table.insert(entities[6],Crate.create(15,6))
-
-	table.insert(entities[3],Crate.create(21,3))
-	table.insert(entities[3],Crate.create(20,3))
-
-	table.insert(entities[6],Crate.create(21,6))
-	table.insert(entities[6],Crate.create(20,6))
-
 	table.insert(entities[1],Vent.create(12,1,0,1,1))
 	table.insert(entities[1],Vent.create(14,1,1,0,-1))
+
+	table.insert(entities[9], Vent.create(3, 9,2,3,1337))
+	table.insert(entities[11],Vent.create(3,11,3,2,0))
 end
