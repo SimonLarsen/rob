@@ -4,6 +4,7 @@ require("drawing")
 require("player")
 require("herbie")
 require("jamal")
+require("robot")
 require("entity")
 
 function love.load()
@@ -21,16 +22,22 @@ function love.load()
 
 	pl1 = Herbie.create(112,40,1)
 	pl2 = Jamal.create(96,40,2)
+	rob = Robot.create(32,16,{{1,1},{1,4},{4,4},{4,1}})
 end
 
 function love.update(dt)
 	pl1:update(dt)
 	pl2:update(dt)
+	rob:update(dt)
 end
 
 function love.keypressed(k,uni)
 	if k == 'escape' then
 		love.event.push('q')
+	elseif k == '2' then
+		SCALE = 2
+	elseif k == '4' then
+		SCALE = 4
 	else
 		pl1:keypressed(k)
 		pl2:keypressed(k)

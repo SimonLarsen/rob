@@ -107,6 +107,6 @@ end
 function Player:action()
 	local e = self:findActionEntity()
 	if e ~= nil then
-		e:action()
+		e:action(self)
 	end
 end

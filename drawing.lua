@@ -40,6 +40,7 @@ function love.draw()
 		end
 
 	end
+	rob:draw()
 end
 
 function drawWall(x,y)

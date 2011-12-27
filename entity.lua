@@ -95,7 +95,7 @@ function Table:draw()
 end
 
 function Table:getCollisionBox()
-	return {x = self.x*CELLW+1, y = self.y*CELLH+4, w = CELLW+CELLW-2, h = CELLH-5}
+	return {x = self.x*CELLW+1, y = self.y*CELLH+3, w = CELLW+CELLW-2, h = CELLH-5}
 end
 
 Safe = { actiontype = 1, solid = true, interactive = true }
@@ -202,10 +202,11 @@ Vent = { actiontype = 4, solid = false, interactive = true }
 Vent.__index = Vent
 setmetatable(Vent,Entity)
 
-function Vent.create(x,y,id,dir)
+function Vent.create(x,y,id,dest,dir)
 	local self = Entity.create(x,y)
 	setmetatable(self,Vent)
 	self.id = id
+	self.dest = dest
 	self.dir = dir -- 0 - front, -1 - left wall, 1 - right wall
 	return self
 end
@@ -217,5 +218,17 @@ function Vent:draw()
 		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,1,1)
 	elseif self.dir == 1 then
 		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,-1,1,16)
+	end
+end
+
+function Vent:action(pl)
+	for iy=0,MAPH-1 do
+		for i=1,#entities[iy] do
+			if entities[iy][i].id == self.dest then
+				pl.x = (entities[iy][i].x+0.5)*CELLW
+				pl.y = (entities[iy][i].y+0.5)*CELLH
+				return
+			end
+		end
 	end
 end

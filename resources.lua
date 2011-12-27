@@ -30,6 +30,11 @@ function loadImages()
 		quadJamal[i] = lg.newQuad(80+i*16,0,11,27,sprw,sprh)
 	end
 
+	quadRobot = {}
+	for i=0,11 do
+		quadRobot[i] = lg.newQuad(i*16,32,11,32,sprw,sprh)
+	end
+
 	-- entity quads
 	quadDoorOpen   = lg.newQuad(32,128,16,32,tilew,tileh)
 	quadDoorClosed = lg.newQuad(16,128,16,32,tilew,tileh)
@@ -111,7 +116,6 @@ function loadMapFromImage(filename)
 	table.insert(entities[6],Crate.create(21,6))
 	table.insert(entities[6],Crate.create(20,6))
 
-	table.insert(entities[1],Vent.create(4,1,0,0))
-	table.insert(entities[1],Vent.create(12,1,0,1))
-	table.insert(entities[1],Vent.create(14,1,0,-1))
+	table.insert(entities[1],Vent.create(12,1,0,1,1))
+	table.insert(entities[1],Vent.create(14,1,1,0,-1))
 end
