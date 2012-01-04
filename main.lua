@@ -1,4 +1,5 @@
 require("defines")
+require("mymath")
 require("resources")
 require("drawing")
 require("player")
@@ -19,6 +20,7 @@ function love.load()
 	end
 	robots = {}
 	table.insert(robots,Robot.create({{14,2},{14,8},{22,8},{22,2}}))
+	table.insert(robots,Robot.create({{22,8},{22,2},{14,2},{14,8}}))
 
 	loadMapFromImage("maps/level0.png")
 

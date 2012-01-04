@@ -1,4 +1,4 @@
-Jamal = {}
+Jamal = { isJamal = true }
 Jamal.__index = Jamal
 setmetatable(Jamal,Player)
 

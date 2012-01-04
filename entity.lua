@@ -154,8 +154,6 @@ end
 
 function Painting:action()
 	self.id = (self.id+1)%4
-	-- TODO: Add code for hiding stuff (e.g. safes, ...)
-	-- behind paintings rather than cycling through them
 end
 
 function Painting:getActionBox()
@@ -169,6 +167,7 @@ setmetatable(Vent,Entity)
 function Vent.create(x,y,id,dest,dir)
 	local self = Entity.create(x,y)
 	setmetatable(self,Vent)
+	self.isVent = true
 	self.id = id
 	self.dest = dest
 	self.dir = dir -- 0 - front, -1 - left wall, 1 - right wall
@@ -188,11 +187,29 @@ end
 function Vent:action(pl)
 	for iy=0,MAPH-1 do
 		for i=1,#entities[iy] do
-			if entities[iy][i].id == self.dest then
+			if entities[iy][i].isVent and entities[iy][i].id == self.dest then
 				pl.x = (entities[iy][i].x+0.5)*CELLW
 				pl.y = (entities[iy][i].y+0.5)*CELLH
 				return
 			end
 		end
 	end
+end
+
+Bonzai = { solid = true, interactive = false }
+Bonzai.__index = Bonzai
+setmetatable(Bonzai,Entity)
+
+function Bonzai.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Bonzai)
+	return self
+end
+
+function Bonzai:getCollisionBox()
+	return {x = self.x*CELLW+5, y = self.y*CELLH+3, w = 5, h = 3}
+end
+
+function Bonzai:draw()
+	love.graphics.drawq(imgTiles,quadBonzai,self.x*CELLW+4,(self.y-1)*CELLH)
 end

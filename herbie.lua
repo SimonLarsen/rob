@@ -1,4 +1,4 @@
-Herbie = {}
+Herbie = { isHerbie = true }
 Herbie.__index = Herbie
 setmetatable(Herbie,Player)
 

@@ -43,6 +43,29 @@ function Robot:update(dt)
 		self.point = (self.point % #self.points) + 1
 		self:getDir()
 	end
+
+	if self:canSeePlayer(pl1) then
+		print(math.random())
+	end
+	if self:canSeePlayer(pl2) then
+		print(math.random())
+	end
+end
+
+function Robot:canSeePlayer(pl)
+	local toplx = pl.x - self.x
+	local toply = pl.y - self.y
+
+	if math.pow(toplx,2)+math.pow(toply,2) > 64*64 then return false end
+
+	local fromx, fromy = mymath.dirToVector(self.dir)
+	local angle = mymath.angle(toplx,toply,fromx,fromy)
+
+	if angle > 0.2 or angle < -0.2 then
+		return false
+	end
+
+	return true
 end
 
 function Robot:draw()

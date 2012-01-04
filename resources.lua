@@ -45,9 +45,11 @@ function loadImages()
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
 	quadTable = {}
-	quadTable[0] = lg.newQuad(16,16,16,17,tilew,tileh)
-	quadTable[1] = lg.newQuad(24,16,16,17,tilew,tileh)
-	quadTable[2] = lg.newQuad(32,16,16,17,tilew,tileh)
+	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
+	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)
+	quadBonzai     = lg.newQuad(48,160,9,14,tilew,tileh)
+	quadKitchenTableLined = lg.newQuad(96,128,9,24,tilew,tileh)
+	quadKitchenTableNoLine = lg.newQuad(104,128,9,24,tilew,tileh)
 
 	-- decor quads
 	quadPainting = {}
@@ -87,6 +89,8 @@ function loadMapFromImage(filename)
 				map[ix][iy] = 11
 			elseif r == 128 and g == 64 and b == 0 then -- table
 				map[ix][iy] = 12
+			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
+				map[ix][iy] = 13
 			elseif r == 0 and g == 0 and b == 255 then	-- door
 				map[ix][iy] = 1
 				if map[ix-1][iy] == 10 then
@@ -112,4 +116,7 @@ function loadMapFromImage(filename)
 
 	table.insert(entities[9], Vent.create(3, 9,2,3,1337))
 	table.insert(entities[11],Vent.create(3,11,3,2,0))
+
+	table.insert(entities[11],Bonzai.create(1,11))
+	table.insert(entities[11],Bonzai.create(12,11))
 end
