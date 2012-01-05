@@ -61,11 +61,12 @@ function Robot:canSeePlayer(pl)
 	local fromx, fromy = mymath.dirToVector(self.dir)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
 
-	if angle > 0.2 or angle < -0.2 then
+	if angle > 0.3 or angle < -0.3 then
 		return false
 	end
 
-	return true
+	return Robot.canSee(math.floor(self.x/CELLW),math.floor(self.y/CELLH),
+		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH))
 end
 
 function Robot:draw()
@@ -97,5 +98,32 @@ function Robot:getDir()
 	elseif y2 < y1 then
 		self.dir = 1
 		self.dist = (y1 - y2)*CELLH
+	end
+end
+
+function Robot.canSee(x0,y0,x1,y1)
+	local dx, dy = math.abs(x1-x0), math.abs(y1-y0)
+	local sx,sy,e2
+	if x0 < x1 then sx = 1 else sx = -1 end
+	if y0 < y1 then sy = 1 else sy = -1 end
+	local err = dx-dy
+
+	while true do
+		local val = map[x0][y0]
+		if val == TILE_WALL or val == TILE_DOOR
+		or val == TILE_CRATE or val == TILE_DOUBLECRATE then
+			return false
+		end
+
+		if x0 == x1 and y0 == y1 then return true end
+		e2 = 2*err
+		if e2 > -dy then
+			err = err - dy
+			x0 = x0 + sx
+		end
+		if e2 < dx then
+			err = err + dx
+			y0 = y0 + sy
+		end
 	end
 end

@@ -1,23 +1,37 @@
 local lg = love.graphics
 
 function love.draw()
-	lg.scale(SCALE)
+	lg.push()
+	lg.setColor(255,255,255)
+
 	local cx = (pl1.x+pl2.x)/2
 	local cy = (pl1.y+pl2.y)/2
-	lg.translate(-cx+(WIDTH/2)/SCALE, -cy+(HEIGHT/2)/SCALE)
 
+	-- Clear light framebuffer
+	lg.setRenderTarget(fb)
+	lg.rectangle("fill",0,0,fbw,fbh)
+	-- scale and draw light cones
+	lg.scale(SCALE)
+	lg.translate(-cx+(WIDTH/2)/SCALE, -cy+(HEIGHT/2)/SCALE)
+	lg.draw(imgLight,pl1.x,pl1.y,0,1,1,128,128)
+	lg.draw(imgLight,pl2.x,pl2.y,0,1,1,128,128)
+
+	-- Reset to screen and draw stuff
+	lg.setRenderTarget()
 	local pl1y, pl2y = math.floor(pl1.y/CELLH), math.floor(pl2.y/CELLH)
 
-	lg.setColor(255,255,255)
 	for iy = 0,MAPH-1 do
 		for ix = 0,MAPW-1 do
-			if map[ix][iy] == 10 then
+			if map[ix][iy] == TILE_WALL then
 				drawWall(ix,iy)
-			elseif map[ix][iy] == 11 then
-				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH+1)
-			elseif map[ix][iy] == 12 then
+			elseif map[ix][iy] == TILE_CRATE then
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH)
+			elseif map[ix][iy] == TILE_DOUBLECRATE then
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH)
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-4)*CELLH)
+			elseif map[ix][iy] == TILE_TABLE then
 				drawTable(ix,iy)
-			elseif map[ix][iy] == 13 then
+			elseif map[ix][iy] == TILE_KITCHEN then
 				drawKitchenTable(ix,iy)
 			else
 				lg.drawq(imgTiles,quadTiles[map[ix][iy]],ix*CELLW,iy*CELLH)
@@ -27,6 +41,19 @@ function love.draw()
 		-- draw entities
 		for i=1,#entities[iy] do
 			entities[iy][i]:draw()
+		end
+
+		-- draw robots
+		for i=1,#robots do
+			if math.floor(robots[i].y/CELLH) == iy then
+				robots[i]:draw()
+			end
+		end
+		-- draw cameras
+		for i=1,#cameras do
+			if cameras[i].y == iy then
+				cameras[i]:draw()
+			end
 		end
 
 		-- draw players
@@ -45,25 +72,24 @@ function love.draw()
 		elseif iy == pl2y then
 			pl2:draw()
 		end
-
-		-- draw robots
-		for i=1,#robots do
-			if math.floor(robots[i].y/CELLH) == iy then
-				robots[i]:draw()
-			end
-		end
 	end
+
+	-- apply light to screen
+	lg.setBlendMode("subtractive")
+	lg.pop()
+	lg.draw(fb,0,0)
+	lg.setBlendMode("alpha")
 end
 
 function drawWall(x,y)
 	local topx, topy = x*CELLW, (y-3)*CELLH
 
-	if x > 0 and map[x-1][y] == 10 then
+	if x > 0 and map[x-1][y] == TILE_WALL then
 		lg.drawq(imgTiles, quadWall[1], topx, topy)
 	else
 		lg.drawq(imgTiles, quadWall[0], topx, topy)
 	end
-	if x < MAPW-1 and map[x+1][y] == 10 then
+	if x < MAPW-1 and map[x+1][y] == TILE_WALL then
 		lg.drawq(imgTiles, quadWall[1], topx+CELLW/2, topy)
 	else
 		lg.drawq(imgTiles, quadWall[2], topx+CELLW/2, topy)
@@ -71,18 +97,18 @@ function drawWall(x,y)
 
 	-- fix top
 	lg.setColor(0,0,0)
-	if y > 0 and map[x][y-1] == 10 then
+	if y > 0 and map[x][y-1] == TILE_WALL then
 		-- lg.line(topx+1,topy+0.5,(x+1)*CELLW-1,(y-3)*CELLH+0.5) end
 		lg.rectangle("fill",topx+1,topy,CELLW-2,1) end
-	if y < MAPH-1 and map[x][y+1] == 10 then
+	if y < MAPH-1 and map[x][y+1] == TILE_WALL then
 		lg.rectangle("fill",topx+1,topy+CELLH-1,CELLW-2,1) end
 
 	lg.setColor(255,255,255)
 end
 
 function drawTable(x,y)
-	if x > 0 and map[x-1][y] == 12 then
-		if x < MAPW-1 and map[x+1][y] == 12 then
+	if x > 0 and map[x-1][y] == TILE_TABLE then
+		if x < MAPW-1 and map[x+1][y] == TILE_TABLE then
 			lg.drawq(imgTiles,quadTable[1],x*CELLW,y*CELLH-9)
 		else
 			--lg.drawq(imgTiles,quadTable[2],x*CELLW,y*CELLH-9)
@@ -94,13 +120,13 @@ function drawTable(x,y)
 end
 
 function drawKitchenTable(x,y)
-	if x > 0 and map[x-1][y] == 13 then
+	if x > 0 and map[x-1][y] == TILE_KITCHEN then
 		lg.drawq(imgTiles,quadKitchenTableNoLine,x*CELLW,(y-2)*CELLH)
 	else
 		lg.drawq(imgTiles,quadKitchenTableLined,x*CELLW,(y-2)*CELLH)
 	end
 
-	if x < MAPW-1 and map[x+1][y] == 13 then
+	if x < MAPW-1 and map[x+1][y] == TILE_KITCHEN then
 		lg.drawq(imgTiles,quadKitchenTableNoLine,x*CELLW+8,(y-2)*CELLH)
 	else
 		lg.drawq(imgTiles,quadKitchenTableLined,x*CELLW+8,(y-2)*CELLH,0,-1,1,8)

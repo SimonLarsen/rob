@@ -7,9 +7,16 @@ local lg = love.graphics
 function loadImages()
 	imgTiles = 	lg.newImage("res/tiles.png")
 	imgTiles:setFilter("nearest","nearest")
-	quadTiles = {}
-
 	local tilew,tileh = imgTiles:getWidth(), imgTiles:getHeight()
+
+	imgSprites = lg.newImage("res/sprites.png")
+	imgSprites:setFilter("nearest","nearest")
+	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
+
+	imgLight = lg.newImage("res/light.png")
+	imgLight:setFilter("nearest","nearest")
+
+	quadTiles = {}
 	for ix = 0,15 do
 		quadTiles[ix] = lg.newQuad(ix*CELLW,0,CELLW,CELLH,tilew,tileh)
 	end
@@ -18,10 +25,6 @@ function loadImages()
 	quadWall[0] = lg.newQuad(0, 128, 8, 32, tilew, tileh)
 	quadWall[1] = lg.newQuad(4, 128, 8, 32, tilew, tileh)
 	quadWall[2] = lg.newQuad(8, 128, 8, 32, tilew, tileh)
-
-	imgSprites = lg.newImage("res/sprites.png")
-	imgSprites:setFilter("nearest","nearest")
-	sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
 
 	quadHerbie = {}
 	quadJamal = {}
@@ -41,6 +44,8 @@ function loadImages()
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
+	quadFridgeClosed = lg.newQuad(96,152,16,32,tilew,tileh)
+	quadFridgeOpen   = lg.newQuad(112,152,16,32,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
@@ -50,12 +55,19 @@ function loadImages()
 	quadBonzai     = lg.newQuad(48,160,9,14,tilew,tileh)
 	quadKitchenTableLined = lg.newQuad(96,128,9,24,tilew,tileh)
 	quadKitchenTableNoLine = lg.newQuad(104,128,9,24,tilew,tileh)
-
-	-- decor quads
 	quadPainting = {}
 	for i = 0,3 do
 		quadPainting[i] = lg.newQuad(i*16,176,16,16,tilew,tileh)
 	end
+	quadTableDecor = {}
+	for i = 0,5 do
+		quadTableDecor[i] = lg.newQuad(i*16,208,16,24,tilew,tileh)
+	end
+	-- camera quads
+	quadCameraSide = lg.newQuad(0,200,9,7,tilew,tileh)
+	quadCameraSideShadow = lg.newQuad(9,200,7,3,tilew,tileh)
+	quadCameraDown = lg.newQuad(16,200,3,8,tilew,tileh)
+	quadCameraDownShadow = lg.newQuad(19,200,3,6,tilew,tileh)
 
 	-- action quads
 	quadAction = {}
@@ -77,27 +89,33 @@ function loadMapFromImage(filename)
 	for ix = 0, MAPW-1 do
 		for iy = 0, MAPH-1 do
 			r,g,b = mapData:getPixel(ix,iy)
-			if r == 255 and g == 255 and b == 255 then -- wall
-				map[ix][iy] = 10
-			elseif r == 127 and g == 0 and b == 0 then -- dark floor
-				map[ix][iy] = 1
+			-- FLOOR TILES
+			if r == 127 and g == 0 and b == 0 then -- dark floor
+				map[ix][iy] = TILE_DARKFLOOR
 			elseif r == 102 and g == 102 and b == 102 then -- tiles
-				map[ix][iy] = 2
+				map[ix][iy] = TILE_TILEFLOOR
 			elseif r == 255 and g == 255 and b == 0 then -- wooden floor
-				map[ix][iy] = 3
-			elseif r == 255 and g == 128 and b == 0 then -- wood crate
-				map[ix][iy] = 11
-			elseif r == 128 and g == 64 and b == 0 then -- table
-				map[ix][iy] = 12
-			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
-				map[ix][iy] = 13
+				map[ix][iy] = TILE_WOODFLOOR
+			-- MISC
 			elseif r == 0 and g == 0 and b == 255 then	-- door
-				map[ix][iy] = 1
-				if map[ix-1][iy] == 10 then
+				map[ix][iy] = TILE_DOOR
+				if map[ix-1][iy] == TILE_WALL then
 					table.insert(entities[iy],Door.create(ix,iy,0))
 				else
 					table.insert(entities[iy],Door.create(ix,iy,1))
 				end
+
+			elseif r == 255 and g == 255 and b == 255 then -- wall
+				map[ix][iy] = TILE_WALL
+			elseif r == 255 and g == 128 and b == 0 then -- crate
+				map[ix][iy] = TILE_CRATE
+			elseif r == 255 and g == 56 and b == 0 then -- double crate
+				map[ix][iy] = TILE_DOUBLECRATE
+			elseif r == 128 and g == 64 and b == 0 then -- table
+				map[ix][iy] = TILE_TABLE
+			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
+				map[ix][iy] = TILE_KITCHEN
+
 			else
 				map[ix][iy] = 0
 			end
@@ -119,4 +137,16 @@ function loadMapFromImage(filename)
 
 	table.insert(entities[11],Bonzai.create(1,11))
 	table.insert(entities[11],Bonzai.create(12,11))
+
+	table.insert(entities[1],TableDecor.create(3,1,0))
+	table.insert(entities[13],TableDecor.create(2,13,1))
+	table.insert(entities[14],TableDecor.create(3,14,2))
+	table.insert(entities[17],TableDecor.create(3,17,2))
+	table.insert(entities[14],TableDecor.create(9,14,2))
+	table.insert(entities[17],TableDecor.create(9,17,2))
+	table.insert(entities[16],TableDecor.create(4,16,3))
+	table.insert(entities[16],TableDecor.create(8,16,4))
+	table.insert(entities[16],TableDecor.create(10,16,5))
+
+	table.insert(entities[1],Fridge.create(4,1))
 end

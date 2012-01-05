@@ -70,12 +70,19 @@ function Door:getActionBox()
 end
 
 function Door:action()
-	self.open = not self.open
+	if self.open == true then
+		self.open = false
+		map[self.x][self.y] = TILE_DOOR
+	else
+		self.open = true
+		map[self.x][self.y] = TILE_DARKFLOOR
+	end
 
 	if self.open == false then
 		if pl1:collideBox(self:getCollisionBox())
 		or pl2:collideBox(self:getCollisionBox()) then
 			self.open = true
+			map[self.x][self.y] = TILE_DARKFLOOR
 		end
 	end
 end
@@ -135,6 +142,38 @@ function Cabinet:getActionBox()
 	return {x = self.x*CELLW+5, y = self.y*CELLH, w = CELLW+CELLW-10, h = CELLH}
 end
 
+Fridge = { actiontype = 1, solid = true, interactive = true }
+Fridge.__index = Fridge
+setmetatable(Fridge,Entity)
+
+function Fridge.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Fridge)
+	self.open = false
+	map[x][y] = TILE_DOOR
+	return self
+end
+
+function Fridge:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+end
+
+function Fridge:getActionBox()
+	return {x = self.x*CELLW+4, y = (self.y+1)*CELLH, w = CELLW-8, h = CELLH-2}
+end
+
+function Fridge:draw()
+	if self.open then
+		love.graphics.drawq(imgTiles,quadFridgeOpen,self.x*CELLW,(self.y-3)*CELLH)
+	else
+		love.graphics.drawq(imgTiles,quadFridgeClosed,self.x*CELLW,(self.y-3)*CELLH)
+	end
+end
+
+function Fridge:action()
+	self.open = not self.open
+end
+
 Painting = { actiontype = 3, solid = false, interactive = true }
 Painting.__index = Painting
 setmetatable(Painting,Entity)
@@ -185,12 +224,14 @@ function Vent:draw()
 end
 
 function Vent:action(pl)
-	for iy=0,MAPH-1 do
-		for i=1,#entities[iy] do
-			if entities[iy][i].isVent and entities[iy][i].id == self.dest then
-				pl.x = (entities[iy][i].x+0.5)*CELLW
-				pl.y = (entities[iy][i].y+0.5)*CELLH
-				return
+	if pl.isJamal then
+		for iy=0,MAPH-1 do
+			for i=1,#entities[iy] do
+				if entities[iy][i].isVent and entities[iy][i].id == self.dest then
+					pl.x = (entities[iy][i].x+0.5)*CELLW
+					pl.y = (entities[iy][i].y+0.5)*CELLH
+					return
+				end
 			end
 		end
 	end
@@ -212,4 +253,19 @@ end
 
 function Bonzai:draw()
 	love.graphics.drawq(imgTiles,quadBonzai,self.x*CELLW+4,(self.y-1)*CELLH)
+end
+
+TableDecor = { solid = false, interactive = false }
+TableDecor.__index = TableDecor
+setmetatable(TableDecor,Entity)
+
+function TableDecor.create(x,y,id)
+	local self = Entity.create(x,y)
+	setmetatable(self,TableDecor)
+	self.id = id
+	return self
+end
+
+function TableDecor:draw()
+	love.graphics.drawq(imgTiles,quadTableDecor[self.id],self.x*CELLW,(self.y-2)*CELLH)
 end
