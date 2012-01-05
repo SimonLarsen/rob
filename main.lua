@@ -63,7 +63,7 @@ end
 function alarm()
 	if alarmtime <= 0 then
 		print("alarm triggered")
-		alarmtime = 4
+		alarmtime = 4.2
 	end
 end
 

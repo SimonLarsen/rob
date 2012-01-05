@@ -54,7 +54,6 @@ function loadImages()
 	quadTable = {}
 	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)
-	quadBonzai     = lg.newQuad(48,160,9,14,tilew,tileh)
 	quadKitchenTableLined = lg.newQuad(80,128,8,24,tilew,tileh)
 	quadKitchenTableNoLine = lg.newQuad(88,128,8,24,tilew,tileh)
 	quadPainting = {}
@@ -64,6 +63,10 @@ function loadImages()
 	quadTableDecor = {}
 	for i = 0,7 do
 		quadTableDecor[i] = lg.newQuad(i*16,208,16,24,tilew,tileh)
+	end
+	quadPlant = {}
+	for i = 0,1 do
+		quadPlant[i] = lg.newQuad(i*16,96,16,24,tilew,tileh)
 	end
 	-- camera quads
 	quadCameraSide = lg.newQuad(0,200,9,7,tilew,tileh)
@@ -139,8 +142,8 @@ function loadMapFromImage(filename)
 	table.insert(entities[9], Vent.create(3, 9,2,3,1337))
 	table.insert(entities[11],Vent.create(3,11,3,2,0))
 
-	table.insert(entities[11],Bonzai.create(1,11))
-	table.insert(entities[11],Bonzai.create(12,11))
+	table.insert(entities[11],Plant.create(1,11,0))
+	table.insert(entities[11],Plant.create(12,11,1))
 
 	table.insert(entities[1],TableDecor.create(3,1,0))
 	table.insert(entities[1],TableDecor.create(2,1,7))

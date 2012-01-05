@@ -237,22 +237,23 @@ function Vent:action(pl)
 	end
 end
 
-Bonzai = { solid = true, interactive = false }
-Bonzai.__index = Bonzai
-setmetatable(Bonzai,Entity)
+Plant = { solid = true, interactive = false }
+Plant.__index = Plant
+setmetatable(Plant,Entity)
 
-function Bonzai.create(x,y)
+function Plant.create(x,y,id)
 	local self = Entity.create(x,y)
-	setmetatable(self,Bonzai)
+	setmetatable(self,Plant)
+	self.id = id
 	return self
 end
 
-function Bonzai:getCollisionBox()
+function Plant:getCollisionBox()
 	return {x = self.x*CELLW+5, y = self.y*CELLH+3, w = 5, h = 3}
 end
 
-function Bonzai:draw()
-	love.graphics.drawq(imgTiles,quadBonzai,self.x*CELLW+4,(self.y-1)*CELLH)
+function Plant:draw()
+	love.graphics.drawq(imgTiles,quadPlant[self.id],self.x*CELLW,(self.y-2)*CELLH)
 end
 
 TableDecor = { solid = false, interactive = false }
