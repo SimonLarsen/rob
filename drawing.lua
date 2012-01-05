@@ -2,14 +2,15 @@ local lg = love.graphics
 
 function love.draw()
 	lg.push()
-	lg.setColor(255,255,255)
 
 	local cx = (pl1.x+pl2.x)/2
 	local cy = (pl1.y+pl2.y)/2
 
 	-- Clear light framebuffer
 	lg.setRenderTarget(fb)
+	lg.setColor(255,255,255,235)
 	lg.rectangle("fill",0,0,fbw,fbh)
+	lg.setColor(255,255,255)
 	-- scale and draw light cones
 	lg.scale(SCALE)
 	lg.translate(-cx+(WIDTH/2)/SCALE, -cy+(HEIGHT/2)/SCALE)
@@ -74,9 +75,17 @@ function love.draw()
 		end
 	end
 
+	lg.pop()
+	-- draw alarm blink if any
+	if alarmtime > 0 then
+		--lg.setColor(255,0,0,64*(math.sin(4*time)/2+0.5))
+		lg.setColor(255,0,0,64*(math.sin(4*alarmtime)/2+0.5))
+		lg.rectangle("fill",0,0,WIDTH,HEIGHT)
+		lg.setColor(255,255,255,255)
+	end
+
 	-- apply light to screen
 	lg.setBlendMode("subtractive")
-	lg.pop()
 	lg.draw(fb,0,0)
 	lg.setBlendMode("alpha")
 end

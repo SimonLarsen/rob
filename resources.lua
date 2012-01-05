@@ -13,8 +13,10 @@ function loadImages()
 	imgSprites:setFilter("nearest","nearest")
 	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
 
-	imgLight = lg.newImage("res/light.png")
+	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
+	imgLightSmall = lg.newImage("res/lightsmall.png")
+	imgLightSmall:setFilter("nearest","nearest")
 
 	quadTiles = {}
 	for ix = 0,15 do
@@ -44,8 +46,8 @@ function loadImages()
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
-	quadFridgeClosed = lg.newQuad(96,152,16,32,tilew,tileh)
-	quadFridgeOpen   = lg.newQuad(112,152,16,32,tilew,tileh)
+	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
+	quadFridgeOpen   = lg.newQuad(112,128,16,32,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
@@ -53,21 +55,23 @@ function loadImages()
 	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)
 	quadBonzai     = lg.newQuad(48,160,9,14,tilew,tileh)
-	quadKitchenTableLined = lg.newQuad(96,128,9,24,tilew,tileh)
-	quadKitchenTableNoLine = lg.newQuad(104,128,9,24,tilew,tileh)
+	quadKitchenTableLined = lg.newQuad(80,128,8,24,tilew,tileh)
+	quadKitchenTableNoLine = lg.newQuad(88,128,8,24,tilew,tileh)
 	quadPainting = {}
-	for i = 0,3 do
+	for i = 0,4 do
 		quadPainting[i] = lg.newQuad(i*16,176,16,16,tilew,tileh)
 	end
 	quadTableDecor = {}
-	for i = 0,5 do
+	for i = 0,7 do
 		quadTableDecor[i] = lg.newQuad(i*16,208,16,24,tilew,tileh)
 	end
 	-- camera quads
 	quadCameraSide = lg.newQuad(0,200,9,7,tilew,tileh)
-	quadCameraSideShadow = lg.newQuad(9,200,7,3,tilew,tileh)
-	quadCameraDown = lg.newQuad(16,200,3,8,tilew,tileh)
-	quadCameraDownShadow = lg.newQuad(19,200,3,6,tilew,tileh)
+	quadCameraSideShadow = lg.newQuad(9,200,8,3,tilew,tileh)
+	quadCameraDown = lg.newQuad(17,200,3,8,tilew,tileh)
+	quadCameraDownShadow = lg.newQuad(20,200,3,6,tilew,tileh)
+	quadCameraDown = lg.newQuad(17,200,3,8,tilew,tileh)
+	quadCameraUp = lg.newQuad(23,200,3,8,tilew,tileh)
 
 	-- action quads
 	quadAction = {}
@@ -139,6 +143,8 @@ function loadMapFromImage(filename)
 	table.insert(entities[11],Bonzai.create(12,11))
 
 	table.insert(entities[1],TableDecor.create(3,1,0))
+	table.insert(entities[1],TableDecor.create(2,1,7))
+
 	table.insert(entities[13],TableDecor.create(2,13,1))
 	table.insert(entities[14],TableDecor.create(3,14,2))
 	table.insert(entities[17],TableDecor.create(3,17,2))
@@ -149,4 +155,11 @@ function loadMapFromImage(filename)
 	table.insert(entities[16],TableDecor.create(10,16,5))
 
 	table.insert(entities[1],Fridge.create(4,1))
+
+	table.insert(entities[14],TableDecor.create(16,14,2))
+	table.insert(entities[14],TableDecor.create(18,14,2))
+	table.insert(entities[14],TableDecor.create(20,14,2))
+	table.insert(entities[13],TableDecor.create(16,13,6))
+	table.insert(entities[13],TableDecor.create(18,13,6))
+	table.insert(entities[13],TableDecor.create(20,13,6))
 end

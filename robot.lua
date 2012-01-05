@@ -44,11 +44,8 @@ function Robot:update(dt)
 		self:getDir()
 	end
 
-	if self:canSeePlayer(pl1) then
-		print(math.random())
-	end
-	if self:canSeePlayer(pl2) then
-		print(math.random())
+	if self:canSeePlayer(pl1) or self:canSeePlayer(pl2) then
+		alarm()
 	end
 end
 

@@ -34,14 +34,21 @@ function love.load()
 	table.insert(cameras,Camera.create(1,17,0))
 	table.insert(cameras,Camera.create(12,17,2))
 	table.insert(cameras,Camera.create(8,1,3))
+	table.insert(cameras,Camera.create(9,9,1))
 
 	loadMapFromImage("maps/level0.png")
 
 	pl1 = Herbie.create(112,40,1)
 	pl2 = Jamal.create(96,40,2)
+
+	time = 0
+	alarmtime = 0
 end
 
 function love.update(dt)
+	time = time + dt
+	if alarmtime > 0 then alarmtime = alarmtime - dt end
+
 	pl1:update(dt)
 	pl2:update(dt)
 
@@ -50,6 +57,13 @@ function love.update(dt)
 	end
 	for i=1,#cameras do
 		cameras[i]:update(dt)
+	end
+end
+
+function alarm()
+	if alarmtime <= 0 then
+		print("alarm triggered")
+		alarmtime = 4
 	end
 end
 

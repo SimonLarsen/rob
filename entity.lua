@@ -192,7 +192,7 @@ function Painting:draw()
 end
 
 function Painting:action()
-	self.id = (self.id+1)%4
+	self.id = (self.id+1)%5
 end
 
 function Painting:getActionBox()
