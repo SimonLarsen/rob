@@ -46,8 +46,10 @@ function loadImages()
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
+	quadLocker     = lg.newQuad(128,128,32,32,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
 	quadFridgeOpen   = lg.newQuad(112,128,16,32,tilew,tileh)
+	quadWatercooler = lg.newQuad(48,152,11,24,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
@@ -65,7 +67,7 @@ function loadImages()
 		quadTableDecor[i] = lg.newQuad(i*16,208,16,24,tilew,tileh)
 	end
 	quadPlant = {}
-	for i = 0,1 do
+	for i = 0,2 do
 		quadPlant[i] = lg.newQuad(i*16,96,16,24,tilew,tileh)
 	end
 	-- camera quads
@@ -83,8 +85,17 @@ function loadImages()
 	end
 end
 
-function loadMapFromImage(filename)
-	local mapData = love.image.newImageData(filename)
+function loadMapFromImage(name)
+	-- clear entities and objects
+	entities = {}
+	for i=0,MAPH-1 do
+		entities[i] = {}
+	end
+	robots = {}
+	cameras = {}
+
+	-- load tiles from image
+	local mapData = love.image.newImageData("maps/"..name..".png")
 	MAPW = mapData:getWidth()
 	MAPH = mapData:getHeight()
 
@@ -123,46 +134,14 @@ function loadMapFromImage(filename)
 			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
 				map[ix][iy] = TILE_KITCHEN
 
+			-- default to black cell
 			else
 				map[ix][iy] = 0
 			end
 		end
 	end
 
-	table.insert(entities[22],Safe.create(17,22))
-
-	table.insert(entities[11],Painting.create(2,11,0))
-	table.insert(entities[11],Painting.create(4,11,1))
-
-	table.insert(entities[11],Cabinet.create(10,11))
-
-	table.insert(entities[1],Vent.create(12,1,0,1,1))
-	table.insert(entities[1],Vent.create(14,1,1,0,-1))
-
-	table.insert(entities[9], Vent.create(3, 9,2,3,1337))
-	table.insert(entities[11],Vent.create(3,11,3,2,0))
-
-	table.insert(entities[11],Plant.create(1,11,0))
-	table.insert(entities[11],Plant.create(12,11,1))
-
-	table.insert(entities[1],TableDecor.create(3,1,0))
-	table.insert(entities[1],TableDecor.create(2,1,7))
-
-	table.insert(entities[13],TableDecor.create(2,13,1))
-	table.insert(entities[14],TableDecor.create(3,14,2))
-	table.insert(entities[17],TableDecor.create(3,17,2))
-	table.insert(entities[14],TableDecor.create(9,14,2))
-	table.insert(entities[17],TableDecor.create(9,17,2))
-	table.insert(entities[16],TableDecor.create(4,16,3))
-	table.insert(entities[16],TableDecor.create(8,16,4))
-	table.insert(entities[16],TableDecor.create(10,16,5))
-
-	table.insert(entities[1],Fridge.create(4,1))
-
-	table.insert(entities[14],TableDecor.create(16,14,2))
-	table.insert(entities[14],TableDecor.create(18,14,2))
-	table.insert(entities[14],TableDecor.create(20,14,2))
-	table.insert(entities[13],TableDecor.create(16,13,6))
-	table.insert(entities[13],TableDecor.create(18,13,6))
-	table.insert(entities[13],TableDecor.create(20,13,6))
+	-- load entities and objects
+	local conf = assert(loadfile("maps/"..name..".lua"))
+	conf()
 end

@@ -47,10 +47,10 @@ function Camera:canSeePlayer(pl)
 	end
 
 	return self:canSee(self.x,self.y,
-		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH))
+		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH),pl)
 end
 
-function Camera:canSee(x0,y0,x1,y1)
+function Camera:canSee(x0,y0,x1,y1,pl)
 	local dx, dy = math.abs(x1-x0), math.abs(y1-y0)
 	local sx,sy,e2
 	if x0 < x1 then sx = 1 else sx = -1 end
@@ -60,7 +60,7 @@ function Camera:canSee(x0,y0,x1,y1)
 	while true do
 		local val = map[x0][y0]
 		if val == TILE_WALL or val == TILE_DOOR
-		or val == TILE_CRATE or val == TILE_DOUBLECRATE then
+		or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
 			if x0 ~= self.x or y0 ~= self.y then
 				return false
 			end

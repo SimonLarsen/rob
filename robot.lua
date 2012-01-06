@@ -62,8 +62,8 @@ function Robot:canSeePlayer(pl)
 		return false
 	end
 
-	return Robot.canSee(math.floor(self.x/CELLW),math.floor(self.y/CELLH),
-		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH))
+	return self:canSee(math.floor(self.x/CELLW),math.floor(self.y/CELLH),
+		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH),pl)
 end
 
 function Robot:draw()
@@ -98,7 +98,7 @@ function Robot:getDir()
 	end
 end
 
-function Robot.canSee(x0,y0,x1,y1)
+function Robot:canSee(x0,y0,x1,y1,pl)
 	local dx, dy = math.abs(x1-x0), math.abs(y1-y0)
 	local sx,sy,e2
 	if x0 < x1 then sx = 1 else sx = -1 end
@@ -108,7 +108,7 @@ function Robot.canSee(x0,y0,x1,y1)
 	while true do
 		local val = map[x0][y0]
 		if val == TILE_WALL or val == TILE_DOOR
-		or val == TILE_CRATE or val == TILE_DOUBLECRATE then
+		or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
 			return false
 		end
 

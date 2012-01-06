@@ -1,12 +1,13 @@
 require("defines")
 require("mymath")
+require("event")
 require("resources")
 require("drawing")
 require("player")
 require("herbie")
 require("jamal")
 require("robot")
-require("entity")
+require("entity")	require("decoration")	require("container")
 require("camera")
 
 function love.load()
@@ -19,27 +20,10 @@ function love.load()
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	entities = {}
-	for i=0,MAPH-1 do
-		entities[i] = {}
-	end
+	loadMapFromImage("level0")
 
-	robots = {}
-	table.insert(robots,Robot.create({{14,2},{14,8},{22,8},{22,2}}))
-	table.insert(robots,Robot.create({{22,8},{22,2},{14,2},{14,8}}))
-	table.insert(robots,Robot.create({{17,3},{17,6},{19,6},{19,3}}))
-
-	cameras = {}
-	table.insert(cameras,Camera.create(1,8,0))
-	table.insert(cameras,Camera.create(1,17,0))
-	table.insert(cameras,Camera.create(12,17,2))
-	table.insert(cameras,Camera.create(8,1,3))
-	table.insert(cameras,Camera.create(9,9,1))
-
-	loadMapFromImage("maps/level0.png")
-
-	pl1 = Herbie.create(112,40,1)
-	pl2 = Jamal.create(96,40,2)
+	pl1 = Herbie.create(p1start[1],p1start[2],1)
+	pl2 = Jamal.create(p2start[1],p2start[2],2)
 
 	time = 0
 	alarmtime = 0
@@ -57,27 +41,5 @@ function love.update(dt)
 	end
 	for i=1,#cameras do
 		cameras[i]:update(dt)
-	end
-end
-
-function alarm()
-	if alarmtime <= 0 then
-		print("alarm triggered")
-		alarmtime = 4.2
-	end
-end
-
-function love.keypressed(k,uni)
-	if k == 'escape' then
-		love.event.push('q')
-	elseif k == '1' then
-		SCALE = 1
-	elseif k == '2' then
-		SCALE = 2
-	elseif k == '4' then
-		SCALE = 4
-	else
-		pl1:keypressed(k)
-		pl2:keypressed(k)
 	end
 end

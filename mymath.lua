@@ -1,7 +1,7 @@
 mymath = {}
 
-dirToVectorX = {1,0,-1,0}
-dirToVectorY = {0,-1,0,1}
+local dirToVectorX = {1,0,-1,0}
+local dirToVectorY = {0,-1,0,1}
 
 function mymath.dotP(x1,y1,x2,y2)
 	return x1*x2 + y1*y2
