@@ -32,7 +32,7 @@ function Door.create(x,y,dir)
 	setmetatable(self,Door)
 
 	self.open = false
-	self.dir = dir -- 0 = horizontal, 1 = vertical
+	self.dir = dir -- 0 = horizontal, 1 = left, -1 = right
 
 	return self
 end
@@ -40,7 +40,7 @@ end
 function Door:draw()
 	if self.dir == 0 then
 		if self.open then
-			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW,(self.y-3)*CELLH)
+			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+12,self.y*CELLH-23)
 		else
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		end
@@ -48,7 +48,13 @@ function Door:draw()
 		if self.open then
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		else
-			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-13,(self.y-3)*CELLH-1)
+			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21)
+		end
+	elseif self.dir == -1 then
+		if self.open then
+			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+		else
+			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1)
 		end
 	end
 end
@@ -59,14 +65,16 @@ function Door:getCollisionBox()
 	else
 		if self.dir == 0 then
 			return {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
-		else
+		elseif self.dir == 1 then
 			return {x = self.x*CELLW, y = self.y*CELLH, w = 3, h = CELLH}
+		else
+			return {x = self.x*CELLW+13, y = self.y*CELLH, w = 3, h = CELLH}
 		end
 	end
 end
 
 function Door:getActionBox()
-	return {x = self.x*CELLW-2, y = self.y*CELLH-2, w = CELLW+4, h = CELLH+4}
+	return {x = self.x*CELLW-3, y = self.y*CELLH-3, w = CELLW+6, h = CELLH+6}
 end
 
 function Door:action()
@@ -79,10 +87,25 @@ function Door:action()
 	end
 
 	if self.open == false then
-		if pl1:collideBox(self:getCollisionBox())
-		or pl2:collideBox(self:getCollisionBox()) then
-			self.open = true
-			map[self.x][self.y] = TILE_DARKFLOOR
+		self:movePlayer(pl1)
+		self:movePlayer(pl2)
+	end
+end
+
+function Door:movePlayer(pl)
+	if pl:collideBox(self:getCollisionBox()) then
+		if self.dir == 0 then
+			local ydist = self.y*CELLH - pl.y + 5
+			if ydist > 0 then pl.y = pl.y - 6 + ydist
+			else pl.y = pl.y + 6 + ydist end
+		elseif self.dir == 1 then
+			local xdist = self.x*CELLW - pl.x + 1
+			if xdist < 0 then pl.x = pl.x + 10 + xdist
+			else pl.x = pl.x - 10 + xdist end
+		elseif self.dir == -1 then
+			local xdist = self.x*CELLW - pl.x + 15
+			if xdist < 0 then pl.x = pl.x + 10 + xdist
+			else pl.x = pl.x - 10 + xdist end
 		end
 	end
 end

@@ -41,7 +41,7 @@ function loadImages()
 	end
 
 	-- entity quads
-	quadDoorOpen   = lg.newQuad(32,128,16,32,tilew,tileh)
+	quadDoorOpen   = lg.newQuad(44,132,4,28,tilew,tileh)
 	quadDoorClosed = lg.newQuad(16,128,16,32,tilew,tileh)
 	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
@@ -86,6 +86,11 @@ function loadImages()
 end
 
 function loadMapFromImage(name)
+	-- get map dimensions
+	local mapData = love.image.newImageData("maps/"..name..".png")
+	MAPW = mapData:getWidth()
+	MAPH = mapData:getHeight()
+
 	-- clear entities and objects
 	entities = {}
 	for i=0,MAPH-1 do
@@ -94,16 +99,12 @@ function loadMapFromImage(name)
 	robots = {}
 	cameras = {}
 
-	-- load tiles from image
-	local mapData = love.image.newImageData("maps/"..name..".png")
-	MAPW = mapData:getWidth()
-	MAPH = mapData:getHeight()
-
 	map = {}
 	for i = -1,MAPW do
 		map[i] = {}
 	end
 
+	-- load tiles from image
 	for ix = 0, MAPW-1 do
 		for iy = 0, MAPH-1 do
 			r,g,b = mapData:getPixel(ix,iy)
@@ -142,6 +143,6 @@ function loadMapFromImage(name)
 	end
 
 	-- load entities and objects
-	local conf = assert(loadfile("maps/"..name..".lua"))
+	local conf = love.filesystem.load("maps/"..name..".lua")
 	conf()
 end
