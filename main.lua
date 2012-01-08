@@ -13,7 +13,14 @@ require("entity")
 	require("container")
 
 function love.load()
+	math.randomseed(os.time())
+	--[[
+	modes = love.graphics.getModes()
+	table.sort(modes, function(a,b) return a.width*a.height > b.width*b.height end) -- descending order
+	WIDTH, HEIGHT = modes[1].width, modes[1].height
+	--]]
 	love.graphics.setMode(WIDTH,HEIGHT,false)
+
 	love.graphics.setBackgroundColor(0,0,0)
 	love.graphics.setLineWidth(SCALE)
 	loadImages()
@@ -29,6 +36,8 @@ function love.load()
 
 	time = 0
 	alarmtime = 0
+
+	messages = {}
 end
 
 function love.update(dt)

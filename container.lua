@@ -88,7 +88,7 @@ function Fridge.create(x,y)
 end
 
 function Fridge:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-2}
 end
 
 function Fridge:getActionBox()
@@ -103,6 +103,6 @@ function Fridge:draw()
 	end
 end
 
-function Fridge:action()
+function Fridge:action(pl)
 	self.open = not self.open
 end

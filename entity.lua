@@ -101,11 +101,11 @@ function Door:movePlayer(pl)
 		elseif self.dir == 1 then
 			local xdist = self.x*CELLW - pl.x + 1
 			if xdist < 0 then pl.x = pl.x + 10 + xdist
-			else pl.x = pl.x - 10 + xdist end
+			else pl.x = pl.x - 9 + xdist end
 		elseif self.dir == -1 then
 			local xdist = self.x*CELLW - pl.x + 15
-			if xdist < 0 then pl.x = pl.x + 10 + xdist
-			else pl.x = pl.x - 10 + xdist end
+			if xdist < 0 then pl.x = pl.x + 9 + xdist
+			else pl.x = pl.x - 9.5 + xdist end
 		end
 	end
 end
@@ -145,5 +145,7 @@ function Vent:action(pl)
 				end
 			end
 		end
+	elseif pl.isHerbie then
+		addMessage("Herbie, your head is too big to crawl through vents!")
 	end
 end

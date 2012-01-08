@@ -2,6 +2,8 @@ keys = {}
 keys[1] = {"up","down","left","right","return"}
 keys[2] =  {"w","s","a","d"," "}
 
+swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit"}
+
 local lg = love.graphics
 
 function loadImages()
@@ -17,6 +19,11 @@ function loadImages()
 	imgLight:setFilter("nearest","nearest")
 	imgLightSmall = lg.newImage("res/lightsmall.png")
 	imgLightSmall:setFilter("nearest","nearest")
+
+	fontImage = lg.newImage("res/font-white-big.png")
+	fontImage:setFilter("nearest","nearest")
+	font = lg.newImageFont(fontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
+	lg.setFont(font)
 
 	quadTiles = {}
 	for ix = 0,15 do
@@ -48,7 +55,7 @@ function loadImages()
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
 	quadLocker     = lg.newQuad(128,128,32,32,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
-	quadFridgeOpen   = lg.newQuad(112,128,16,32,tilew,tileh)
+	quadFridgeOpen   = lg.newQuad(112,128,16,34,tilew,tileh)
 	quadWatercooler = lg.newQuad(48,152,11,24,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)

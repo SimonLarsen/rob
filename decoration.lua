@@ -20,7 +20,7 @@ function Painting:action()
 end
 
 function Painting:getActionBox()
-	return {x = self.x*CELLW+4, y = self.y*CELLH, w = CELLW-8, h = CELLH}
+	return {x = self.x*CELLW+4, y = self.y*CELLH, w = CELLW-8, h = CELLH-7}
 end
 
 Plant = { solid = true, interactive = false }

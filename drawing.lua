@@ -21,6 +21,16 @@ function love.draw()
 	lg.setRenderTarget()
 	local pl1y, pl2y = math.floor(pl1.y/CELLH), math.floor(pl2.y/CELLH)
 
+	-- draw all floor stuff first:
+	for iy = 0,MAPH-1 do
+		for ix = 0,MAPW-1 do
+			if map[ix][iy] < 10 then
+				lg.drawq(imgTiles,quadTiles[map[ix][iy]],ix*CELLW,iy*CELLH)
+			end
+		end
+	end
+
+	-- draw walls, decorations and entities
 	for iy = 0,MAPH-1 do
 		for ix = 0,MAPW-1 do
 			if map[ix][iy] == TILE_WALL then
@@ -34,8 +44,6 @@ function love.draw()
 				drawTable(ix,iy)
 			elseif map[ix][iy] == TILE_KITCHEN then
 				drawKitchenTable(ix,iy)
-			else
-				lg.drawq(imgTiles,quadTiles[map[ix][iy]],ix*CELLW,iy*CELLH)
 			end
 		end
 
@@ -88,6 +96,14 @@ function love.draw()
 	lg.setBlendMode("subtractive")
 	lg.draw(fb,0,0)
 	lg.setBlendMode("alpha")
+	
+	-- draw messages
+	for i=0,NUM_MESSAGES-1 do
+		if messages[i] ~= nil then
+			lg.setColor(255,255,255,255-i*80)
+			lg.print(messages[i],15,HEIGHT-30-i*24)
+		end
+	end
 end
 
 function drawWall(x,y)

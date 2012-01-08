@@ -1,6 +1,6 @@
 function alarm()
 	if alarmtime <= 0 then
-		print("alarm triggered")
+		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
 		alarmtime = 4.2
 	end
 end
@@ -14,8 +14,17 @@ function love.keypressed(k,uni)
 		SCALE = 2
 	elseif k == '4' then
 		SCALE = 4
+	elseif k == 'm' then
+		addMessage(tostring(math.random()))
 	else
 		pl1:keypressed(k)
 		pl2:keypressed(k)
 	end
+end
+
+function addMessage(text)
+	for i = NUM_MESSAGES-1,1,-1 do
+		messages[i] = messages[i-1]
+	end
+	messages[0] = text
 end
