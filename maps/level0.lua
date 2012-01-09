@@ -52,3 +52,7 @@ table.insert(cameras,Camera.create(1,17,0))
 table.insert(cameras,Camera.create(12,17,2))
 table.insert(cameras,Camera.create(8,1,3))
 table.insert(cameras,Camera.create(9,9,1))
+
+-- Sofa
+table.insert(entities[1],Sofa.create(9,1,3))
+table.insert(entities[4],Sofa.create(9,4,1))

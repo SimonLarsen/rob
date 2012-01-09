@@ -27,12 +27,17 @@ Door = { actiontype = 1, solid = true, interactive = true }
 Door.__index = Door
 setmetatable(Door,Entity)
 
-function Door.create(x,y,dir)
+function Door.create(x,y,dir,lock)
 	local self = Entity.create(x,y)
 	setmetatable(self,Door)
 
 	self.open = false
 	self.dir = dir -- 0 = horizontal, 1 = left, -1 = right
+	if lock then
+		self.lock = lock
+	else
+		self.lock = 0
+	end
 
 	return self
 end
@@ -81,14 +86,15 @@ function Door:action()
 	if self.open == true then
 		self.open = false
 		map[self.x][self.y] = TILE_DOOR
-	else
-		self.open = true
-		map[self.x][self.y] = TILE_DARKFLOOR
-	end
-
-	if self.open == false then
 		self:movePlayer(pl1)
 		self:movePlayer(pl2)
+	elseif self.open == false then
+		if self.lock == 0 or keys[self.lock] then
+			self.open = true
+			map[self.x][self.y] = TILE_DARKFLOOR
+		else
+			addMessage("This door is locked")
+		end
 	end
 end
 

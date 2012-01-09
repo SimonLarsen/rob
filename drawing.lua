@@ -101,7 +101,7 @@ function love.draw()
 	for i=0,NUM_MESSAGES-1 do
 		if messages[i] ~= nil then
 			lg.setColor(255,255,255,255-i*80)
-			lg.print(messages[i],15,HEIGHT-30-i*24)
+			lg.print(messages[i],15,HEIGHT-30-i*24+messagefade*96)
 		end
 	end
 end

@@ -29,7 +29,9 @@ end
 
 function Camera:update(dt)
 	if self:canSeePlayer(pl1) or self:canSeePlayer(pl2) then
-		alarm()
+		if alarm() then
+			print("Camera at " .. self.x .. "," .. self.y .. " triggered alarm")
+		end
 	end
 end
 
@@ -37,12 +39,12 @@ function Camera:canSeePlayer(pl)
 	local toplx = pl.x - ((self.x+0.5)*CELLW)
 	local toply = pl.y - ((self.y+0.5)*CELLH)
 
-	if math.pow(toplx,2)+math.pow(toply,2) > 16000 then return false end
+	if math.pow(toplx,2)+math.pow(toply,2) > 6000 then return false end
 
 	local fromx, fromy = mymath.dirToVector(self.dir)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
 
-	if angle > 0.2 or angle < -0.2 then
+	if angle > 0.1 or angle < -0.1 then
 		return false
 	end
 

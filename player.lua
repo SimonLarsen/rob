@@ -21,11 +21,11 @@ function Player:update(dt)
 	self.moving = false
 	local oldx, oldy = self.x, self.y
 
-	if love.keyboard.isDown(keys[self.player][1]) then
+	if love.keyboard.isDown(keybinds[self.player][1]) then
 		self.ydir = -1
 		self.y = self.y - PLAYER_SPEED*dt
 		self.moving = true
-	elseif love.keyboard.isDown(keys[self.player][2]) then
+	elseif love.keyboard.isDown(keybinds[self.player][2]) then
 		self.ydir = 1
 		self.y = self.y + PLAYER_SPEED*dt
 		self.moving = true
@@ -35,10 +35,10 @@ function Player:update(dt)
 		self.y = oldy
 	end
 
-	if love.keyboard.isDown(keys[self.player][3]) then
+	if love.keyboard.isDown(keybinds[self.player][3]) then
 		self.xdir = -1
 		self.x = self.x - PLAYER_SPEED*dt
-		self.moving = true elseif love.keyboard.isDown(keys[self.player][4]) then
+		self.moving = true elseif love.keyboard.isDown(keybinds[self.player][4]) then
 		self.xdir = 1
 		self.x = self.x + PLAYER_SPEED*dt
 		self.moving = true
@@ -57,7 +57,7 @@ function Player:update(dt)
 end
 
 function Player:keypressed(k)
-	if k == keys[self.player][5] then
+	if k == keybinds[self.player][5] then
 		self:action()
 	end
 end

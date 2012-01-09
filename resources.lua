@@ -1,6 +1,6 @@
-keys = {}
-keys[1] = {"up","down","left","right","return"}
-keys[2] =  {"w","s","a","d"," "}
+keybinds = {}
+keybinds[1] = {"up","down","left","right","return"}
+keybinds[2] =  {"w","s","a","d"," "}
 
 swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit"}
 
@@ -54,12 +54,15 @@ function loadImages()
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(64,152,32,24,tilew,tileh)
 	quadLocker     = lg.newQuad(128,128,32,32,tilew,tileh)
+	quadLockerDoor = lg.newQuad(160,128,12,29,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
 	quadFridgeOpen   = lg.newQuad(112,128,16,34,tilew,tileh)
 	quadWatercooler = lg.newQuad(48,152,11,24,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
+	quadSofaFront  = lg.newQuad(176,128,32,19,tilew,tileh)
+	quadSofaBack   = lg.newQuad(176,147,32,17,tilew,tileh)
 	quadTable = {}
 	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)

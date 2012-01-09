@@ -2,6 +2,9 @@ function alarm()
 	if alarmtime <= 0 then
 		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
 		alarmtime = 4.2
+		return true
+	else
+		return false
 	end
 end
 
@@ -15,7 +18,10 @@ function love.keypressed(k,uni)
 	elseif k == '4' then
 		SCALE = 4
 	elseif k == 'm' then
-		addMessage(tostring(math.random()))
+		addMessage(swearwords[math.random(1,#swearwords)].."!")
+	elseif k == 'f1' then
+		keys[1] = true
+		addMessage("You found a key!")
 	else
 		pl1:keypressed(k)
 		pl2:keypressed(k)
@@ -27,4 +33,5 @@ function addMessage(text)
 		messages[i] = messages[i-1]
 	end
 	messages[0] = text
+	messagefade = 0.25
 end

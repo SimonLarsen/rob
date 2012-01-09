@@ -3,7 +3,7 @@ p2start = {9*16, 3*8}
 
 -- Doors
 table.insert(entities[5],Door.create(6,5,-1))
-table.insert(entities[5],Door.create(11,5,1))
+table.insert(entities[5],Door.create(11,5,1,1))
 table.insert(entities[11],Door.create(5,11,-1))
 table.insert(entities[16],Door.create(11,16,1))
 table.insert(entities[29],Door.create(8,29,0))

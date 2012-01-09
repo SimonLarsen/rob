@@ -74,3 +74,26 @@ end
 function Watercooler:getCollisionBox()
 	return {x = self.x*CELLW+3, y = self.y*CELLH+1, w = 11, h = 6}
 end
+
+Sofa = { solid = true, interactive = false }
+Sofa.__index = Sofa
+setmetatable(Sofa,Entity)
+
+function Sofa.create(x,y,dir)
+	local self = Entity.create(x,y)
+	setmetatable(self,Sofa)
+	self.dir = dir -- 1 = back, 3 = front
+	return self
+end
+
+function Sofa:draw()
+	if self.dir == 3 then
+		love.graphics.drawq(imgTiles,quadSofaFront,self.x*CELLW,self.y*CELLH-11)
+	elseif self.dir == 1 then
+		love.graphics.drawq(imgTiles,quadSofaBack,self.x*CELLW,self.y*CELLH-9)
+	end
+end
+
+function Sofa:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
+end

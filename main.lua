@@ -38,11 +38,14 @@ function love.load()
 	alarmtime = 0
 
 	messages = {}
+	messagefade = 0
+	keys = {}
 end
 
 function love.update(dt)
 	time = time + dt
 	if alarmtime > 0 then alarmtime = alarmtime - dt end
+	if messagefade > 0 then messagefade = messagefade - dt end
 
 	pl1:update(dt)
 	pl2:update(dt)

@@ -60,11 +60,15 @@ setmetatable(Locker,Entity)
 function Locker.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Locker)
+	self.open = false
 	return self
 end
 
 function Locker:draw()
 	love.graphics.drawq(imgTiles,quadLocker,self.x*CELLW,self.y*CELLH-25)
+	if self.open then
+		love.graphics.drawq(imgTiles,quadLockerDoor,self.x*CELLW+9,self.y*CELLH-18)
+	end
 end
 
 function Locker:getCollisionBox()
@@ -72,7 +76,11 @@ function Locker:getCollisionBox()
 end
 
 function Locker:getActionBox()
-	return {x = self.x*CELLW+5, y = self.y*CELLH, w = CELLW+CELLW-10, h = CELLH}
+	return {x = self.x*CELLW+17, y = self.y*CELLH+2, w = 1, h = CELLH}
+end
+
+function Locker:action()
+	self.open = not self.open
 end
 
 Fridge = { actiontype = 1, solid = true, interactive = true }
