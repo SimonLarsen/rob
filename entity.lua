@@ -89,7 +89,12 @@ function Door:action()
 		self:movePlayer(pl1)
 		self:movePlayer(pl2)
 	elseif self.open == false then
-		if self.lock == 0 or keys[self.lock] then
+		if self.lock == 0 then
+			self.open = true
+			map[self.x][self.y] = TILE_DARKFLOOR
+		elseif keys[self.lock] then
+			addMessage("You unlocked the door")
+			self.lock = 0
 			self.open = true
 			map[self.x][self.y] = TILE_DARKFLOOR
 		else

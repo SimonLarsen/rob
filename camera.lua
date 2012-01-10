@@ -44,7 +44,7 @@ function Camera:canSeePlayer(pl)
 	local fromx, fromy = mymath.dirToVector(self.dir)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
 
-	if angle > 0.1 or angle < -0.1 then
+	if angle > 0.15 or angle < -0.15 then
 		return false
 	end
 

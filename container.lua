@@ -1,9 +1,31 @@
+Container = { actiontype = 1 }
+Container.__index = Container
+setmetatable(Container,Entity)
+
+function Container.create(x,y,storage)
+	local self = Entity.create(x,y)
+	self.open = false
+	self.storage = storage
+	return self
+end
+
+function Container:action()
+	self.open = not self.open
+	if self.storage then
+		if self.storage:sub(1,3) == "key" then
+			addKey(tonumber(self.storage:sub(4)))
+		end
+		-- TODO: Add support for getting skins
+		self.storage = nil
+	end
+end
+
 Safe = { actiontype = 1, solid = true, interactive = true }
 Safe.__index = Safe
-setmetatable(Safe,Entity)
+setmetatable(Safe,Container)
 
-function Safe.create(x,y)
-	local self = Entity.create(x,y)
+function Safe.create(x,y,storage)
+	local self = Container.create(x,y,storage)
 	setmetatable(self,Safe)
 
 	self.open = false
@@ -27,16 +49,12 @@ function Safe:getActionBox()
 	return {x = self.x*CELLW, y = (self.y+1)*CELLH, w = CELLW, h = CELLH/2}
 end
 
-function Safe:action()
-	self.open = not self.open
-end
-
 Cabinet = { actiontype = 1, solid = true, interactive = true }
 Cabinet.__index = Cabinet
-setmetatable(Cabinet,Entity)
+setmetatable(Cabinet,Container)
 
-function Cabinet.create(x,y)
-	local self = Entity.create(x,y)
+function Cabinet.create(x,y,storage)
+	local self = Container.create(x,y,storage)
 	setmetatable(self,Cabinet)
 	return self
 end
@@ -55,10 +73,10 @@ end
 
 Locker = { actiontype = 1, solid = true, interactive = true }
 Locker.__index = Locker
-setmetatable(Locker,Entity)
+setmetatable(Locker,Container)
 
-function Locker.create(x,y)
-	local self = Entity.create(x,y)
+function Locker.create(x,y,storage)
+	local self = Container.create(x,y,storage)
 	setmetatable(self,Locker)
 	self.open = false
 	return self
@@ -79,16 +97,12 @@ function Locker:getActionBox()
 	return {x = self.x*CELLW+17, y = self.y*CELLH+2, w = 1, h = CELLH}
 end
 
-function Locker:action()
-	self.open = not self.open
-end
-
 Fridge = { actiontype = 1, solid = true, interactive = true }
 Fridge.__index = Fridge
-setmetatable(Fridge,Entity)
+setmetatable(Fridge,Container)
 
-function Fridge.create(x,y)
-	local self = Entity.create(x,y)
+function Fridge.create(x,y,storage)
+	local self = Container.create(x,y,storage)
 	setmetatable(self,Fridge)
 	self.open = false
 	map[x][y] = TILE_DOOR
@@ -109,8 +123,4 @@ function Fridge:draw()
 	else
 		love.graphics.drawq(imgTiles,quadFridgeClosed,self.x*CELLW,(self.y-3)*CELLH)
 	end
-end
-
-function Fridge:action(pl)
-	self.open = not self.open
 end

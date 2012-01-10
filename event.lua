@@ -20,8 +20,7 @@ function love.keypressed(k,uni)
 	elseif k == 'm' then
 		addMessage(swearwords[math.random(1,#swearwords)].."!")
 	elseif k == 'f1' then
-		keys[1] = true
-		addMessage("You found a key!")
+		addKey(1)
 	else
 		pl1:keypressed(k)
 		pl2:keypressed(k)
@@ -34,4 +33,9 @@ function addMessage(text)
 	end
 	messages[0] = text
 	messagefade = 0.25
+end
+
+function addKey(num)
+	addMessage("You found a key!")
+	keys[num] = true
 end
