@@ -8,7 +8,6 @@ function Player.create(x,y,player)
 	self.x = x
 	self.y = y
 	self.xdir = 1 -- 1 = right, -1 = left
-	self.ydir = 1 -- 1 = down, -1 = up
 	self.frame = 0
 	self.moving = false
 	self.player = player
@@ -22,11 +21,9 @@ function Player:update(dt)
 	local oldx, oldy = self.x, self.y
 
 	if love.keyboard.isDown(keybinds[self.player][1]) then
-		self.ydir = -1
 		self.y = self.y - PLAYER_SPEED*dt
 		self.moving = true
 	elseif love.keyboard.isDown(keybinds[self.player][2]) then
-		self.ydir = 1
 		self.y = self.y + PLAYER_SPEED*dt
 		self.moving = true
 	end

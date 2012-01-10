@@ -32,7 +32,8 @@ function Door.create(x,y,dir,lock)
 	setmetatable(self,Door)
 
 	self.open = false
-	self.dir = dir -- 0 = horizontal, 1 = left, -1 = right
+	self.dir = mymath.strToDir(dir)
+	-- 0 = horizontal, 1 = left, -1 = right
 	if lock then
 		self.lock = lock
 	else
@@ -43,19 +44,19 @@ function Door.create(x,y,dir,lock)
 end
 
 function Door:draw()
-	if self.dir == 0 then
+	if self.dir == 1 then
 		if self.open then
 			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+12,self.y*CELLH-23)
 		else
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		end
-	elseif self.dir == 1 then
+	elseif self.dir == 0 then
 		if self.open then
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		else
 			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21)
 		end
-	elseif self.dir == -1 then
+	elseif self.dir == 2 then
 		if self.open then
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		else
@@ -68,11 +69,11 @@ function Door:getCollisionBox()
 	if self.open then
 		return {x = 0, y = 0, w = 0, h = 0}
 	else
-		if self.dir == 0 then
+		if self.dir == 1 then
 			return {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
-		elseif self.dir == 1 then
+		elseif self.dir == 0 then
 			return {x = self.x*CELLW, y = self.y*CELLH, w = 3, h = CELLH}
-		else
+		elseif self.dir == 2 then
 			return {x = self.x*CELLW+13, y = self.y*CELLH, w = 3, h = CELLH}
 		end
 	end
@@ -105,15 +106,15 @@ end
 
 function Door:movePlayer(pl)
 	if pl:collideBox(self:getCollisionBox()) then
-		if self.dir == 0 then
+		if self.dir == 1 then
 			local ydist = self.y*CELLH - pl.y + 5
 			if ydist > 0 then pl.y = pl.y - 6 + ydist
 			else pl.y = pl.y + 6 + ydist end
-		elseif self.dir == 1 then
+		elseif self.dir == 0 then
 			local xdist = self.x*CELLW - pl.x + 1
 			if xdist < 0 then pl.x = pl.x + 10 + xdist
 			else pl.x = pl.x - 9 + xdist end
-		elseif self.dir == -1 then
+		elseif self.dir == 2 then
 			local xdist = self.x*CELLW - pl.x + 15
 			if xdist < 0 then pl.x = pl.x + 9 + xdist
 			else pl.x = pl.x - 9.5 + xdist end
@@ -125,22 +126,22 @@ Vent = { actiontype = 4, solid = false, interactive = true }
 Vent.__index = Vent
 setmetatable(Vent,Entity)
 
-function Vent.create(x,y,id,dest,dir)
+function Vent.create(x,y,dir,id,dest)
 	local self = Entity.create(x,y)
 	setmetatable(self,Vent)
 	self.isVent = true
 	self.id = id
 	self.dest = dest
-	self.dir = dir -- 0 - front, -1 - left wall, 1 - right wall
+	self.dir = mymath.strToDir(dir)
 	return self
 end
 
 function Vent:draw()
-	if self.dir == 0 then
+	if self.dir == 1 then
 		love.graphics.drawq(imgTiles,quadVentFront,self.x*CELLW,(self.y-1)*CELLH)
-	elseif self.dir == -1 then
+	elseif self.dir == 2 then
 		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,1,1)
-	elseif self.dir == 1 then
+	elseif self.dir == 0 then
 		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,-1,1,16)
 	end
 end

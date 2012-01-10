@@ -19,3 +19,15 @@ end
 function mymath.abs(x,y)
 	return math.sqrt(x*x+y*y)
 end
+
+function mymath.strToDir(str)
+	if str == "right" then return 0
+	elseif str == "up" then return 1
+	elseif str == "left" then return 2
+	elseif str == "down" then return 3
+	
+	elseif str == "vert" then return 1
+
+	else return -1
+	end
+end

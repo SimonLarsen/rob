@@ -14,6 +14,8 @@ function Container:action()
 	if self.storage then
 		if self.storage:sub(1,3) == "key" then
 			addKey(tonumber(self.storage:sub(4)))
+		elseif self.storage:sub(1,4) == "goal"  then
+			addMessage("You got the " .. self.storage:sub(5) .. ", time to get out of here!")
 		end
 		-- TODO: Add support for getting skins
 		self.storage = nil

@@ -2,12 +2,12 @@ p1start = {8*16, 3*8}
 p2start = {9*16, 3*8}
 
 -- Doors
-table.insert(entities[5],Door.create(6,5,-1))
-table.insert(entities[5],Door.create(11,5,1,1))
-table.insert(entities[11],Door.create(5,11,-1))
-table.insert(entities[16],Door.create(11,16,1))
-table.insert(entities[29],Door.create(8,29,0))
-table.insert(entities[10],Door.create(16,10,0))
+table.insert(entities[5],Door.create(6,5,"left"))
+table.insert(entities[5],Door.create(11,5,"right",1))
+table.insert(entities[11],Door.create(5,11,"left"))
+table.insert(entities[16],Door.create(11,16,"right"))
+table.insert(entities[29],Door.create(8,29,"vert"))
+table.insert(entities[10],Door.create(16,10,"vert"))
 
 table.insert(entities[1],TableDecor.create(4,1,0))
 table.insert(entities[1],Fridge.create(1,1,"key1"))
@@ -35,13 +35,16 @@ table.insert(entities[18],TableDecor.create(14,18,1))
 
 table.insert(robots,Robot.create({{13,13},{13,20},{17,20},{17,13}}))
 
-table.insert(entities[28],Vent.create(1,28,1,2))
-table.insert(entities[30],Vent.create(1,30,2,1,0))
+table.insert(entities[28],Vent.create(1,28,"vert",1,2))
+table.insert(entities[30],Vent.create(1,30,"vert",2,1))
 
-table.insert(cameras,Camera.create(6,10,3))
-table.insert(cameras,Camera.create(10,15,2))
+table.insert(cameras,Camera.create(6,10,"down"))
+table.insert(cameras,Camera.create(10,15,"left"))
 
-table.insert(cameras,Camera.create(6,30,3))
-table.insert(cameras,Camera.create(7,35,1))
+table.insert(cameras,Camera.create(6,30,"down"))
+table.insert(cameras,Camera.create(7,35,"up"))
 
-table.insert(entities[30],Safe.create(16,30))
+table.insert(entities[30],Safe.create(16,30,"goalrare Supernintendo game"))
+
+table.insert(entities[21],Vent.create(4,21,"right",4,5))
+table.insert(entities[21],Vent.create(6,21,"left",5,4))

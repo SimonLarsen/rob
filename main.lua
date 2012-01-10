@@ -34,7 +34,6 @@ function love.load()
 	pl1 = Herbie.create(p1start[1],p1start[2],1)
 	pl2 = Jamal.create(p2start[1],p2start[2],2)
 
-	time = 0
 	alarmtime = 0
 
 	messages = {}
@@ -43,7 +42,6 @@ function love.load()
 end
 
 function love.update(dt)
-	time = time + dt
 	if alarmtime > 0 then alarmtime = alarmtime - dt end
 	if messagefade > 0 then messagefade = messagefade - dt end
 

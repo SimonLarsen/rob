@@ -82,7 +82,7 @@ setmetatable(Sofa,Entity)
 function Sofa.create(x,y,dir)
 	local self = Entity.create(x,y)
 	setmetatable(self,Sofa)
-	self.dir = dir -- 1 = back, 3 = front
+	self.dir = mymath.strToDir(dir) -- 1 = back, 3 = front
 	return self
 end
 

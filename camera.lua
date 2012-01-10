@@ -6,7 +6,7 @@ function Camera.create(x,y,dir)
 	setmetatable(self,Camera)
 	self.x = x
 	self.y = y
-	self.dir = dir
+	self.dir = mymath.strToDir(dir)
 	-- dir: 0 - right, 1 - up, 2 - left, 3 - down
 	return self
 end
