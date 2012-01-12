@@ -17,6 +17,10 @@ function Player.create(x,y,player)
 end
 
 function Player:update(dt)
+	self:updateplayer(dt)
+end
+
+function Player:updateplayer(dt)
 	self.moving = false
 	local oldx, oldy = self.x, self.y
 

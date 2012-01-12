@@ -1,5 +1,5 @@
 p1start = {8*16, 3*8}
-p2start = {9*16, 3*8}
+p2start = {9*16, 21*8}
 
 -- Doors
 table.insert(entities[5],Door.create(6,5,"left"))
@@ -35,8 +35,8 @@ table.insert(entities[18],TableDecor.create(14,18,1))
 
 table.insert(robots,Robot.create({{13,13},{13,20},{17,20},{17,13}}))
 
-table.insert(entities[28],Vent.create(1,28,"vert",1,2))
-table.insert(entities[30],Vent.create(1,30,"vert",2,1))
+table.insert(entities[28],Vent.create(1,28,"down",1,2))
+table.insert(entities[30],Vent.create(1,30,"up",2,1))
 
 table.insert(cameras,Camera.create(6,10,"down"))
 table.insert(cameras,Camera.create(10,15,"left"))

@@ -151,8 +151,7 @@ function Vent:action(pl)
 		for iy=0,MAPH-1 do
 			for i=1,#entities[iy] do
 				if entities[iy][i].isVent and entities[iy][i].id == self.dest then
-					pl.x = (entities[iy][i].x+0.5)*CELLW
-					pl.y = (entities[iy][i].y+0.5)*CELLH
+					pl:crawlVent(entities[iy][i],self.dir)
 					return
 				end
 			end
@@ -160,4 +159,8 @@ function Vent:action(pl)
 	elseif pl.isHerbie then
 		addMessage("Herbie, your head is too big to crawl through vents!")
 	end
+end
+
+function Vent:getActionBox()
+	return {x = self.x*CELLW+8, y = self.y*CELLH+4, w = 1, h = 1}
 end

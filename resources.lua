@@ -41,6 +41,18 @@ function loadImages()
 		quadHerbie[i] = lg.newQuad(i*16,0,14,21,sprw,sprh)
 		quadJamal[i] = lg.newQuad(80+i*16,0,11,27,sprw,sprh)
 	end
+	-- vent animations
+	quadJamalIntoVentSide = {}
+	quadJamalIntoVentFront = {}
+	quadJamalOutVentSide = {}
+	quadJamalOutVentFront = {}
+	for i = 0,7 do
+		quadJamalIntoVentSide[i] = lg.newQuad(i*16,80,16,27,sprw,sprh)
+		quadJamalOutVentSide[i] = lg.newQuad(128+i*16,80,16,27,sprw,sprh)
+		quadJamalOutVentFront[i] = lg.newQuad(128+i*16,112,16,30,sprw,sprh)
+		quadJamalIntoVentFront[i] = lg.newQuad(i*16,112,16,30,sprw,sprh)
+	end
+
 
 	quadRobot = {}
 	for i=0,11 do

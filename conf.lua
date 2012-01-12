@@ -4,8 +4,8 @@ function love.conf(t)
     t.identity = "herbieandjamal"
     t.version = 0.72
     t.console = false
-    t.screen.width = 800
-    t.screen.height = 600
+    --t.screen.width = 800
+    --t.screen.height = 600
     t.screen.fullscreen = false
     t.screen.vsync = true
     t.screen.fsaa = 0

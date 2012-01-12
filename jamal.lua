@@ -5,17 +5,68 @@ setmetatable(Jamal,Player)
 function Jamal.create(x,y,player)
 	local self = Player.create(x,y,player)
 	setmetatable(self,Jamal)
+	self.state = 0
+	-- 0 = walking
+	-- 1 = crawling into vent
+	-- 2 = crawling out of vent
 	return self
 end
 
-function Jamal:draw()
-	if self.moving then
-		love.graphics.drawq(imgSprites,quadJamal[1+math.floor(self.frame)],self.x,self.y,0,self.xdir,1,5.5,26)
-	else
-		love.graphics.drawq(imgSprites,quadJamal[0],self.x,self.y,0,self.xdir,1,5.5,26)
+function Jamal:update(dt)
+	if self.state == 0 then
+		self:updateplayer(dt)
+	elseif self.state == 1 then
+		self.frame = self.frame + dt
+		if self.frame >= 1 then
+			self.x, self.y = self.crawlToX, self.crawlToY
+			self.frame = 0
+			self.state = 2
+		end
+	elseif self.state == 2 then
+		self.frame = self.frame + dt
+		if self.frame >= 1 then
+			self.frame = 0
+			self.state = 0
+		end
 	end
-	if self.actiontype > 0 then
-		love.graphics.drawq(imgSprites,quadAction[self.actiontype],self.x,self.y,0,1,1,4.5,36)
+end
+
+function Jamal:crawlVent(dest,dir)
+	self.x = math.floor(self.x/16)*16+8
+	self.y = math.floor(self.y/8)*8+4
+
+	if dir == 0 then self.xdir = 1
+	elseif dir == 2 then self.xdir = -1 end
+
+	self.crawlToX = dest.x*CELLW+8
+	self.crawlToY = dest.y*CELLH+4
+	self.frame = 0
+	self.state = 1
+	self.crawldir = dir
+end
+
+function Jamal:draw()
+	if self.state == 0 then -- normal state
+		if self.moving then
+			love.graphics.drawq(imgSprites,quadJamal[1+math.floor(self.frame)],self.x,self.y,0,self.xdir,1,5.5,26)
+		else
+			love.graphics.drawq(imgSprites,quadJamal[0],self.x,self.y,0,self.xdir,1,5.5,26)
+		end
+		if self.actiontype > 0 then
+			love.graphics.drawq(imgSprites,quadAction[self.actiontype],self.x,self.y,0,1,1,4.5,36)
+		end
+	elseif self.state == 1 then -- crawling into vent
+		if self.crawldir == 0 or self.crawldir == 2 then
+			love.graphics.drawq(imgSprites,quadJamalIntoVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+		else
+			love.graphics.drawq(imgSprites,quadJamalIntoVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+		end
+	elseif self.state == 2 then -- crawling out of vent
+		if self.crawldir == 0 or self.crawldir == 2 then
+			love.graphics.drawq(imgSprites,quadJamalOutVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+		else
+			love.graphics.drawq(imgSprites,quadJamalOutVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+		end
 	end
 end
 
