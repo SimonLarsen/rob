@@ -16,7 +16,7 @@ table.insert(entities[1],Painting.create(2,1,1))
 table.insert(entities[1],Cabinet.create(14,1,"msgPoop banana monkey jazz"))
 table.insert(entities[1],Cabinet.create(16,1))
 
-table.insert(entities[10],Locker.create(1,10))
+table.insert(entities[10],Locker.create(1,10,"msgNothing but dirty socks in there"))
 table.insert(entities[10],Painting.create(4,10,2))
 table.insert(entities[11],Painting.create(15,11,0))
 table.insert(entities[30],Painting.create(5,30,3))

@@ -26,8 +26,10 @@ function loadImages()
 
 	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
+	--[[
 	imgLightSmall = lg.newImage("res/lightsmall.png")
 	imgLightSmall:setFilter("nearest","nearest")
+	--]]
 
 	fontImage = lg.newImage("res/font-white-big.png")
 	fontImage:setFilter("nearest","nearest")
@@ -74,23 +76,26 @@ function loadImages()
 	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet    = lg.newQuad(0,48,32,24,tilew,tileh)
 	quadCabinetOpen= lg.newQuad(32,48,32,27,tilew,tileh)
-	quadLocker     = lg.newQuad(128,128,32,32,tilew,tileh)
-	quadLockerDoor = lg.newQuad(160,128,12,29,tilew,tileh)
+	quadLocker     = lg.newQuad(80,48,32,32,tilew,tileh)
+	quadLockerDoor = lg.newQuad(112,48,12,29,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
 	quadFridgeOpen   = lg.newQuad(112,128,16,34,tilew,tileh)
+	quadCloset     = lg.newQuad(64,48,16,31,tilew,tileh)
 	quadWatercooler = lg.newQuad(48,152,11,24,tilew,tileh)
 	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
 	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
-	quadSofaFront  = lg.newQuad(176,128,32,19,tilew,tileh)
-	quadSofaBack   = lg.newQuad(176,147,32,17,tilew,tileh)
+	quadSofaFront  = lg.newQuad(128,128,32,19,tilew,tileh)
+	quadSofaBack   = lg.newQuad(128,147,32,17,tilew,tileh)
+	quadBed        = lg.newQuad(160,128,32,25,tilew,tileh)
 	quadTable = {}
 	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)
 	quadKitchenTableLined = lg.newQuad(80,128,8,24,tilew,tileh)
 	quadKitchenTableNoLine = lg.newQuad(88,128,8,24,tilew,tileh)
+
 	quadPainting = {}
-	for i = 0,4 do
+	for i = 0,6 do
 		quadPainting[i] = lg.newQuad(i*16,176,16,16,tilew,tileh)
 	end
 	quadTableDecor = {}

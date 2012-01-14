@@ -16,7 +16,7 @@ function Painting:draw()
 end
 
 function Painting:action()
-	self.id = (self.id+1)%5
+	self.id = (self.id+1)%7
 end
 
 function Painting:getActionBox()
@@ -96,4 +96,22 @@ end
 
 function Sofa:getCollisionBox()
 	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
+end
+
+Bed = { solid = true, interactive = false }
+Bed.__index = Bed
+setmetatable(Bed,Entity)
+	
+function Bed.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Bed)
+	return self
+end
+
+function Bed:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
+end
+
+function Bed:draw()
+	love.graphics.drawq(imgTiles,quadBed,self.x*CELLW,self.y*CELLH-17)
 end

@@ -1,8 +1,0 @@
-0	- empty
-1	- brown floor
-2	- checkered floor
-3	- wooden floor
-
-10	- wall
-
-20	- door

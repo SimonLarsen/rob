@@ -27,6 +27,8 @@ function mymath.strToDir(str)
 	elseif str == "down" then return 3
 	
 	elseif str == "vert" then return 1
+	elseif str == "back" then return 1
+	elseif str == "front" then return 3
 
 	else return -1
 	end

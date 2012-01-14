@@ -165,3 +165,25 @@ end
 function Vent:getActionBox()
 	return {x = self.x*CELLW+8, y = self.y*CELLH+4, w = 1, h = 1}
 end
+
+Closet = { actiontype = 1, solid = true, interactive = true }
+Closet.__index = Closet
+setmetatable(Closet,Entity)
+
+function Closet.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Closet)
+	return self
+end
+
+function Closet:draw()
+	love.graphics.drawq(imgTiles,quadCloset,self.x*CELLW,self.y*CELLH-24)
+end
+
+function Closet:action()
+	addMessage("TODO: Add skin change screen")
+end
+
+function Closet:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-1}
+end
