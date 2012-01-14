@@ -4,6 +4,8 @@ keybinds[2] =  {"w","s","a","d"," "}
 
 swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit"}
 
+skins = {"default", "suit"}
+
 local lg = love.graphics
 
 function loadImages()
@@ -14,6 +16,13 @@ function loadImages()
 	imgSprites = lg.newImage("res/sprites.png")
 	imgSprites:setFilter("nearest","nearest")
 	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
+
+	imgSkins = {}
+	for i=1,#skins do
+		imgSkins[i] = lg.newImage("res/skins/"..skins[i]..".png")
+		imgSkins[i]:setFilter("nearest","nearest")
+	end
+	local skinw, skinh = 256,256
 
 	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
@@ -47,16 +56,15 @@ function loadImages()
 	quadJamalOutVentSide = {}
 	quadJamalOutVentFront = {}
 	for i = 0,7 do
-		quadJamalIntoVentSide[i] = lg.newQuad(i*16,80,16,27,sprw,sprh)
-		quadJamalOutVentSide[i] = lg.newQuad(128+i*16,80,16,27,sprw,sprh)
-		quadJamalOutVentFront[i] = lg.newQuad(128+i*16,112,16,30,sprw,sprh)
-		quadJamalIntoVentFront[i] = lg.newQuad(i*16,112,16,30,sprw,sprh)
+		quadJamalIntoVentSide[i] = lg.newQuad(i*16,32,16,27,sprw,sprh)
+		quadJamalOutVentSide[i] = lg.newQuad(128+i*16,32,16,27,sprw,sprh)
+		quadJamalOutVentFront[i] = lg.newQuad(128+i*16,64,16,30,sprw,sprh)
+		quadJamalIntoVentFront[i] = lg.newQuad(i*16,64,16,30,sprw,sprh)
 	end
-
 
 	quadRobot = {}
 	for i=0,11 do
-		quadRobot[i] = lg.newQuad(i*16,32,11,32,sprw,sprh)
+		quadRobot[i] = lg.newQuad(i*16,0,11,32,sprw,sprh)
 	end
 
 	-- entity quads
@@ -104,7 +112,7 @@ function loadImages()
 	-- action quads
 	quadAction = {}
 	for i = 1,4 do
-		quadAction[i] = lg.newQuad((i-1)*16,64,9,9,sprw,sprh)
+		quadAction[i] = lg.newQuad((i-1)*16,32,9,9,sprw,sprh)
 	end
 end
 

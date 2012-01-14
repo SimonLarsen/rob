@@ -44,24 +44,24 @@ end
 function Jamal:draw()
 	if self.state == 0 then -- normal state
 		if self.moving then
-			love.graphics.drawq(imgSprites,quadJamal[1+math.floor(self.frame)],self.x,self.y,0,self.xdir,1,5.5,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamal[1+math.floor(self.frame)],self.x,self.y,0,self.xdir,1,5.5,26)
 		else
-			love.graphics.drawq(imgSprites,quadJamal[0],self.x,self.y,0,self.xdir,1,5.5,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamal[0],self.x,self.y,0,self.xdir,1,5.5,26)
 		end
 		if self.actiontype > 0 then
 			love.graphics.drawq(imgSprites,quadAction[self.actiontype],self.x,self.y,0,1,1,4.5,36)
 		end
 	elseif self.state == 1 then -- crawling into vent
 		if self.crawldir == 0 or self.crawldir == 2 then
-			love.graphics.drawq(imgSprites,quadJamalIntoVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamalIntoVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
 		else
-			love.graphics.drawq(imgSprites,quadJamalIntoVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamalIntoVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
 		end
 	elseif self.state == 2 then -- crawling out of vent
 		if self.crawldir == 0 or self.crawldir == 2 then
-			love.graphics.drawq(imgSprites,quadJamalOutVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamalOutVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
 		else
-			love.graphics.drawq(imgSprites,quadJamalOutVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+			love.graphics.drawq(imgSkins[self.skin],quadJamalOutVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
 		end
 	end
 end

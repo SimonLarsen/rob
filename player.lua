@@ -10,6 +10,7 @@ function Player.create(x,y,player)
 	self.xdir = 1 -- 1 = right, -1 = left
 	self.frame = 0
 	self.moving = false
+	self.skin = 2
 	self.player = player
 	self.actiontype = 0 -- indicates type of action to perform if any (0 for one)
 	self.state = 0
