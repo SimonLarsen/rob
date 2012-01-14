@@ -12,7 +12,10 @@ function Player.create(x,y,player)
 	self.moving = false
 	self.player = player
 	self.actiontype = 0 -- indicates type of action to perform if any (0 for one)
-
+	self.state = 0
+	-- 0 = walking
+	-- 1 = crawling into vent
+	-- 2 = crawling out of vent
 	return self
 end
 
@@ -58,7 +61,7 @@ function Player:updateplayer(dt)
 end
 
 function Player:keypressed(k)
-	if k == keybinds[self.player][5] then
+	if k == keybinds[self.player][5] and self.state == 0 then
 		self:action()
 	end
 end

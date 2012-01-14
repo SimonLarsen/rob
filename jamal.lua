@@ -5,10 +5,6 @@ setmetatable(Jamal,Player)
 function Jamal.create(x,y,player)
 	local self = Player.create(x,y,player)
 	setmetatable(self,Jamal)
-	self.state = 0
-	-- 0 = walking
-	-- 1 = crawling into vent
-	-- 2 = crawling out of vent
 	return self
 end
 

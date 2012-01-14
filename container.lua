@@ -16,6 +16,8 @@ function Container:action()
 			addKey(tonumber(self.storage:sub(4)))
 		elseif self.storage:sub(1,4) == "goal"  then
 			addMessage("You got the " .. self.storage:sub(5) .. ", time to get out of here!")
+		elseif self.storage:sub(1,3) == "msg" then
+			addMessage(self.storage:sub(4))
 		end
 		-- TODO: Add support for getting skins
 		self.storage = nil
@@ -62,7 +64,11 @@ function Cabinet.create(x,y,storage)
 end
 
 function Cabinet:draw()
-	love.graphics.drawq(imgTiles,quadCabinet,self.x*CELLW,self.y*CELLH-18)
+	if self.open then
+		love.graphics.drawq(imgTiles,quadCabinetOpen,self.x*CELLW,self.y*CELLH-18)
+	else
+		love.graphics.drawq(imgTiles,quadCabinet,self.x*CELLW,self.y*CELLH-18)
+	end
 end
 
 function Cabinet:getCollisionBox()

@@ -13,7 +13,7 @@ table.insert(entities[1],TableDecor.create(4,1,0))
 table.insert(entities[1],Fridge.create(1,1,"key1"))
 table.insert(entities[1],Painting.create(2,1,1))
 
-table.insert(entities[1],Cabinet.create(14,1))
+table.insert(entities[1],Cabinet.create(14,1,"msgPoop banana monkey jazz"))
 table.insert(entities[1],Cabinet.create(16,1))
 
 table.insert(entities[10],Locker.create(1,10))

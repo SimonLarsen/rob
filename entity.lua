@@ -31,6 +31,7 @@ function Door.create(x,y,dir,lock)
 	local self = Entity.create(x,y)
 	setmetatable(self,Door)
 
+	map[x][y] = TILE_DOOR
 	self.open = false
 	self.dir = mymath.strToDir(dir)
 	-- 0 = horizontal, 1 = left, -1 = right

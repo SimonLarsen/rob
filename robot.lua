@@ -98,29 +98,28 @@ function Robot:getDir()
 	end
 end
 
+local fl = math.floor
 function Robot:canSee(x0,y0,x1,y1,pl)
-	local dx, dy = math.abs(x1-x0), math.abs(y1-y0)
-	local sx,sy,e2
-	if x0 < x1 then sx = 1 else sx = -1 end
-	if y0 < y1 then sy = 1 else sy = -1 end
-	local err = dx-dy
+	local xvec, yvec = x1-x0, y1-y0
+	local steps = 2*math.ceil(math.sqrt(math.pow(xvec,2) + math.pow(yvec,2)))
+	if steps <= 0 then return true end
 
-	while true do
-		local val = map[x0][y0]
-		if val == TILE_WALL or val == TILE_DOOR
-		or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
-			return false
-		end
+	local xstep, ystep = xvec/steps, yvec/steps
+	local ox, oy = -1,-1
+	local ix, iy = x0, y0
 
-		if x0 == x1 and y0 == y1 then return true end
-		e2 = 2*err
-		if e2 > -dy then
-			err = err - dy
-			x0 = x0 + sx
+	for i = 0,steps do
+		if fl(ix) ~= fl(ox) or fl(iy) ~= fl(oy) then
+			local val = map[fl(ix)][fl(iy)]
+
+			if val == TILE_WALL or val == TILE_DOOR
+			or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
+				return false
+			end
 		end
-		if e2 < dx then
-			err = err + dx
-			y0 = y0 + sy
-		end
+		ox, oy = ix, iy
+		ix = ix + xstep
+		iy = iy + ystep
 	end
+	return true
 end
