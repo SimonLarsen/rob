@@ -187,3 +187,33 @@ end
 function Closet:getCollisionBox()
 	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-1}
 end
+
+function Closet:getActionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH+2}
+end
+
+RecordPlayer = { actiontype = 5, solid = true, interactive = true }
+RecordPlayer.__index = RecordPlayer
+setmetatable(RecordPlayer,Entity)
+
+function RecordPlayer.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,RecordPlayer)
+	return self
+end
+
+function RecordPlayer:draw()
+	love.graphics.drawq(imgTiles,quadRecordPlayer,self.x*CELLW,self.y*CELLH-17)
+end
+
+function RecordPlayer:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+end
+
+function RecordPlayer:getActionBox()
+	return {x = self.x*CELLW-2, y = self.y*CELLH-2, w = CELLW+4, h = CELLH+4}
+end
+
+function RecordPlayer:action()
+	addMessage("TODO Skip song")
+end

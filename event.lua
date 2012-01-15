@@ -21,6 +21,10 @@ function love.keypressed(k,uni)
 		addMessage(swearwords[math.random(1,#swearwords)].."!")
 	elseif k == 'f1' then
 		addKey(1)
+	elseif k == "tab" then
+		local tmp1 = keybinds[1]
+		keybinds[1] = keybinds[2]
+		keybinds[2] = tmp1
 	else
 		pl1:keypressed(k)
 		pl2:keypressed(k)

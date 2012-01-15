@@ -11,30 +11,32 @@ local lg = love.graphics
 function loadImages()
 	imgTiles = 	lg.newImage("res/tiles.png")
 	imgTiles:setFilter("nearest","nearest")
-	local tilew,tileh = imgTiles:getWidth(), imgTiles:getHeight()
 
 	imgSprites = lg.newImage("res/sprites.png")
 	imgSprites:setFilter("nearest","nearest")
-	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
-
-	imgSkins = {}
-	for i=1,#skins do
-		imgSkins[i] = lg.newImage("res/skins/"..skins[i]..".png")
-		imgSkins[i]:setFilter("nearest","nearest")
-	end
-	local skinw, skinh = 256,256
-
 	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
-	--[[
-	imgLightSmall = lg.newImage("res/lightsmall.png")
-	imgLightSmall:setFilter("nearest","nearest")
-	--]]
 
 	fontImage = lg.newImage("res/font-white-big.png")
 	fontImage:setFilter("nearest","nearest")
 	font = lg.newImageFont(fontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
 	lg.setFont(font)
+end
+
+function createQuads()
+	local tilew,tileh = imgTiles:getWidth(), imgTiles:getHeight()
+	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
+	local skinw, skinh = 256,256
+
+	imgSkins = {}
+	imgSkinPreviews = {}
+	for i=1,#skins do
+		imgSkins[i] = lg.newImage("res/skins/"..skins[i]..".png")
+		imgSkins[i]:setFilter("nearest","nearest")
+
+		imgSkinPreviews[i] = lg.newImage("res/skins/"..skins[i].."-preview.png")
+		imgSkinPreviews[i]:setFilter("nearest","nearest")
+	end
 
 	quadTiles = {}
 	for ix = 0,15 do
@@ -63,36 +65,47 @@ function loadImages()
 		quadJamalOutVentFront[i] = lg.newQuad(128+i*16,64,16,30,sprw,sprh)
 		quadJamalIntoVentFront[i] = lg.newQuad(i*16,64,16,30,sprw,sprh)
 	end
-
+	-- robot
 	quadRobot = {}
 	for i=0,11 do
 		quadRobot[i] = lg.newQuad(i*16,0,11,32,sprw,sprh)
 	end
 
 	-- entity quads
-	quadDoorOpen   = lg.newQuad(44,132,4,28,tilew,tileh)
-	quadDoorClosed = lg.newQuad(16,128,16,32,tilew,tileh)
-	quadSafeClosed = lg.newQuad(48,128,16,24,tilew,tileh)
-	quadSafeOpen   = lg.newQuad(64,128,16,24,tilew,tileh)
-	quadCabinet    = lg.newQuad(0,48,32,24,tilew,tileh)
-	quadCabinetOpen= lg.newQuad(32,48,32,27,tilew,tileh)
-	quadLocker     = lg.newQuad(80,48,32,32,tilew,tileh)
-	quadLockerDoor = lg.newQuad(112,48,12,29,tilew,tileh)
+	quadDoorOpen     = lg.newQuad(44,132,4,28,tilew,tileh)
+	quadDoorClosed   = lg.newQuad(16,128,16,32,tilew,tileh)
+	quadSafeClosed   = lg.newQuad(48,128,16,24,tilew,tileh)
+	quadSafeOpen     = lg.newQuad(64,128,16,24,tilew,tileh)
+	quadCabinet      = lg.newQuad(0,48,32,24,tilew,tileh)
+	quadCabinetOpen  = lg.newQuad(32,48,32,27,tilew,tileh)
+	quadLocker       = lg.newQuad(80,48,32,32,tilew,tileh)
+	quadLockerDoor   = lg.newQuad(112,48,12,29,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
-	quadFridgeOpen   = lg.newQuad(112,128,16,34,tilew,tileh)
-	quadCloset     = lg.newQuad(64,48,16,31,tilew,tileh)
-	quadWatercooler = lg.newQuad(48,152,11,24,tilew,tileh)
-	quadCrate      = lg.newQuad( 0, 16,16,24,tilew,tileh)
-	quadVentFront  = lg.newQuad(32,160,16, 8,tilew,tileh)
-	quadVentSide   = lg.newQuad(32,168,16, 8,tilew,tileh)
-	quadSofaFront  = lg.newQuad(128,128,32,19,tilew,tileh)
-	quadSofaBack   = lg.newQuad(128,147,32,17,tilew,tileh)
-	quadBed        = lg.newQuad(160,128,32,25,tilew,tileh)
+	quadFridgeOpen   = lg.newQuad(112,128,16,35,tilew,tileh)
+	quadCloset       = lg.newQuad(64,48,16,31,tilew,tileh)
+	quadWatercooler  = lg.newQuad(48,152,11,24,tilew,tileh)
+	quadCrate        = lg.newQuad( 0, 16,16,24,tilew,tileh)
+	quadVentFront    = lg.newQuad(32,160,16, 8,tilew,tileh)
+	quadVentSide     = lg.newQuad(32,168,16, 8,tilew,tileh)
+	quadSofaFront    = lg.newQuad(128,128,32,19,tilew,tileh)
+	quadSofaBack     = lg.newQuad(128,147,32,17,tilew,tileh)
+	quadBed          = lg.newQuad(160,128,32,25,tilew,tileh)
+	quadToiletOpen   = lg.newQuad(64,158,7,18,tilew,tileh)
+	quadToiletClosed = lg.newQuad(72,158,7,18,tilew,tileh)
+	quadRecordPlayer = lg.newQuad(128,48,16,25,tilew,tileh)
+	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)
 	quadTable = {}
-	quadTable[0]   = lg.newQuad(16,16,16,17,tilew,tileh)
-	quadTable[1]   = lg.newQuad(24,16,16,17,tilew,tileh)
+	quadTable[0]     = lg.newQuad(16,16,16,17,tilew,tileh)
+	quadTable[1]     = lg.newQuad(24,16,16,17,tilew,tileh)
 	quadKitchenTableLined = lg.newQuad(80,128,8,24,tilew,tileh)
 	quadKitchenTableNoLine = lg.newQuad(88,128,8,24,tilew,tileh)
+	quadTelevision  = lg.newQuad(80,156,16,20,tilew,tileh)
+
+	quadTVFrames = {}
+	quadTVFrames[0] = lg.newQuad(96,163,6,5,tilew,tileh)
+	for i=0,6 do
+		quadTVFrames[i+1] = lg.newQuad(96+i*7,171,6,5,tilew,tileh)
+	end
 
 	quadPainting = {}
 	for i = 0,6 do
@@ -116,69 +129,7 @@ function loadImages()
 
 	-- action quads
 	quadAction = {}
-	for i = 1,4 do
+	for i = 1,5 do
 		quadAction[i] = lg.newQuad((i-1)*16,32,9,9,sprw,sprh)
 	end
-end
-
-function loadMapFromImage(name)
-	-- get map dimensions
-	local mapData = love.image.newImageData("maps/"..name..".png")
-	MAPW = mapData:getWidth()
-	MAPH = mapData:getHeight()
-
-	-- clear entities and objects
-	entities = {}
-	for i=0,MAPH-1 do
-		entities[i] = {}
-	end
-	robots = {}
-	cameras = {}
-
-	map = {}
-	for i = -1,MAPW do
-		map[i] = {}
-	end
-
-	-- load tiles from image
-	for ix = 0, MAPW-1 do
-		for iy = 0, MAPH-1 do
-			r,g,b = mapData:getPixel(ix,iy)
-			-- FLOOR TILES
-			if r == 127 and g == 0 and b == 0 then -- dark floor
-				map[ix][iy] = TILE_DARKFLOOR
-			elseif r == 102 and g == 102 and b == 102 then -- tiles
-				map[ix][iy] = TILE_TILEFLOOR
-			elseif r == 255 and g == 255 and b == 0 then -- wooden floor
-				map[ix][iy] = TILE_WOODFLOOR
-			-- MISC
-			elseif r == 0 and g == 0 and b == 255 then	-- door
-				map[ix][iy] = TILE_DOOR
-				if map[ix-1][iy] == TILE_WALL then
-					table.insert(entities[iy],Door.create(ix,iy,0))
-				else
-					table.insert(entities[iy],Door.create(ix,iy,1))
-				end
-
-			elseif r == 255 and g == 255 and b == 255 then -- wall
-				map[ix][iy] = TILE_WALL
-			elseif r == 255 and g == 128 and b == 0 then -- crate
-				map[ix][iy] = TILE_CRATE
-			elseif r == 255 and g == 56 and b == 0 then -- double crate
-				map[ix][iy] = TILE_DOUBLECRATE
-			elseif r == 128 and g == 64 and b == 0 then -- table
-				map[ix][iy] = TILE_TABLE
-			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
-				map[ix][iy] = TILE_KITCHEN
-
-			-- default to black cell
-			else
-				map[ix][iy] = 0
-			end
-		end
-	end
-
-	-- load entities and objects
-	local conf = love.filesystem.load("maps/"..name..".lua")
-	conf()
 end

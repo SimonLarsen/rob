@@ -1,6 +1,19 @@
 local lg = love.graphics
 
 function love.draw()
+	if gamestate == STATE_INGAME then
+		drawIngame()
+	elseif gamestate == STATE_SKINS then
+		drawIngame()
+		drawSkinSelection()
+	end
+end
+
+function drawSkinSelection()
+	
+end
+
+function drawIngame()
 	lg.push()
 
 	local cx = (pl1.x+pl2.x)/2
@@ -38,8 +51,8 @@ function love.draw()
 			elseif map[ix][iy] == TILE_CRATE then
 				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH)
 			elseif map[ix][iy] == TILE_DOUBLECRATE then
-				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-2)*CELLH)
-				lg.drawq(imgTiles,quadCrate,ix*CELLW,(iy-4)*CELLH)
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,iy*CELLH-16)
+				lg.drawq(imgTiles,quadCrate,ix*CELLW,iy*CELLH-31)
 			elseif map[ix][iy] == TILE_TABLE then
 				drawTable(ix,iy)
 			elseif map[ix][iy] == TILE_KITCHEN then

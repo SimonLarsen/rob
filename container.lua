@@ -18,6 +18,8 @@ function Container:action()
 			addMessage("You got the " .. self.storage:sub(5) .. ", time to get out of here!")
 		elseif self.storage:sub(1,3) == "msg" then
 			addMessage(self.storage:sub(4))
+		elseif self.storage:sub(1,4) == "skin" then
+			addMessage("Unlocked "..self.storage:sub(5).." skin")
 		end
 		-- TODO: Add support for getting skins
 		self.storage = nil
@@ -31,8 +33,6 @@ setmetatable(Safe,Container)
 function Safe.create(x,y,storage)
 	local self = Container.create(x,y,storage)
 	setmetatable(self,Safe)
-
-	self.open = false
 
 	return self
 end
@@ -86,7 +86,6 @@ setmetatable(Locker,Container)
 function Locker.create(x,y,storage)
 	local self = Container.create(x,y,storage)
 	setmetatable(self,Locker)
-	self.open = false
 	return self
 end
 
@@ -112,13 +111,12 @@ setmetatable(Fridge,Container)
 function Fridge.create(x,y,storage)
 	local self = Container.create(x,y,storage)
 	setmetatable(self,Fridge)
-	self.open = false
 	map[x][y] = TILE_DOOR
 	return self
 end
 
 function Fridge:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-2}
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
 end
 
 function Fridge:getActionBox()
@@ -131,4 +129,30 @@ function Fridge:draw()
 	else
 		love.graphics.drawq(imgTiles,quadFridgeClosed,self.x*CELLW,(self.y-3)*CELLH)
 	end
+end
+
+Toilet = { actiontype = 1, solid = true, interactive = true }
+Toilet.__index = Toilet
+setmetatable(Toilet, Container)
+
+function Toilet.create(x,y,storage)
+	local self = Container.create(x,y,storage)
+	setmetatable(self,Toilet)
+	return self
+end
+
+function Toilet:draw()
+	if self.open then
+		love.graphics.drawq(imgTiles,quadToiletOpen,self.x*CELLW+4,self.y*CELLH-15)
+	else
+		love.graphics.drawq(imgTiles,quadToiletClosed,self.x*CELLW+4,self.y*CELLH-15)
+	end
+end
+
+function Toilet:getCollisionBox()
+	return { x = self.x*CELLW+4, y = self.y*CELLH, w = 7, h = 6 }
+end
+
+function Toilet:getActionBox()
+	return {x = self.x*CELLW+4, y = self.y*CELLH, w = 7, h = CELLH+2}
 end

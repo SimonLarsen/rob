@@ -115,3 +115,49 @@ end
 function Bed:draw()
 	love.graphics.drawq(imgTiles,quadBed,self.x*CELLW,self.y*CELLH-17)
 end
+
+Shower = { solid = true, interactive = false }
+Shower.__index = Shower
+setmetatable(Shower,Entity)
+
+function Shower.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Shower)
+	return self
+end
+
+function Shower:draw()
+	love.graphics.drawq(imgTiles,quadShower,self.x*CELLW,self.y*CELLH-24)
+end
+
+function Shower:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+end
+
+Television = { actiontype = 2, solid = true, interactive = true }
+Television.__index = Television
+setmetatable(Television,Entity)
+
+function Television.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Television)
+	self.on = false
+	return self
+end
+
+function Television:action()
+	self.on = not self.on
+end
+
+function Television:draw()
+	if self.on then
+		love.graphics.drawq(imgTiles,quadTVFrames[1+math.floor(time*10%7)],self.x*CELLW+3, self.y*CELLH-5)
+	else
+		love.graphics.drawq(imgTiles,quadTVFrames[0],self.x*CELLW+3, self.y*CELLH-5)
+	end
+	love.graphics.drawq(imgTiles,quadTelevision,self.x*CELLW, self.y*CELLH-13)
+end
+
+function Television:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH+1, w = CELLW, h = CELLH-2}
+end

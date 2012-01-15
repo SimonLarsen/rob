@@ -70,7 +70,7 @@ function Jamal:collideWalls()
 	local x1, x2 = math.floor((self.x-6)/CELLW), math.floor((self.x+6)/CELLW)
 	local y1, y2 = math.floor((self.y-3)/CELLH), math.floor((self.y+3)/CELLH)
 
-	if map[x1][y1] < 5 and map[x2][y1] < 5 and map[x1][y2] < 5 and map[x2][y2] < 5 then
+	if map[x1][y1] < 10 and map[x2][y1] < 10 and map[x1][y2] < 10 and map[x2][y2] < 10 then
 		return false
 	end
 

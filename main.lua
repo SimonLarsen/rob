@@ -11,6 +11,7 @@ require("robot")
 require("entity")
 	require("decoration")
 	require("container")
+require("map")
 
 function love.load()
 	math.randomseed(os.time())
@@ -19,17 +20,21 @@ function love.load()
 	love.graphics.setBackgroundColor(0,0,0)
 	love.graphics.setLineWidth(SCALE)
 	loadImages()
+	createQuads()
 
 	fbw = math.pow(2,math.ceil(math.log(WIDTH)/math.log(2)))
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	loadMapFromImage("home")
+	loadMapFromImage("enbane")
 
 	pl1 = Herbie.create(p1start[1],p1start[2],1)
 	pl2 = Jamal.create(p2start[1],p2start[2],2)
 
+	gamestate = STATE_INGAME
+
 	alarmtime = 0
+	time = 0
 
 	messages = {}
 	messagefade = 0
@@ -37,6 +42,7 @@ function love.load()
 end
 
 function love.update(dt)
+	time = time + dt
 	if alarmtime > 0 then alarmtime = alarmtime - dt end
 	if messagefade > 0 then messagefade = messagefade - dt end
 

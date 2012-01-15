@@ -91,7 +91,7 @@ end
 
 function Player:collideBox(e)
 	if self.x-7 > e.x+e.w or self.x+7 < e.x or
-	self.y-4 > e.y+e.h or self.y+4 < e.y then
+	self.y-3 > e.y+e.h or self.y+3 < e.y then
 		return false
 	else
 		return true

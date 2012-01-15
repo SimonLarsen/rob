@@ -12,6 +12,10 @@ table.insert(entities[11],Sofa.create(2,11,"back"))
 table.insert(entities[7],Fridge.create(11,7))
 table.insert(entities[1],Closet.create(1,1))
 table.insert(entities[1],Bed.create(2,1))
+table.insert(entities[1],Toilet.create(14,1,"skinpoo"))
+table.insert(entities[1],Shower.create(13,1))
+table.insert(entities[7],RecordPlayer.create(1,7))
+table.insert(entities[7],Television.create(3,7))
 
 -- Table decoration
 table.insert(entities[7],TableDecor.create(12,7,0))
