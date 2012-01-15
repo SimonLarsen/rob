@@ -10,7 +10,25 @@ function love.draw()
 end
 
 function drawSkinSelection()
+	lg.setColor(0,0,0,247)
+	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
+	lg.setColor(255,255,255,255)
 	
+	if has1Selected == true then
+		lg.setColor(108,108,108,255)
+	end
+	lg.drawq(imgSkinPreviews[pl1.skin],quadSkinHerbie,(WIDTH/2)+200,HEIGHT-512,0,2,2,64,0)
+	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+50,HEIGHT-256,0,2,2,7.5,0)
+	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+345,HEIGHT-256,0,-2,2,7.5,0)
+
+	if has2Selected == false then
+		lg.setColor(255,255,255,255)
+	else
+		lg.setColor(108,108,108,255)
+	end
+	lg.drawq(imgSkinPreviews[pl2.skin],quadSkinJamal,(WIDTH/2)-200,HEIGHT-512,0,2,2,64,0)
+	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)-330,HEIGHT-256,0,2,2,7.5,0)
+	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)-60,HEIGHT-256,0,-2,2,7.5,0)
 end
 
 function drawIngame()
@@ -106,17 +124,30 @@ function drawIngame()
 	end
 
 	-- apply light to screen
-	lg.setBlendMode("subtractive")
-	lg.draw(fb,0,0)
-	lg.setBlendMode("alpha")
-	
+	if fow then
+		lg.setBlendMode("subtractive")
+		lg.draw(fb,0,0)
+		lg.setBlendMode("alpha")
+	end
+
+	drawMessages()
+end
+
+function drawMessages()
 	-- draw messages
 	for i=0,NUM_MESSAGES-1 do
 		if messages[i] ~= nil then
-			lg.setColor(255,255,255,255-i*80)
+			lg.setColor(0,0,0,255-i*80)
+			lg.print(messages[i],17,HEIGHT-28-i*24+messagefade*96)
+
+			if messagecolor[i] == nil then lg.setColor(255,255,255,255-i*80)
+			elseif messagecolor[i] == 1 then lg.setColor(0,160,176,255-i*80) -- herbie
+			elseif messagecolor[i] == 2 then lg.setColor(235,80,65,255-i*80) -- jamal
+			end
 			lg.print(messages[i],15,HEIGHT-30-i*24+messagefade*96)
 		end
 	end
+	lg.setColor(255,255,255,255)
 end
 
 function drawWall(x,y)

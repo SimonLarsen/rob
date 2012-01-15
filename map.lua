@@ -61,6 +61,38 @@ function loadMapFromImage(name)
 end
 
 -- Map helper functions
-function addDoor(x,y,dir)
-	table.insert(entities[y],Door.create(x,y,dir))
+add = {}
+function add.door(x,y,dir,lock)
+	table.insert(entities[y],Door.create(x,y,dir,lock))
+end
+
+-- Entities
+function add.vent(x,y,dir,id,dest)
+	table.insert(entities[y],Vent.create(x,y,dir,id,dest)) end
+
+-- Containers
+function add.cabinet(x,y,storage)
+	table.insert(entities[y],Cabinet.create(x,y,storage))
+end
+function add.locker(x,y,storage)
+	table.insert(entities[y],Locker.create(x,y,storage))
+end
+function add.fridge(x,y,storage)
+	table.insert(entities[y],Fridge.create(x,y,storage))
+end
+
+-- Table decors
+function add.sink(x,y)
+	table.insert(entities[y],TableDecor.create(x,y,0))
+end
+function add.oven(x,y)
+	table.insert(entities[y],TableDecor.create(x,y,7))
+end
+
+-- Decoration stuff
+function add.painting(x,y,id)
+	table.insert(entities[y],Painting.create(x,y,id))
+end
+function add.entrance(x,y)
+	table.insert(entities[y],Entrance.create(x,y))
 end

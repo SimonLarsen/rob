@@ -9,7 +9,7 @@ function Container.create(x,y,storage)
 	return self
 end
 
-function Container:action()
+function Container:action(pl)
 	self.open = not self.open
 	if self.storage then
 		if self.storage:sub(1,3) == "key" then
@@ -19,7 +19,7 @@ function Container:action()
 		elseif self.storage:sub(1,3) == "msg" then
 			addMessage(self.storage:sub(4))
 		elseif self.storage:sub(1,4) == "skin" then
-			addMessage("Unlocked "..self.storage:sub(5).." skin")
+			unlockSkin(self.storage:sub(5))
 		end
 		-- TODO: Add support for getting skins
 		self.storage = nil

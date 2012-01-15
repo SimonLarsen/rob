@@ -158,7 +158,7 @@ function Vent:action(pl)
 			end
 		end
 	elseif pl.isHerbie then
-		addMessage("Herbie, your head is too big to crawl through vents!")
+		addMessage("Herbie, your head is too big to crawl through vents!",pl.player)
 	end
 end
 
@@ -181,7 +181,7 @@ function Closet:draw()
 end
 
 function Closet:action()
-	addMessage("TODO: Add skin change screen")
+	openSkinSelection()
 end
 
 function Closet:getCollisionBox()

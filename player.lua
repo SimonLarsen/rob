@@ -1,3 +1,7 @@
+keybinds = {}
+keybinds[1] = {"up","down","left","right","return"}
+keybinds[2] =  {"w","s","a","d"," "}
+
 Player = {}
 Player.__index = Player
 
@@ -10,7 +14,7 @@ function Player.create(x,y,player)
 	self.xdir = 1 -- 1 = right, -1 = left
 	self.frame = 0
 	self.moving = false
-	self.skin = 2
+	self.skin = 1
 	self.player = player
 	self.actiontype = 0 -- indicates type of action to perform if any (0 for one)
 	self.state = 0

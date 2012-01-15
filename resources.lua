@@ -1,10 +1,6 @@
-keybinds = {}
-keybinds[1] = {"up","down","left","right","return"}
-keybinds[2] =  {"w","s","a","d"," "}
-
 swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit"}
 
-skins = {"default", "suit"}
+skins = {"default", "naked", "blackmetal"}
 
 local lg = love.graphics
 
@@ -17,17 +13,6 @@ function loadImages()
 	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
 
-	fontImage = lg.newImage("res/font-white-big.png")
-	fontImage:setFilter("nearest","nearest")
-	font = lg.newImageFont(fontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
-	lg.setFont(font)
-end
-
-function createQuads()
-	local tilew,tileh = imgTiles:getWidth(), imgTiles:getHeight()
-	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
-	local skinw, skinh = 256,256
-
 	imgSkins = {}
 	imgSkinPreviews = {}
 	for i=1,#skins do
@@ -37,6 +22,21 @@ function createQuads()
 		imgSkinPreviews[i] = lg.newImage("res/skins/"..skins[i].."-preview.png")
 		imgSkinPreviews[i]:setFilter("nearest","nearest")
 	end
+
+	sansFontImage = lg.newImage("res/font-white-big.png")
+	sansFontImage:setFilter("nearest","nearest")
+	font = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
+
+	serifFontImage = lg.newImage("res/font-serif.png")
+	serifFontImage:setFilter("nearest","nearest")
+	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
+	lg.setFont(font)
+end
+
+function createQuads()
+	local tilew,tileh = imgTiles:getWidth(), imgTiles:getHeight()
+	local sprw, sprh = imgSprites:getWidth(), imgSprites:getHeight()
+	local skinw, skinh = 256,256
 
 	quadTiles = {}
 	for ix = 0,15 do
@@ -94,6 +94,7 @@ function createQuads()
 	quadToiletClosed = lg.newQuad(72,158,7,18,tilew,tileh)
 	quadRecordPlayer = lg.newQuad(128,48,16,25,tilew,tileh)
 	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)
+	quadEntrance     = lg.newQuad(160,88,34,40,tilew,tileh)
 	quadTable = {}
 	quadTable[0]     = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]     = lg.newQuad(24,16,16,17,tilew,tileh)
@@ -132,4 +133,9 @@ function createQuads()
 	for i = 1,5 do
 		quadAction[i] = lg.newQuad((i-1)*16,32,9,9,sprw,sprh)
 	end
+
+	-- big skin previews
+	quadSkinJamal  = lg.newQuad(0,0,128,256,256,256)
+	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
+	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
 end
