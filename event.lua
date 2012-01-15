@@ -20,7 +20,7 @@ function love.keypressed(k,uni)
 	elseif k == 'f5' then
 		gamestate = STATE_INGAME
 	elseif k == 'f6' then
-		gamestate = STATE_SKINS
+		openSkinSelection()
 	end
 
 	if gamestate == STATE_INGAME then
@@ -38,30 +38,37 @@ function love.keypressed(k,uni)
 		end
 	elseif gamestate == STATE_SKINS then
 		if k == keybinds[1][3] then
-			pl1.skin = findSkin(pl1.skin,-1)
+			selectSkin(pl1,-1)
 		elseif k == keybinds[1][4] then
-			pl1.skin = findSkin(pl1.skin,1)
+			selectSkin(pl1,1)
 		elseif k == keybinds[1][5] then
-			has1Selected = not has1Selected
+			skinsel[1].confirmed = not skinsel[1].confirmed
 
 		elseif k == keybinds[2][3] then
-			pl2.skin = findSkin(pl2.skin,-1)
+			selectSkin(pl2,-1)
 		elseif k == keybinds[2][4] then
-			pl2.skin = findSkin(pl2.skin,1)
+			selectSkin(pl2,1)
 		elseif k == keybinds[2][5] then
-			has2Selected = not has2Selected
+			skinsel[2].confirmed = not skinsel[2].confirmed
 		end
 	end
 end
 
-function findSkin(cur,dir)
+function selectSkin(pl,dir)
+	if skinsel[pl.player].scroll > 0 or skinsel[pl.player].confirmed == true then return end
+	skinsel[pl.player].last = pl.skin
+	skinsel[pl.player].scroll = 1
+	local cur = pl.skin
+
 	for i = 0,#skins do
 		cur = cur+dir
 		if cur < 1 then cur = #skins end
 		if cur > #skins then cur = 1 end
-		if hasSkin[cur] then return cur end
+		if hasSkin[cur] then 
+			pl.skin = cur
+			return
+		end
 	end
-	return 1
 end
 
 function unlockSkin(skin)
@@ -92,6 +99,6 @@ end
 
 function openSkinSelection()
 	gamestate = STATE_SKINS
-	has1Selected = false
-	has2Selected = false
+	skinsel[1].confirmed, skinsel[2].confirmed = false, false
+	skinsel[1].scroll, skinsel[2].scroll = 0, 0
 end

@@ -1,4 +1,4 @@
-Painting = { actiontype = 3, solid = false, interactive = true }
+Painting = { solid = false, interactive = false }
 Painting.__index = Painting
 setmetatable(Painting,Entity)
 
@@ -13,14 +13,6 @@ end
 
 function Painting:draw()
 	love.graphics.drawq(imgTiles,quadPainting[self.id],self.x*CELLW,(self.y-3)*CELLH)
-end
-
-function Painting:action()
-	self.id = (self.id+1)%7
-end
-
-function Painting:getActionBox()
-	return {x = self.x*CELLW+4, y = self.y*CELLH, w = CELLW-8, h = CELLH-7}
 end
 
 Plant = { solid = true, interactive = false }

@@ -1,6 +1,8 @@
 p1start = {6, 2}
 p2start = {7, 2}
 
+add.entrance(6,1)
+
 -- Doors
 add.door(4,4,"left")
 add.door(9,4,"right")

@@ -12,23 +12,38 @@ end
 function drawSkinSelection()
 	lg.setColor(0,0,0,247)
 	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
-	lg.setColor(255,255,255,255)
 	
-	if has1Selected == true then
-		lg.setColor(108,108,108,255)
-	end
-	lg.drawq(imgSkinPreviews[pl1.skin],quadSkinHerbie,(WIDTH/2)+200,HEIGHT-512,0,2,2,64,0)
+	-- player 1
+	if skinsel[1].confirmed == false then lg.setColor(255,255,255,255)
+	else lg.setColor(255,255,255,108) end
+
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+50,HEIGHT-256,0,2,2,7.5,0)
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+345,HEIGHT-256,0,-2,2,7.5,0)
-
-	if has2Selected == false then
-		lg.setColor(255,255,255,255)
+	if skinsel[1].scroll <= 0 then
+		lg.drawq(imgSkinPreviews[pl1.skin],quadSkinHerbie,(WIDTH/2)+200,HEIGHT-512,0,2,2,64,0)
+	elseif skinsel[1].scroll > 0.5 then
+		lg.drawq(imgSkinPreviews[skinsel[1].last],quadSkinHerbie,
+			(WIDTH/2)+200,HEIGHT-(skinsel[1].scroll-0.5)*1024,0,2,2,64,0)
 	else
-		lg.setColor(108,108,108,255)
+		lg.drawq(imgSkinPreviews[pl1.skin],quadSkinHerbie,
+			(WIDTH/2)+200,HEIGHT-(0.5-skinsel[1].scroll)*1024,0,2,2,64,0)
 	end
-	lg.drawq(imgSkinPreviews[pl2.skin],quadSkinJamal,(WIDTH/2)-200,HEIGHT-512,0,2,2,64,0)
+
+	-- player 2
+	if skinsel[2].confirmed == false then lg.setColor(255,255,255,255)
+	else lg.setColor(255,255,255,108) end
+
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)-330,HEIGHT-256,0,2,2,7.5,0)
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)-60,HEIGHT-256,0,-2,2,7.5,0)
+	if skinsel[2].scroll <= 0 then
+		lg.drawq(imgSkinPreviews[pl2.skin],quadSkinJamal,(WIDTH/2)-200,HEIGHT-512,0,2,2,64,0)
+	elseif skinsel[2].scroll > 0.5 then
+		lg.drawq(imgSkinPreviews[skinsel[2].last],quadSkinJamal,
+			(WIDTH/2)-200,HEIGHT-(skinsel[2].scroll-0.5)*1024,0,2,2,64,0)
+	else
+		lg.drawq(imgSkinPreviews[pl2.skin],quadSkinJamal,
+			(WIDTH/2)-200,HEIGHT-(0.5-skinsel[2].scroll)*1024,0,2,2,64,0)
+	end
 end
 
 function drawIngame()

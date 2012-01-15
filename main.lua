@@ -42,6 +42,7 @@ function love.load()
 	messagefade = 0
 	keys = {}
 	hasSkin = {true, true, false}
+	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}
 end
 
 function love.update(dt)
@@ -60,8 +61,10 @@ function love.update(dt)
 			cameras[i]:update(dt)
 		end
 	elseif gamestate == STATE_SKINS then
-		if has1Selected == true and has2Selected == true then
+		if skinsel[1].confirmed == true and skinsel[2].confirmed == true then
 			gamestate = STATE_INGAME
 		end
+		if skinsel[1].scroll > 0 then skinsel[1].scroll = skinsel[1].scroll - dt end
+		if skinsel[2].scroll > 0 then skinsel[2].scroll = skinsel[2].scroll - dt end
 	end
 end
