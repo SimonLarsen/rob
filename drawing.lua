@@ -12,10 +12,18 @@ end
 function drawSkinSelection()
 	lg.setColor(0,0,0,247)
 	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
+	lg.setColor(255,255,255,255)
+	-- draw title
+	lg.push()
+	lg.scale(2)
+	lg.setFont(serifFont)
+	lg.printf("Select your attire, gentlemen",0,20,WIDTH/2,"center")
+	lg.pop()
+	lg.rectangle("fill",WIDTH/2-250,32,500,2)
+	lg.rectangle("fill",WIDTH/2-250,78,500,2)
 	
 	-- player 1
-	if skinsel[1].confirmed == false then lg.setColor(255,255,255,255)
-	else lg.setColor(255,255,255,108) end
+	if skinsel[1].confirmed == true then lg.setColor(255,255,255,108) end
 
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+50,HEIGHT-256,0,2,2,7.5,0)
 	lg.drawq(imgSprites,quadTriangle,(WIDTH/2)+345,HEIGHT-256,0,-2,2,7.5,0)
@@ -149,6 +157,7 @@ function drawIngame()
 end
 
 function drawMessages()
+	lg.setFont(font)
 	-- draw messages
 	for i=0,NUM_MESSAGES-1 do
 		if messages[i] ~= nil then

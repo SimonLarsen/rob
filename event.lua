@@ -21,6 +21,10 @@ function love.keypressed(k,uni)
 		gamestate = STATE_INGAME
 	elseif k == 'f6' then
 		openSkinSelection()
+	elseif k == "tab" then
+		local tmp1 = keybinds[1]
+		keybinds[1] = keybinds[2]
+		keybinds[2] = tmp1
 	end
 
 	if gamestate == STATE_INGAME then
@@ -28,10 +32,6 @@ function love.keypressed(k,uni)
 			addMessage(swearwords[math.random(1,#swearwords)].."!")
 		elseif k == 'f1' then
 			fow = not fow
-		elseif k == "tab" then
-			local tmp1 = keybinds[1]
-			keybinds[1] = keybinds[2]
-			keybinds[2] = tmp1
 		else
 			pl1:keypressed(k)
 			pl2:keypressed(k)

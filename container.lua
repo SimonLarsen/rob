@@ -131,7 +131,7 @@ function Fridge:draw()
 	end
 end
 
-Toilet = { actiontype = 1, solid = true, interactive = true }
+Toilet = { actiontype = 2, solid = true, interactive = true }
 Toilet.__index = Toilet
 setmetatable(Toilet, Container)
 

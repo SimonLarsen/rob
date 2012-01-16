@@ -95,6 +95,7 @@ function createQuads()
 	quadRecordPlayer = lg.newQuad(128,48,16,25,tilew,tileh)
 	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)
 	quadEntrance     = lg.newQuad(160,88,34,40,tilew,tileh)
+	quadTelephone    = lg.newQuad(160,156,10,12,tilew,tileh)
 	quadTable = {}
 	quadTable[0]     = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]     = lg.newQuad(24,16,16,17,tilew,tileh)

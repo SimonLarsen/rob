@@ -217,3 +217,25 @@ end
 function RecordPlayer:action()
 	addMessage("TODO Skip song")
 end
+
+Telephone = { actiontype = 2, solid = true, interactive = true }
+Telephone.__index = Telephone
+setmetatable(Telephone,Entity)
+
+function Telephone.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Telephone)
+	return self
+end
+
+function Telephone:draw()
+	love.graphics.drawq(imgTiles,quadTelephone,self.x*CELLW+3,self.y*CELLH-6)
+end
+
+function Telephone:getCollisionBox()
+	return {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
+end
+
+function Telephone:action()
+	addMessage("TODO Add telephone menu stuff")
+end

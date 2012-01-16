@@ -62,37 +62,65 @@ end
 
 -- Map helper functions
 add = {}
+function add.e(y,ent)
+	table.insert(entities[y],ent)
+end
 function add.door(x,y,dir,lock)
-	table.insert(entities[y],Door.create(x,y,dir,lock))
+	add.e(y,Door.create(x,y,dir,lock))
 end
 
 -- Entities
 function add.vent(x,y,dir,id,dest)
-	table.insert(entities[y],Vent.create(x,y,dir,id,dest)) end
+	add.e(y,Vent.create(x,y,dir,id,dest))
+end
+function add.telephone(x,y)
+	add.e(y,Telephone.create(x,y))
+end
+function add.closet(x,y)
+	add.e(y,Closet.create(x,y))
+end
+function add.recordplayer(x,y)
+	add.e(y,RecordPlayer.create(x,y))
+end
 
 -- Containers
 function add.cabinet(x,y,storage)
-	table.insert(entities[y],Cabinet.create(x,y,storage))
+	add.e(y,Cabinet.create(x,y,storage))
 end
 function add.locker(x,y,storage)
-	table.insert(entities[y],Locker.create(x,y,storage))
+	add.e(y,Locker.create(x,y,storage))
 end
 function add.fridge(x,y,storage)
-	table.insert(entities[y],Fridge.create(x,y,storage))
+	add.e(y,Fridge.create(x,y,storage))
+end
+function add.toilet(x,y,storage)
+	add.e(y,Toilet.create(x,y,storage))
 end
 
 -- Table decors
 function add.sink(x,y)
-	table.insert(entities[y],TableDecor.create(x,y,0))
+	add.e(y,TableDecor.create(x,y,0))
 end
 function add.oven(x,y)
-	table.insert(entities[y],TableDecor.create(x,y,7))
+	add.e(y,TableDecor.create(x,y,7))
 end
 
 -- Decoration stuff
 function add.painting(x,y,id)
-	table.insert(entities[y],Painting.create(x,y,id))
+	add.e(y,Painting.create(x,y,id))
 end
 function add.entrance(x,y)
-	table.insert(entities[y],Entrance.create(x,y))
+	add.e(y,Entrance.create(x,y))
+end
+function add.sofa(x,y,dir)
+	add.e(y,Sofa.create(x,y,dir))
+end
+function add.television(x,y)
+	add.e(y,Television.create(x,y))
+end
+function add.bed(x,y)
+	add.e(y,Bed.create(x,y))
+end
+function add.shower(x,y)
+	add.e(y,Shower.create(x,y))
 end
