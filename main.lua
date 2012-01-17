@@ -26,7 +26,7 @@ function love.load()
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	loadMapFromImage("home")
+	loadMapFromImage("level1")
 
 	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
 	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
@@ -41,7 +41,7 @@ function love.load()
 	messagecolor = {}
 	messagefade = 0
 	keys = {}
-	hasSkin = {true, true, false}
+	hasSkin = {true, true, true}
 	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}
 end
 

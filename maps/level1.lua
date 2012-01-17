@@ -1,5 +1,5 @@
-p1start = {8*16, 3*8}
-p2start = {9*16, 21*8}
+p1start = {8, 3}
+p2start = {9, 21}
 
 -- Doors
 table.insert(entities[5],Door.create(6,5,"left"))
