@@ -26,7 +26,7 @@ function love.load()
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	loadMapFromImage("level1")
+	loadMapFromImage("home")
 
 	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
 	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
@@ -34,7 +34,6 @@ function love.load()
 	gamestate = STATE_INGAME
 
 	alarmtime = 0
-	time = 0
 	fow = true
 
 	messages = {}
@@ -46,8 +45,8 @@ function love.load()
 end
 
 function love.update(dt)
+	-- STATE_INGAME
 	if gamestate == STATE_INGAME then
-		time = time + dt
 		if alarmtime > 0 then alarmtime = alarmtime - dt end
 		if messagefade > 0 then messagefade = messagefade - dt end
 
@@ -60,6 +59,14 @@ function love.update(dt)
 		for i=1,#cameras do
 			cameras[i]:update(dt)
 		end
+		for iy=0,MAPH-1 do
+			for i=1,#entities[iy] do
+				if entities[iy][i].realtime then
+					entities[iy][i]:update(dt)
+				end
+			end
+		end
+	-- STATE_SKINS - SKIN SELECTION SCREEN
 	elseif gamestate == STATE_SKINS then
 		if skinsel[1].confirmed == true and skinsel[2].confirmed == true then
 			gamestate = STATE_INGAME

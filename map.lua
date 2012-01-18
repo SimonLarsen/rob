@@ -28,15 +28,6 @@ function loadMapFromImage(name)
 				map[ix][iy] = TILE_TILEFLOOR
 			elseif r == 255 and g == 255 and b == 0 then -- wooden floor
 				map[ix][iy] = TILE_WOODFLOOR
-			-- MISC
-			elseif r == 0 and g == 0 and b == 255 then	-- door
-				map[ix][iy] = TILE_DOOR
-				if map[ix-1][iy] == TILE_WALL then
-					table.insert(entities[iy],Door.create(ix,iy,0))
-				else
-					table.insert(entities[iy],Door.create(ix,iy,1))
-				end
-
 			elseif r == 255 and g == 255 and b == 255 then -- wall
 				map[ix][iy] = TILE_WALL
 			elseif r == 255 and g == 128 and b == 0 then -- crate
@@ -84,6 +75,7 @@ local consts = {
 	television = Television.create,
 	plant = Plant.create,
 	watercooler = Watercooler.create,
+	-- Table decorations
 	sink = function(x,y) return TableDecor.create(x,y,0) end,
 	typewriter = function(x,y) return TableDecor.create(x,y,1) end,
 	chair = function(x,y) return TableDecor.create(x,y,2) end,
@@ -97,4 +89,5 @@ local consts = {
 function add(t,x,y,...)
 	local e = consts[t](x,y,...)
 	table.insert(entities[y],e)
+	return e
 end

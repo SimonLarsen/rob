@@ -239,3 +239,35 @@ end
 function Telephone:action()
 	addMessage("TODO Add telephone menu stuff")
 end
+
+PressurePlate = { solid = false, realtime = true, interactive = false }
+PressurePlate.__index = PressurePlate
+setmetatable(PressurePlate,Entity)
+
+function PressurePlate.create(x,y,objs)
+	local self = Entity.create(x,y)
+	setmetatable(self,PressurePlate)
+	self.objs = objs -- list of objects to update
+	self.state = false
+	return self
+end
+
+function PressurePlate:draw()
+	if self.state == false then
+		love.graphics.drawq(imgTiles,quadPressurePlateUp,self.x*CELLW+3,self.y*CELLH)
+	else
+		love.graphics.drawq(imgTiles,quadPressurePlateDown,self.x*CELLW+3,self.y*CELLH)
+	end
+end
+
+function PressurePlate:update(dt)
+	local nstate = pl1:collideBox({x=self.x*CELLW+8,y=self.y*CELLH+4,w=1,h=1}) or
+	pl2:collideBox({x=self.x*CELLW+8,y=self.y*CELLH+4,w=1,h=1})
+
+	if nstate ~= self.state then
+		self.state = nstate
+		for i=1,#self.objs do
+			self.objs[i]:action()
+		end
+	end
+end

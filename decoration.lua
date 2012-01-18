@@ -126,7 +126,7 @@ function Shower:getCollisionBox()
 	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
 end
 
-Television = { actiontype = 2, solid = true, interactive = true }
+Television = { actiontype = 2, solid = true, interactive = true, realtime = true }
 Television.__index = Television
 setmetatable(Television,Entity)
 
@@ -134,6 +134,7 @@ function Television.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Television)
 	self.on = false
+	self.frame = 0
 	return self
 end
 
@@ -141,9 +142,13 @@ function Television:action()
 	self.on = not self.on
 end
 
+function Television:update(dt)
+	self.frame = (self.frame + dt*10)%7
+end
+
 function Television:draw()
 	if self.on then
-		love.graphics.drawq(imgTiles,quadTVFrames[1+math.floor(time*10%7)],self.x*CELLW+3, self.y*CELLH-5)
+		love.graphics.drawq(imgTiles,quadTVFrames[1+math.floor(self.frame)],self.x*CELLW+3, self.y*CELLH-5)
 	else
 		love.graphics.drawq(imgTiles,quadTVFrames[0],self.x*CELLW+3, self.y*CELLH-5)
 	end
