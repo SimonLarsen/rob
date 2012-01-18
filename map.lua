@@ -61,66 +61,40 @@ function loadMapFromImage(name)
 end
 
 -- Map helper functions
-add = {}
-function add.e(y,ent)
-	table.insert(entities[y],ent)
-end
-function add.door(x,y,dir,lock)
-	add.e(y,Door.create(x,y,dir,lock))
-end
+local consts = {
+	-- Special entities
+	door = Door.create,
+	closet = Closet.create,
+	recordplayer = RecordPlayer.create,
+	telephone = Telephone.create,
+	vent = Vent.create,
+	-- Containers
+	toilet = Toilet.create,
+	fridge = Fridge.create,
+	cabinet = Cabinet.create,
+	locker = Locker.create,
+	safe = Safe.create,
+	-- Furniture
+	sofa = Sofa.create,
+	bed = Bed.create,
+	-- Decoration
+	painting = Painting.create,
+	shower = Shower.create,
+	entrance = Entrance.create,
+	television = Television.create,
+	plant = Plant.create,
+	watercooler = Watercooler.create,
+	sink = function(x,y) return TableDecor.create(x,y,0) end,
+	typewriter = function(x,y) return TableDecor.create(x,y,1) end,
+	chair = function(x,y) return TableDecor.create(x,y,2) end,
+	desktelephone = function(x,y) return TableDecor.create(x,y,3) end,
+	book = function(x,y) return TableDecor.create(x,y,4) end,
+	desklamp = function(x,y) return TableDecor.create(x,y,5) end,
+	chairfront = function(x,y) return TableDecor.create(x,y,6) end,
+	oven = function(x,y) return TableDecor.create(x,y,7) end,
+}
 
--- Entities
-function add.vent(x,y,dir,id,dest)
-	add.e(y,Vent.create(x,y,dir,id,dest))
-end
-function add.telephone(x,y)
-	add.e(y,Telephone.create(x,y))
-end
-function add.closet(x,y)
-	add.e(y,Closet.create(x,y))
-end
-function add.recordplayer(x,y)
-	add.e(y,RecordPlayer.create(x,y))
-end
-
--- Containers
-function add.cabinet(x,y,storage)
-	add.e(y,Cabinet.create(x,y,storage))
-end
-function add.locker(x,y,storage)
-	add.e(y,Locker.create(x,y,storage))
-end
-function add.fridge(x,y,storage)
-	add.e(y,Fridge.create(x,y,storage))
-end
-function add.toilet(x,y,storage)
-	add.e(y,Toilet.create(x,y,storage))
-end
-
--- Table decors
-function add.sink(x,y)
-	add.e(y,TableDecor.create(x,y,0))
-end
-function add.oven(x,y)
-	add.e(y,TableDecor.create(x,y,7))
-end
-
--- Decoration stuff
-function add.painting(x,y,id)
-	add.e(y,Painting.create(x,y,id))
-end
-function add.entrance(x,y)
-	add.e(y,Entrance.create(x,y))
-end
-function add.sofa(x,y,dir)
-	add.e(y,Sofa.create(x,y,dir))
-end
-function add.television(x,y)
-	add.e(y,Television.create(x,y))
-end
-function add.bed(x,y)
-	add.e(y,Bed.create(x,y))
-end
-function add.shower(x,y)
-	add.e(y,Shower.create(x,y))
+function add(t,x,y,...)
+	local e = consts[t](x,y,...)
+	table.insert(entities[y],e)
 end

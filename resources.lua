@@ -25,7 +25,7 @@ function loadImages()
 
 	sansFontImage = lg.newImage("res/font-white-big.png")
 	sansFontImage:setFilter("nearest","nearest")
-	font = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
+	font = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$%")
 
 	serifFontImage = lg.newImage("res/font-serif.png")
 	serifFontImage:setFilter("nearest","nearest")

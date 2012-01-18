@@ -215,7 +215,7 @@ function RecordPlayer:getActionBox()
 end
 
 function RecordPlayer:action()
-	addMessage("TODO Skip song")
+	addMessage("% TODO Skip song %")
 end
 
 Telephone = { actiontype = 2, solid = true, interactive = true }
