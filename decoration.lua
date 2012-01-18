@@ -90,6 +90,24 @@ function Sofa:getCollisionBox()
 	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
 end
 
+BossDesk = { solid = true, interactive = false }
+BossDesk.__index = BossDesk
+setmetatable(BossDesk,Entity)
+
+function BossDesk.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,BossDesk)
+	return self
+end
+
+function BossDesk:draw()
+	love.graphics.drawq(imgTiles,quadBossDesk,self.x*CELLW,self.y*CELLH-13)
+end
+
+function BossDesk:getCollisionBox()
+	return {x = self.x*CELLW, y = self.y*CELLH+3, w = 3*CELLW, h = 13}
+end
+
 Bed = { solid = true, interactive = false }
 Bed.__index = Bed
 setmetatable(Bed,Entity)

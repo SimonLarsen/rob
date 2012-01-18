@@ -123,3 +123,82 @@ function Robot:canSee(x0,y0,x1,y1,pl)
 	end
 	return true
 end
+
+RotatingRobot = {}
+RotatingRobot.__index = RotatingRobot
+setmetatable(RotatingRobot,Robot)
+
+function RotatingRobot.create(points)
+	local self = Robot.create(points)
+	setmetatable(self,RotatingRobot)
+	self.rot = 0
+	return self
+end
+
+function RotatingRobot:update(dt)
+	self.frame = (self.frame+dt*4)%4
+	self.rot = (self.rot + dt)%8
+
+	local toMove = dt*ROBOT_SPEED
+	local newDir = false
+	if toMove > self.dist then
+		toMove = self.dist
+		newDir = true
+	end
+
+	if self.dir == 0 then
+		self.x = self.x + toMove
+	elseif self.dir == 1 then
+		self.y = self.y - toMove
+	elseif self.dir == 2 then
+		self.x = self.x - toMove
+	elseif self.dir == 3 then
+		self.y = self.y + toMove
+	end
+	self.dist = self.dist - toMove
+
+	if newDir then
+		self.point = (self.point % #self.points) + 1
+		self:getDir()
+	end
+
+	if self:canSeePlayer(pl1) or self:canSeePlayer(pl2) then
+		alarm()
+	end
+end
+
+function RotatingRobot:canSeePlayer(pl)
+	local toplx = pl.x - self.x
+	local toply = pl.y - self.y
+
+	if math.pow(toplx,2)+math.pow(toply,2) > 64*64 then return false end
+
+	local fromx, fromy = mymath.dirToVector(math.floor(self.rot)%4)
+	local angle = mymath.angle(toplx,toply,fromx,fromy)
+
+	if angle > 0.3 or angle < -0.3 then
+		return false
+	end
+
+	return self:canSee(math.floor(self.x/CELLW),math.floor(self.y/CELLH),
+		math.floor(pl.x/CELLW), math.floor(pl.y/CELLH),pl)
+end
+
+function RotatingRobot:draw()
+	-- Draw body
+	if self.dir == 0 then
+		love.graphics.drawq(imgSprites,quadRotRobotBody[8+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
+	elseif self.dir == 1 then
+		love.graphics.drawq(imgSprites,quadRotRobotBody[4+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
+	elseif self.dir == 2 then
+		love.graphics.drawq(imgSprites,quadRotRobotBody[8+math.floor(self.frame)],self.x,self.y,0,-1,1,5.5,13)
+	elseif self.dir == 3 then
+		love.graphics.drawq(imgSprites,quadRotRobotBody[math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
+	end
+	-- Draw rotating head
+	if self.rot % 1 < 0.9 then
+		love.graphics.drawq(imgSprites,quadRotRobotHead[2*math.floor(self.rot)],self.x,self.y,0,1,1,7.5,36)
+	else
+		love.graphics.drawq(imgSprites,quadRotRobotHead[2*math.floor(self.rot)+1],self.x,self.y,0,1,1,7.5,36)
+	end
+end

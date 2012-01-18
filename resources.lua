@@ -70,6 +70,14 @@ function createQuads()
 	for i=0,11 do
 		quadRobot[i] = lg.newQuad(i*16,0,11,32,sprw,sprh)
 	end
+	quadRotRobotBody = {}
+	for i=0,11 do
+		quadRotRobotBody[i] = lg.newQuad(i*16,48,11,14,sprw,sprh)
+	end
+	quadRotRobotHead = {}
+	for i=0,15 do
+		quadRotRobotHead[i] = lg.newQuad(i*16,73,15,23,sprw,sprh)
+	end
 
 	-- entity quads
 	quadDoorOpen     = lg.newQuad(44,132,4,28,tilew,tileh)
@@ -96,6 +104,7 @@ function createQuads()
 	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)
 	quadEntrance     = lg.newQuad(160,88,34,40,tilew,tileh)
 	quadTelephone    = lg.newQuad(160,156,10,12,tilew,tileh)
+	quadBossDesk     = lg.newQuad(80,19,48,29,tilew,tileh)
 	quadPressurePlateUp = lg.newQuad(176,160,10,7,tilew,tileh)
 	quadPressurePlateDown = lg.newQuad(176,167,10,7,tilew,tileh)
 	quadTable = {}
@@ -141,4 +150,12 @@ function createQuads()
 	quadSkinJamal  = lg.newQuad(0,0,128,256,256,256)
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
+end
+
+local lastswear = -1
+function getSwearword()
+	local w = lastswear
+	while w == lastswear do w = math.random(1,#swearwords) end
+	lastswear = w
+	return swearwords[w]
 end

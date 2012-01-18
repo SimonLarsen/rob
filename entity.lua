@@ -85,7 +85,7 @@ function Door:getActionBox()
 end
 
 function Door:action(force)
-	if self.open == true then
+	if self.open == true and (self.lock == 0 or force == true) then
 		self.open = false
 		map[self.x][self.y] = TILE_DOOR
 		self:movePlayer(pl1)

@@ -69,6 +69,7 @@ local consts = {
 	-- Furniture
 	sofa = Sofa.create,
 	bed = Bed.create,
+	bossdesk = BossDesk.create,
 	-- Decoration
 	painting = Painting.create,
 	shower = Shower.create,

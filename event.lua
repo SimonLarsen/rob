@@ -29,7 +29,7 @@ function love.keypressed(k,uni)
 
 	if gamestate == STATE_INGAME then
 		if k == 'm' then
-			addMessage(swearwords[math.random(1,#swearwords)].."!")
+			addMessage(getSwearword() .. "!")
 		elseif k == 'f1' then
 			fow = not fow
 		else
