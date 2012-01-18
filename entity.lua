@@ -84,14 +84,14 @@ function Door:getActionBox()
 	return {x = self.x*CELLW-3, y = self.y*CELLH-3, w = CELLW+6, h = CELLH+6}
 end
 
-function Door:action()
+function Door:action(force)
 	if self.open == true then
 		self.open = false
 		map[self.x][self.y] = TILE_DOOR
 		self:movePlayer(pl1)
 		self:movePlayer(pl2)
 	elseif self.open == false then
-		if self.lock == 0 then
+		if self.lock == 0 or force == true then
 			self.open = true
 			map[self.x][self.y] = TILE_DARKFLOOR
 		elseif keys[self.lock] then
@@ -267,7 +267,11 @@ function PressurePlate:update(dt)
 	if nstate ~= self.state then
 		self.state = nstate
 		for i=1,#self.objs do
-			self.objs[i]:action()
+			if type(self.objs[i]) == "table" then
+				self.objs[i]:action(true)
+			elseif type(self.objs[i]) == "function" then
+				self.objs[i](self.state)
+			end
 		end
 	end
 end

@@ -1,4 +1,4 @@
-swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit"}
+swearwords = {"Poppycock", "Whippersnapper", "Scallywag", "Wallydrag", "Mollygrub", "Tattlebasket", "Nincompoop", "Flimflammery", "Ragamuffin", "Dagnabbit", "Bugger"}
 
 skins = {"default", "naked", "blackmetal"}
 
@@ -25,12 +25,12 @@ function loadImages()
 
 	sansFontImage = lg.newImage("res/font-white-big.png")
 	sansFontImage:setFilter("nearest","nearest")
-	font = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$%")
+	sansFont = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$%")
 
 	serifFontImage = lg.newImage("res/font-serif.png")
 	serifFontImage:setFilter("nearest","nearest")
 	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
-	lg.setFont(font)
+	lg.setFont(sansFont)
 end
 
 function createQuads()

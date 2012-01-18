@@ -157,7 +157,7 @@ function drawIngame()
 end
 
 function drawMessages()
-	lg.setFont(font)
+	lg.setFont(sansFont)
 	-- draw messages
 	for i=0,NUM_MESSAGES-1 do
 		if messages[i] ~= nil then

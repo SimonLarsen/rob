@@ -59,6 +59,7 @@ local consts = {
 	recordplayer = RecordPlayer.create,
 	telephone = Telephone.create,
 	vent = Vent.create,
+	pressureplate = PressurePlate.create,
 	-- Containers
 	toilet = Toilet.create,
 	fridge = Fridge.create,
