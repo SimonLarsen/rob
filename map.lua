@@ -72,6 +72,8 @@ local consts = {
 	bossdesk = BossDesk.create,
 	-- Decoration
 	painting = Painting.create,
+	projector = Projector.create,
+	projectorimage = ProjectorImage.create,
 	shower = Shower.create,
 	entrance = Entrance.create,
 	television = Television.create,

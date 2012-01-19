@@ -26,7 +26,7 @@ function love.load()
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	loadMapFromImage("test")
+	loadMapFromImage("home")
 
 	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
 	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)

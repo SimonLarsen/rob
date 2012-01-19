@@ -113,6 +113,11 @@ function createQuads()
 	quadKitchenTableLined = lg.newQuad(80,128,8,24,tilew,tileh)
 	quadKitchenTableNoLine = lg.newQuad(88,128,8,24,tilew,tileh)
 	quadTelevision  = lg.newQuad(80,156,16,20,tilew,tileh)
+	quadProjectorImage = {}
+	for i=0,2 do
+		quadProjectorImage[i] = lg.newQuad(i*27,237,27,19,tilew,tileh)
+	end
+	quadProjector    = lg.newQuad(160,48,12,20,tilew,tileh)
 
 	quadTVFrames = {}
 	quadTVFrames[0] = lg.newQuad(96,163,6,5,tilew,tileh)

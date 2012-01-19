@@ -189,3 +189,50 @@ end
 function Entrance:draw()
 	love.graphics.drawq(imgTiles,quadEntrance,self.x*CELLW-1,self.y*CELLW-40)
 end
+
+Projector = { actiontype = 2, solid = true, interactive = true }
+Projector.__index = Projector
+setmetatable(Projector,Entity)
+
+function Projector.create(x,y)
+	local self = Entity.create(x,y)
+	setmetatable(self,Projector)
+	for iy = y,0,-1 do
+		if map[x][iy] >= 10 then
+			self.image = add("projectorimage",x,iy)
+			break
+		end
+	end
+	return self
+end
+
+function Projector:draw()
+	love.graphics.drawq(imgTiles,quadProjector,self.x*CELLW+1,self.y*CELLH-14)
+end
+
+function Projector:getCollisionBox()
+	return {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
+end
+
+function Projector:action()
+	self.image:switch()
+end
+
+ProjectorImage = { solid = false, interactive = false }
+ProjectorImage.__index = ProjectorImage
+setmetatable(ProjectorImage,Entity)
+
+function ProjectorImage.create(x,y)
+	local self = Entity.create(x,y)
+	self.image = 0
+	setmetatable(self,ProjectorImage)
+	return self
+end
+
+function ProjectorImage:draw()
+	love.graphics.drawq(imgTiles,quadProjectorImage[self.image],self.x*CELLW-7,self.y*CELLH-14)
+end
+
+function ProjectorImage:switch()
+	self.image = (self.image+1)%3
+end

@@ -9,7 +9,7 @@ add("telephone",8,1)
 add("door",4,4,"left")
 add("door",9,4,"right")
 add("door",7,6,"vert")
-add("door",10,10,"right",1337)
+add("door",10,10,"right")
 
 -- Furniture
 add("sofa",2,11,"back")
@@ -28,3 +28,5 @@ add("oven",13,7)
 -- Misc. decorations
 add("painting",9,7,5) -- clock
 add("painting",11,1,6) -- bathroom mirror
+add("projector",5,11)
+-- add("projectorimage",5,7)
