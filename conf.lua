@@ -1,6 +1,6 @@
 function love.conf(t)
     t.title = "Herbie and Jamal's Super Rob You Now Adventures"
-    t.author = "Tricat and Algorilla"
+    t.author = "We need a name"
     t.identity = "herbieandjamal"
     t.version = 0.72
     t.console = false

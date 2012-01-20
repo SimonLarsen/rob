@@ -4,6 +4,12 @@ skins = {"default", "naked", "blackmetal"}
 
 local lg = love.graphics
 
+function loadResources()
+	createMaplist()
+	loadImages()
+	createQuads()
+end
+
 function loadImages()
 	imgTiles = 	lg.newImage("res/tiles.png")
 	imgTiles:setFilter("nearest","nearest")
@@ -31,6 +37,8 @@ function loadImages()
 	serifFontImage:setFilter("nearest","nearest")
 	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
 	lg.setFont(sansFont)
+
+	print("Images loaded...")
 end
 
 function createQuads()
@@ -54,7 +62,7 @@ function createQuads()
 		quadHerbie[i] = lg.newQuad(i*16,0,14,21,sprw,sprh)
 		quadJamal[i] = lg.newQuad(80+i*16,0,11,27,sprw,sprh)
 	end
-	-- vent animations
+	-- Jamal vent animations
 	quadJamalIntoVentSide = {}
 	quadJamalIntoVentFront = {}
 	quadJamalOutVentSide = {}
@@ -64,6 +72,15 @@ function createQuads()
 		quadJamalOutVentSide[i] = lg.newQuad(128+i*16,32,16,27,sprw,sprh)
 		quadJamalOutVentFront[i] = lg.newQuad(128+i*16,64,16,30,sprw,sprh)
 		quadJamalIntoVentFront[i] = lg.newQuad(i*16,64,16,30,sprw,sprh)
+	end
+	-- Herbie roll animations
+	quadHerbieRollSide = {}
+	quadHerbieRollFront = {}
+	quadHerbieRollBack = {}
+	for i=0,11 do
+		quadHerbieRollSide[i] = lg.newQuad(i*15,96,15,20,sprw,sprh)
+		quadHerbieRollFront[i] = lg.newQuad(i*14,128,14,20,sprw,sprh)
+		quadHerbieRollBack[i] = lg.newQuad(i*14,160,14,20,sprw,sprh)
 	end
 	-- robot
 	quadRobot = {}
@@ -82,6 +99,7 @@ function createQuads()
 	-- entity quads
 	quadDoorOpen     = lg.newQuad(44,132,4,28,tilew,tileh)
 	quadDoorClosed   = lg.newQuad(16,128,16,32,tilew,tileh)
+	quadDoorGradient = lg.newQuad(33,168,3,8,tilew,tileh)
 	quadSafeClosed   = lg.newQuad(48,128,16,24,tilew,tileh)
 	quadSafeOpen     = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet      = lg.newQuad(0,48,32,24,tilew,tileh)
@@ -94,7 +112,8 @@ function createQuads()
 	quadWatercooler  = lg.newQuad(48,152,11,24,tilew,tileh)
 	quadCrate        = lg.newQuad( 0, 16,16,24,tilew,tileh)
 	quadVentFront    = lg.newQuad(32,160,16, 8,tilew,tileh)
-	quadVentSide     = lg.newQuad(32,168,16, 8,tilew,tileh)
+	--quadVentSide     = lg.newQuad(32,168,16, 8,tilew,tileh)
+	quadVentSide     = lg.newQuad(32,169,7,6,tilew,tileh)
 	quadSofaFront    = lg.newQuad(128,128,32,19,tilew,tileh)
 	quadSofaBack     = lg.newQuad(128,147,32,17,tilew,tileh)
 	quadBed          = lg.newQuad(160,128,32,25,tilew,tileh)
@@ -155,6 +174,8 @@ function createQuads()
 	quadSkinJamal  = lg.newQuad(0,0,128,256,256,256)
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
+
+	print("Quads created...")
 end
 
 local lastswear = -1

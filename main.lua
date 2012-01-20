@@ -13,21 +13,30 @@ require("entity")
 	require("container")
 require("map")
 
-function love.load()
+function love.load(arg)
 	math.randomseed(os.time())
 	love.graphics.setMode(WIDTH,HEIGHT,false)
 
 	love.graphics.setBackgroundColor(0,0,0)
 	love.graphics.setLineWidth(SCALE)
-	loadImages()
-	createQuads()
+
+	loadResources()
 
 	fbw = math.pow(2,math.ceil(math.log(WIDTH)/math.log(2)))
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
-	loadMapFromImage("home")
+	if arg[2] then loadMap(arg[2])
+	else loadMap("home") end
 
+	messages = {}
+	messagecolor = {}
+	messagefade = 0
+	hasSkin = {true, true, false}
+	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}
+end
+
+function restartLevel()
 	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
 	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
 
@@ -36,12 +45,7 @@ function love.load()
 	alarmtime = 0
 	fow = true
 
-	messages = {}
-	messagecolor = {}
-	messagefade = 0
 	keys = {}
-	hasSkin = {true, true, false}
-	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}
 end
 
 function love.update(dt)

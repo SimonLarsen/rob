@@ -1,0 +1,16 @@
+20/01/12
+* Gave Herbie ability to roll by pressing the action button when no other action is available.
+	Bad idea? Should each play have another button?
+* Added gradient to horizontal doors for easier alignment
+* Adjusts zoom level upon loading level in case the game runs in a huge resolution
+* Containers now contains a function rather than a string.
+	The "open" argument tells whether the container was opened or closed.
+	If the function returns true it will be called again. Otherwise the function will be removed from the container. Example:
+	local function toiletfunc(open)
+		if open == true then addMessage("You opened the toilet!") return true
+		else addMessage("You closed the toilet!") end
+	end
+	add("toilet", 1, 1, toiletfunc)
+* If a string is given as the first argument it will load that level instead of the apartment.
+	Example: "love rob.love test" will load test.png and test.lua
+* Pressing action at the telephone will load the level "test" for those who might want to play around with it.

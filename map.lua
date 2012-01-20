@@ -1,8 +1,28 @@
-function loadMapFromImage(name)
+function createMaplist()
+	maplist = {}
+	local files = love.filesystem.enumerate("maps/")
+	for i,v in ipairs(files) do
+		local a,b,name = string.find(v,"(.*).lua")
+		if name ~= nil then
+			table.insert(maplist,name)
+		end
+	end
+	print("Found " .. #maplist .." maps:")
+	for i,v in ipairs(maplist) do
+		print("- " .. v)
+	end
+end
+
+function loadMap(name)
 	-- get map dimensions
 	local mapData = love.image.newImageData("maps/"..name..".png")
 	MAPW = mapData:getWidth()
 	MAPH = mapData:getHeight()
+	if MAPW*CELLW*4 <= WIDTH and MAPH*CELLH*4 <= HEIGHT then
+		SCALE = 4
+	else
+		SCALE = 2
+	end
 
 	-- clear entities and objects
 	entities = {}
@@ -49,6 +69,9 @@ function loadMapFromImage(name)
 	-- load entities and objects
 	local conf = love.filesystem.load("maps/"..name..".lua")
 	conf()
+
+	restartLevel()
+	print("Loaded map \""..name.."\"...")
 end
 
 -- Map helper functions
@@ -94,4 +117,22 @@ function add(t,x,y,...)
 	local e = consts[t](x,y,...)
 	table.insert(entities[y],e)
 	return e
+end
+
+function addRobot(points)
+	local rob = Robot.create(points)
+	table.insert(robots,rob)
+	return rob
+end
+
+function addRotatingRobot(points)
+	local rob = RotatingRobot.create(points)
+	table.insert(robots,rob)
+	return rob
+end
+
+function addCamera(...)
+	local cam = Camera.create(...)
+	table.insert(cameras,cam)
+	return cam
 end

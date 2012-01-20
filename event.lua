@@ -17,8 +17,6 @@ function love.keypressed(k,uni)
 		SCALE = 2
 	elseif k == '4' then
 		SCALE = 4
-	elseif k == 'f5' then
-		gamestate = STATE_INGAME
 	elseif k == 'f6' then
 		openSkinSelection()
 	elseif k == "tab" then

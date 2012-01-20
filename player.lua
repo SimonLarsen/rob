@@ -14,13 +14,14 @@ function Player.create(x,y,player)
 	self.xdir = 1 -- 1 = right, -1 = left
 	self.frame = 0
 	self.moving = false
-	self.skin = 1
+	self.skin = 2
 	self.player = player
 	self.actiontype = 0 -- indicates type of action to perform if any (0 for one)
 	self.state = 0
 	-- 0 = walking
-	-- 1 = crawling into vent
-	-- 2 = crawling out of vent
+	-- 1 = crawling into vent (only Jamal)
+	-- 2 = crawling out of vent (only Jamal)
+	-- 3 = rolling (only Herbie)
 	return self
 end
 

@@ -2,9 +2,6 @@ WIDTH = 800
 HEIGHT = 600
 SCALE = 2
 
-MAPW = 24
-MAPH = 32
-
 CELLW = 16
 CELLH = 8
 

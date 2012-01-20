@@ -51,18 +51,22 @@ function Door:draw()
 		else
 			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
 		end
-	elseif self.dir == 0 then
-		if self.open then
-			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
-		else
-			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21)
+	else
+		if self.dir == 0 then
+			if self.open then
+				love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else
+				love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21)
+			end
+		elseif self.dir == 2 then
+			if self.open then
+				love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else
+				love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1)
+			end
 		end
-	elseif self.dir == 2 then
-		if self.open then
-			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
-		else
-			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1)
-		end
+		love.graphics.drawq(imgTiles,quadDoorGradient,self.x*CELLW-3,self.y*CELLH,0,-1,1,3)
+		love.graphics.drawq(imgTiles,quadDoorGradient,(self.x+1)*CELLW,self.y*CELLH)
 	end
 end
 
@@ -141,9 +145,9 @@ function Vent:draw()
 	if self.dir == 1 then
 		love.graphics.drawq(imgTiles,quadVentFront,self.x*CELLW,(self.y-1)*CELLH)
 	elseif self.dir == 2 then
-		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,1,1)
+		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH+1,0,1,1)
 	elseif self.dir == 0 then
-		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH,0,-1,1,16)
+		love.graphics.drawq(imgTiles,quadVentSide,self.x*CELLW,self.y*CELLH+1,0,-1,1,16)
 	end
 end
 
@@ -237,7 +241,7 @@ function Telephone:getCollisionBox()
 end
 
 function Telephone:action()
-	addMessage("TODO Add telephone menu stuff")
+	loadMap("test")
 end
 
 PressurePlate = { solid = false, realtime = true, interactive = false }
