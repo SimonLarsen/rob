@@ -12,6 +12,7 @@ require("entity")
 	require("decoration")
 	require("container")
 require("map")
+require("menu")
 
 function love.load(arg)
 	math.randomseed(os.time())
@@ -34,18 +35,6 @@ function love.load(arg)
 	messagefade = 0
 	hasSkin = {true, true, false}
 	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}
-end
-
-function restartLevel()
-	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
-	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
-
-	gamestate = STATE_INGAME
-
-	alarmtime = 0
-	fow = true
-
-	keys = {}
 end
 
 function love.update(dt)

@@ -1,4 +1,4 @@
-20/01/12
+[ 20/01/12 ]
 * Gave Herbie ability to roll by pressing the action button when no other action is available.
 	Bad idea? Should each play have another button?
 * Added gradient to horizontal doors for easier alignment
@@ -14,3 +14,8 @@
 * If a string is given as the first argument it will load that level instead of the apartment.
 	Example: "love rob.love test" will load test.png and test.lua
 * Pressing action at the telephone will load the level "test" for those who might want to play around with it.
+
+[ 22/01/12 ]
+* Added menu system
+* Fixed annoying bug where standing in certain places would produce artifacts on walls.
+  Was caused by a floating point error when using love.graphics.translate()

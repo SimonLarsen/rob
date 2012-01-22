@@ -53,7 +53,7 @@ function Robot:canSeePlayer(pl)
 	local toplx = pl.x - self.x
 	local toply = pl.y - self.y
 
-	if math.pow(toplx,2)+math.pow(toply,2) > 64*64 then return false end
+	if math.pow(toplx,2)+math.pow(toply,2) > 128*128 then return false end
 
 	local fromx, fromy = mymath.dirToVector(self.dir)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
@@ -171,7 +171,7 @@ function RotatingRobot:canSeePlayer(pl)
 	local toplx = pl.x - self.x
 	local toply = pl.y - self.y
 
-	if math.pow(toplx,2)+math.pow(toply,2) > 64*64 then return false end
+	if math.pow(toplx,2)+math.pow(toply,2) > 128*128 then return false end
 
 	local fromx, fromy = mymath.dirToVector(math.floor(self.rot)%4)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)

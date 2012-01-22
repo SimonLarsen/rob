@@ -35,7 +35,7 @@ function loadImages()
 
 	serifFontImage = lg.newImage("res/font-serif.png")
 	serifFontImage:setFilter("nearest","nearest")
-	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$")
+	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$\"")
 	lg.setFont(sansFont)
 
 	print("Images loaded...")
@@ -170,10 +170,11 @@ function createQuads()
 		quadAction[i] = lg.newQuad((i-1)*16,32,9,9,sprw,sprh)
 	end
 
-	-- big skin previews
+	-- big skin previews and menu stuff
 	quadSkinJamal  = lg.newQuad(0,0,128,256,256,256)
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
+	quadMarker     = lg.newQuad(206,32,50,20,sprw,sprh)
 
 	print("Quads created...")
 end

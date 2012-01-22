@@ -3,9 +3,25 @@ local lg = love.graphics
 function love.draw()
 	if gamestate == STATE_INGAME then
 		drawIngame()
+	elseif gamestate == STATE_INGAME_MENU then
+		drawIngame()
+		current_menu:draw()
 	elseif gamestate == STATE_SKINS then
 		drawIngame()
 		drawSkinSelection()
+	end
+end
+
+function drawTitle(str,lines)
+	lg.push()
+	lg.scale(2)
+	lg.setFont(serifFont)
+	lg.printf(str,0,20,WIDTH/2,"center")
+	lg.pop()
+	if lines then
+		local strw = serifFont:getWidth(str) + 25
+		lg.rectangle("fill",WIDTH/2-strw-4,32,2*strw,2)
+		lg.rectangle("fill",WIDTH/2-strw-4,78,2*strw,2)
 	end
 end
 
@@ -13,14 +29,8 @@ function drawSkinSelection()
 	lg.setColor(0,0,0,247)
 	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
 	lg.setColor(255,255,255,255)
-	-- draw title
-	lg.push()
-	lg.scale(2)
-	lg.setFont(serifFont)
-	lg.printf("Select your attire, gentlemen",0,20,WIDTH/2,"center")
-	lg.pop()
-	lg.rectangle("fill",WIDTH/2-250,32,500,2)
-	lg.rectangle("fill",WIDTH/2-250,78,500,2)
+
+	drawTitle("Select your attire, gentlemen", true)
 	
 	-- player 1
 	if skinsel[1].confirmed == true then lg.setColor(255,255,255,108) end
@@ -57,8 +67,9 @@ end
 function drawIngame()
 	lg.push()
 
-	local cx = (pl1.x+pl2.x)/2
-	local cy = (pl1.y+pl2.y)/2
+	-- Round off some decimal to, hopefully remove artifacts
+	local cx = math.floor((pl1.x+pl2.x)*500)/1000
+	local cy = math.floor((pl1.y+pl2.y)*500)/1000
 
 	-- Clear light framebuffer
 	lg.setRenderTarget(fb)

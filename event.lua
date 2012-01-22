@@ -1,22 +1,14 @@
-function alarm()
-	if alarmtime <= 0 then
-		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
-		alarmtime = 4.2
-		return true
-	else
-		return false
-	end
-end
-
 function love.keypressed(k,uni)
-	if k == 'escape' then
-		love.event.push('q')
-	elseif k == '1' then
+	if k == '1' then
 		SCALE = 1
 	elseif k == '2' then
 		SCALE = 2
+	elseif k == '3' then
+		SCALE = 3
 	elseif k == '4' then
 		SCALE = 4
+	elseif k == 'f5' then
+		gamestate = STATE_INGAME
 	elseif k == 'f6' then
 		openSkinSelection()
 	elseif k == "tab" then
@@ -25,15 +17,23 @@ function love.keypressed(k,uni)
 		keybinds[2] = tmp1
 	end
 
+	-- STATE_INGAME
 	if gamestate == STATE_INGAME then
 		if k == 'm' then
 			addMessage(getSwearword() .. "!")
 		elseif k == 'f1' then
 			fow = not fow
+		elseif k == 'escape' then
+			current_menu = ingame_menu
+			gamestate = STATE_INGAME_MENU
 		else
 			pl1:keypressed(k)
 			pl2:keypressed(k)
 		end
+	-- STATE INGAME MENU
+	elseif gamestate == STATE_INGAME_MENU then
+		current_menu:keypressed(k,uni)
+	-- STATE SKIN SELECTION MENU
 	elseif gamestate == STATE_SKINS then
 		if k == keybinds[1][3] then
 			selectSkin(pl1,-1)
@@ -41,7 +41,6 @@ function love.keypressed(k,uni)
 			selectSkin(pl1,1)
 		elseif k == keybinds[1][5] then
 			skinsel[1].confirmed = not skinsel[1].confirmed
-
 		elseif k == keybinds[2][3] then
 			selectSkin(pl2,-1)
 		elseif k == keybinds[2][4] then
@@ -49,6 +48,16 @@ function love.keypressed(k,uni)
 		elseif k == keybinds[2][5] then
 			skinsel[2].confirmed = not skinsel[2].confirmed
 		end
+	end
+end
+
+function alarm()
+	if alarmtime <= 0 then
+		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
+		alarmtime = 4.2
+		return true
+	else
+		return false
 	end
 end
 
@@ -99,4 +108,16 @@ function openSkinSelection()
 	gamestate = STATE_SKINS
 	skinsel[1].confirmed, skinsel[2].confirmed = false, false
 	skinsel[1].scroll, skinsel[2].scroll = 0, 0
+end
+
+function restartLevel()
+	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
+	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
+
+	gamestate = STATE_INGAME
+
+	alarmtime = 0
+	fow = true
+
+	keys = {}
 end

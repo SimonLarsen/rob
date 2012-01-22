@@ -47,14 +47,12 @@ function Herbie:draw()
 		end
 	elseif self.state == 3 then
 		local fr = math.floor(self.rolltime*16)
-		if self.rolldir == 0 then -- right
-			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollSide[fr],self.x,self.y,0,1,1,7.5,19)
-		elseif self.rolldir == 1 then -- up
-			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollBack[fr],self.x,self.y,0,1,1,7,19)
-		elseif self.rolldir == 2 then --left
-			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollSide[fr],self.x,self.y,0,-1,1,7.5,19)
+		if self.rolldir == 1 then -- up
+			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollBack[fr],self.x,self.y,0,self.xdir,1,7,19)
 		elseif self.rolldir == 3 then -- down
-			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollFront[fr],self.x,self.y,0,1,1,7,19)
+			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollFront[fr],self.x,self.y,0,self.xdir,1,7,19)
+		else  -- left or right
+			love.graphics.drawq(imgSkins[self.skin],quadHerbieRollSide[fr],self.x,self.y,0,self.xdir,1,7.5,19)
 		end
 	end
 end
