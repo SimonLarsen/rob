@@ -23,3 +23,5 @@
 
 [ 24/01/12 ]
 * Cleaned up some entity code to avoid a lot of unnecessary garbage collection
+* Added wall lasers and timed wall lasers.
+* Added switches which can be hooked up to doors, laser and etc. like pressure plates

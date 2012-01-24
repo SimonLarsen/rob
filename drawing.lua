@@ -238,4 +238,8 @@ end
 
 function applyMode()
 	lg.setMode(WIDTH,HEIGHT,FULLSCREEN)
+
+	fbw = math.pow(2,math.ceil(math.log(WIDTH)/math.log(2)))
+	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
+	fb = love.graphics.newFramebuffer(fbw,fbh)
 end

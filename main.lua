@@ -23,14 +23,10 @@ function love.load(arg)
 
 	loadResources()
 
-	fbw = math.pow(2,math.ceil(math.log(WIDTH)/math.log(2)))
-	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
-	fb = love.graphics.newFramebuffer(fbw,fbh)
-
 	pl1 = Herbie.create(1)
 	pl2 =  Jamal.create(2)
 	if arg[2] then loadMap(arg[2])
-	else loadMap("home") end
+	else loadMap("test2") end
 
 	messages = {}
 	messagecolor = {}

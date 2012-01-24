@@ -262,3 +262,128 @@ function PressurePlate:update(dt)
 		end
 	end
 end
+
+Laser = { solid = false, realtime = true, interactive = false }
+Laser.__index = Laser
+setmetatable(Laser,Entity)
+
+function Laser.create(x0,y0,x1,y1)
+	assert(x0 == x1 or y0 == y1)
+	local self = Entity.create(math.min(x0,x1),math.min(y0,y1))
+	setmetatable(self,Laser)
+
+	self.length = math.abs(x0-x1)+math.abs(y0-y1)
+	self.on = true
+	if x0 ~= x1 then
+		self.dir = 0 -- left to right
+		self.cbox = {x = self.x*CELLW, y = self.y*CELLH+3, w = self.length*CELLW, h = 1}
+	else
+		self.dir = 3 -- vertical, far to near
+		self.cbox = {x = self.x*CELLW+4, y = self.y*CELLH, w = 7, h = self.length*CELLH}
+	end
+
+	return self
+end
+
+function Laser:update(dt)
+	if self.on then
+		if pl1:collideBox(self.cbox) or pl2:collideBox(self.cbox) then
+			alarm()
+		end
+	end
+end
+
+function Laser:draw()
+	if self.dir == 0 then
+		local iy = self.y*CELLH-16
+		if self.on then
+			for ix = self.x, self.x+self.length,1 do
+				love.graphics.drawq(imgTiles,quadLaserSide,ix*CELLW,iy)
+			end
+		end
+		love.graphics.drawq(imgTiles,quadLaserStartSide,self.x*CELLW,iy-1)
+		love.graphics.drawq(imgTiles,quadLaserStartSide,(self.x+self.length)*CELLW,iy-1,0,-1,1,16)
+	else -- 3
+		love.graphics.drawq(imgTiles,quadLaserStartVert,self.x*CELLW+3,self.y*CELLH-22)
+		if self.on then
+			local ix = self.x*CELLW+4
+			for iy = self.y, self.y+self.length, 1 do
+				love.graphics.drawq(imgTiles,quadLaserVert,ix,iy*CELLH-20)
+			end
+		end
+	end
+end
+
+function Laser:action()
+	self.on = not self.on
+end
+
+TimedLaser = { solid = false, interactive = false, realtime = true }
+TimedLaser.__index = TimedLaser
+setmetatable(TimedLaser,Laser)
+
+function TimedLaser.create(x0,y0,x1,y1,ontime,offtime)
+	local self = Laser.create(x0,y0,x1,y1)
+	setmetatable(self,TimedLaser)
+	self.ontime = ontime
+	self.offtime = offtime
+	self.time = 0
+	return self
+end
+
+function TimedLaser:update(dt)
+	self.time = self.time + dt
+	if (self.on == true and self.time > self.ontime)
+	or (self.on == false and self.time > self.offtime) then
+		self.on = not self.on
+		self.time = 0
+	end
+	if self.on then
+		if pl1:collideBox(self.cbox) or pl2:collideBox(self.cbox) then
+			alarm()
+		end
+	end
+end
+
+Switch = { actiontype = 2, solid = false, interactive = true }
+Switch.__index = Switch
+setmetatable(Switch,Entity)
+
+function Switch.create(x,y,objs)
+	local self = Entity.create(x,y)
+	setmetatable(self,Switch)
+	self.objs = objs
+	self.state = false
+	self.abox = {x = self.x*CELLW+4, y = self.y*CELLH+2, w = 8, h = 4}
+	if map[x][y-1] >= 10 then self.dir = 3
+	elseif map[x-1][y] >= 10 then self.dir = 2
+	elseif map[x+1][y] >= 10 then self.dir = 0
+	else self.dir = 3 end
+
+	return self
+end
+
+function Switch:draw()
+	local ysc = self.state and 1 or -1
+	if self.dir == 3 then
+		love.graphics.drawq(imgTiles,quadSwitchFront,self.x*CELLW+5,self.y*CELLH-16)
+		love.graphics.drawq(imgTiles,quadSwitchFrontHandle,self.x*CELLW+7,self.y*CELLH-12,0,1,ysc,0,2)
+	elseif self.dir == 2 then
+		love.graphics.drawq(imgTiles,quadSwitchSide,self.x*CELLW,self.y*CELLH-8,0,1,1,0,4)
+		love.graphics.drawq(imgTiles,quadSwitchSideHandle,self.x*CELLW+1,self.y*CELLH-8,0,1,ysc,0,1)
+	elseif self.dir == 0 then
+		love.graphics.drawq(imgTiles,quadSwitchSide,self.x*CELLW,self.y*CELLH-8,0,-1,1,16,4)
+		love.graphics.drawq(imgTiles,quadSwitchSideHandle,self.x*CELLW-1,self.y*CELLH-8,0,-1,ysc,16,1)
+	end
+end
+
+function Switch:action()
+	self.state = not self.state
+	for i=1,#self.objs do
+		if type(self.objs[i]) == "table" then
+			self.objs[i]:action(true)
+		elseif type(self.objs[i]) == "function" then
+			self.objs[i](self.state)
+		end
+	end
+end

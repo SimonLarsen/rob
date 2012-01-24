@@ -87,6 +87,7 @@ local consts = {
 	telephone = Telephone.create,
 	vent = Vent.create,
 	pressureplate = PressurePlate.create,
+	switch = Switch.create,
 	-- Containers
 	toilet = Toilet.create,
 	fridge = Fridge.create,
@@ -139,4 +140,16 @@ function addCamera(...)
 	local cam = Camera.create(...)
 	table.insert(cameras,cam)
 	return cam
+end
+
+function addLaser(x0,y0,x1,y1)
+	local laser = Laser.create(x0,y0,x1,y1)
+	table.insert(entities[math.min(y0,y1)],laser)
+	return laser
+end
+
+function addTimedLaser(x0,y0,x1,y1,...)
+	local tlaser = TimedLaser.create(x0,y0,x1,y1,...)
+	table.insert(entities[math.min(y0,y1)],tlaser)
+	return tlaser
 end

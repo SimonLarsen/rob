@@ -128,6 +128,10 @@ function createQuads()
 	quadBossDesk     = lg.newQuad(80,19,48,29,tilew,tileh)
 	quadPressurePlateUp = lg.newQuad(176,160,10,7,tilew,tileh)
 	quadPressurePlateDown = lg.newQuad(176,167,10,7,tilew,tileh)
+	quadSwitchFront = lg.newQuad(192,160,7,8,tilew,tileh)
+	quadSwitchFrontHandle = lg.newQuad(200,160,3,4,tilew,tileh)
+	quadSwitchSide  = lg.newQuad(192,168,1,8,tilew,tileh)
+	quadSwitchSideHandle = lg.newQuad(193,171,3,3,tilew,tileh)
 	quadTable = {}
 	quadTable[0]     = lg.newQuad(16,16,16,17,tilew,tileh)
 	quadTable[1]     = lg.newQuad(24,16,16,17,tilew,tileh)
@@ -165,6 +169,12 @@ function createQuads()
 	quadCameraDownShadow = lg.newQuad(20,200,3,6,tilew,tileh)
 	quadCameraDown = lg.newQuad(17,200,3,8,tilew,tileh)
 	quadCameraUp = lg.newQuad(23,200,3,8,tilew,tileh)
+
+	-- laser quads
+	quadLaserStartVert = lg.newQuad(128,16,9,24,tilew,tileh)
+	quadLaserVert = lg.newQuad(144,16,7,23,tilew,tileh)
+	quadLaserSide = lg.newQuad(160,17,16,19,tilew,tileh)
+	quadLaserStartSide = lg.newQuad(158,16,2,21,tilew,tileh)
 
 	-- action quads
 	quadAction = {}

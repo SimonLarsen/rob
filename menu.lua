@@ -66,8 +66,9 @@ function createMenus()
 		 function() love.event.push("q") end})
 
 	loadlevel_menu = Menu.create("Load level",
-		{"Load \"home\"","Load \"test\"","Back"},
-		{function() loadMap("home") end, function() loadMap("test") end, parent_function}, ingame_menu)
+		{"Load \"home\"","Load \"test\"","Load \"test2\"","Back"},
+		{function() loadMap("home") end, function() loadMap("test") end, function() loadMap("test2") end,
+		parent_function}, ingame_menu)
 
 	settings_menu = Menu.create("Settings",
 		{"Controls","Video options","Sound options","Back"},
