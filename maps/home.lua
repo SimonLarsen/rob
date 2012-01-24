@@ -29,5 +29,5 @@ add("oven",13,7)
 
 -- Misc. decorations
 add("painting",9,7,5) -- clock
-add("painting",11,1,6) -- bathroom mirror
+add("painting",12,1,6) -- bathroom mirror
 add("projector",5,11)

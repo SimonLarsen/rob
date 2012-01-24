@@ -111,8 +111,8 @@ function openSkinSelection()
 end
 
 function restartLevel()
-	pl1 = Herbie.create(p1start[1]*CELLW+8, p1start[2]*CELLH+4, 1)
-	pl2 =  Jamal.create(p2start[1]*CELLW+8, p2start[2]*CELLH+4, 2)
+	pl1.x, pl1.y = p1start[1]*CELLW+8, p1start[2]*CELLH+4
+	pl2.x, pl2.y = p2start[1]*CELLW+8, p2start[2]*CELLH+4
 
 	gamestate = STATE_INGAME
 

@@ -16,7 +16,7 @@ require("menu")
 
 function love.load(arg)
 	math.randomseed(os.time())
-	love.graphics.setMode(WIDTH,HEIGHT,false)
+	applyMode()
 
 	love.graphics.setBackgroundColor(0,0,0)
 	love.graphics.setLineWidth(SCALE)
@@ -27,6 +27,8 @@ function love.load(arg)
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
 	fb = love.graphics.newFramebuffer(fbw,fbh)
 
+	pl1 = Herbie.create(1)
+	pl2 =  Jamal.create(2)
 	if arg[2] then loadMap(arg[2])
 	else loadMap("home") end
 

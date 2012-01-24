@@ -1,5 +1,6 @@
 WIDTH = 800
 HEIGHT = 600
+FULLSCREEN = false
 SCALE = 2
 
 CELLW = 16

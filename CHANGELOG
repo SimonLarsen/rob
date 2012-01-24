@@ -19,3 +19,7 @@
 * Added menu system
 * Fixed annoying bug where standing in certain places would produce artifacts on walls.
   Was caused by a floating point error when using love.graphics.translate()
+  - Nevermind. It's still a problem.
+
+[ 24/01/12 ]
+* Cleaned up some entity code to avoid a lot of unnecessary garbage collection

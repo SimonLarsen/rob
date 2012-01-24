@@ -3,6 +3,14 @@ p2start = {3,5}
 
 add("closet",1,1)
 
+add("locker",2,1,"front")
+
+add("locker",1,6,"left")
+add("locker",1,7,"left")
+
+add("locker",5,8,"right")
+add("locker",5,9,"right")
+
 add("door",6,6,"left")
 add("door",18,6,"left")
 
@@ -24,7 +32,7 @@ add("watercooler",1,13)
 addRotatingRobot({{7,15},{7,18}})
 
 add("cabinet",19,1, function() addKey(1) end)
-add("locker",21,1)
+add("locker",21,1,"front")
 
 add("door",24,6,"right",1)
 add("bossdesk",27,4)

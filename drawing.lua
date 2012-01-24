@@ -68,8 +68,9 @@ function drawIngame()
 	lg.push()
 
 	-- Round off some decimal to, hopefully remove artifacts
-	local cx = math.floor((pl1.x+pl2.x)*500)/1000
-	local cy = math.floor((pl1.y+pl2.y)*500)/1000
+	-- Scratch that. Still a problem. :(
+	local cx = (pl1.x+pl2.x)/2
+	local cy = (pl1.y+pl2.y)/2
 
 	-- Clear light framebuffer
 	lg.setRenderTarget(fb)
@@ -202,7 +203,6 @@ function drawWall(x,y)
 	-- fix top
 	lg.setColor(0,0,0)
 	if y > 0 and map[x][y-1] == TILE_WALL then
-		-- lg.line(topx+1,topy+0.5,(x+1)*CELLW-1,(y-3)*CELLH+0.5) end
 		lg.rectangle("fill",topx+1,topy,CELLW-2,1) end
 	if y < MAPH-1 and map[x][y+1] == TILE_WALL then
 		lg.rectangle("fill",topx+1,topy+CELLH-1,CELLW-2,1) end
@@ -215,7 +215,6 @@ function drawTable(x,y)
 		if x < MAPW-1 and map[x+1][y] == TILE_TABLE then
 			lg.drawq(imgTiles,quadTable[1],x*CELLW,y*CELLH-9)
 		else
-			--lg.drawq(imgTiles,quadTable[2],x*CELLW,y*CELLH-9)
 			lg.drawq(imgTiles,quadTable[0],x*CELLW,y*CELLH-9,0,-1,1,16)
 		end
 	else
@@ -235,4 +234,8 @@ function drawKitchenTable(x,y)
 	else
 		lg.drawq(imgTiles,quadKitchenTableLined,x*CELLW+8,(y-2)*CELLH,0,-1,1,8)
 	end
+end
+
+function applyMode()
+	lg.setMode(WIDTH,HEIGHT,FULLSCREEN)
 end

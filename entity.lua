@@ -7,16 +7,18 @@ function Entity.create(x,y)
 
 	self.x = x
 	self.y = y
+	self.cbox = {x = 0, y = 0, w = 0, h = 0}
+	self.abox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
 
 	return self
 end
 
 function Entity:getCollisionBox()
-	return {x = 0, y = 0, w = 0, h = 0}
+	return self.cbox
 end
 
 function Entity:getActionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+	return self.abox
 end
 
 function Entity:action()
@@ -40,6 +42,14 @@ function Door.create(x,y,dir,lock)
 	else
 		self.lock = 0
 	end
+	if self.dir == 1 then
+		self.cboxcl = {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
+	elseif self.dir == 0 then
+		self.cboxcl = {x = self.x*CELLW, y = self.y*CELLH, w = 3, h = CELLH}
+	else
+		self.cboxcl = {x = self.x*CELLW+13, y = self.y*CELLH, w = 3, h = CELLH}
+	end
+	self.abox = {x = self.x*CELLW-3, y = self.y*CELLH-3, w = CELLW+6, h = CELLH+6}
 
 	return self
 end
@@ -72,20 +82,10 @@ end
 
 function Door:getCollisionBox()
 	if self.open then
-		return {x = 0, y = 0, w = 0, h = 0}
+		return self.cbox
 	else
-		if self.dir == 1 then
-			return {x = self.x*CELLW, y = self.y*CELLH+3, w = 16, h = 3}
-		elseif self.dir == 0 then
-			return {x = self.x*CELLW, y = self.y*CELLH, w = 3, h = CELLH}
-		elseif self.dir == 2 then
-			return {x = self.x*CELLW+13, y = self.y*CELLH, w = 3, h = CELLH}
-		end
+		return self.cboxcl
 	end
-end
-
-function Door:getActionBox()
-	return {x = self.x*CELLW-3, y = self.y*CELLH-3, w = CELLW+6, h = CELLH+6}
 end
 
 function Door:action(force)
@@ -138,6 +138,8 @@ function Vent.create(x,y,dir,id,dest)
 	self.id = id
 	self.dest = dest
 	self.dir = mymath.strToDir(dir)
+	self.abox = {x = self.x*CELLW+8, y = self.y*CELLH+4, w = 1, h = 1}
+
 	return self
 end
 
@@ -166,10 +168,6 @@ function Vent:action(pl)
 	end
 end
 
-function Vent:getActionBox()
-	return {x = self.x*CELLW+8, y = self.y*CELLH+4, w = 1, h = 1}
-end
-
 Closet = { actiontype = 1, solid = true, interactive = true }
 Closet.__index = Closet
 setmetatable(Closet,Entity)
@@ -177,6 +175,8 @@ setmetatable(Closet,Entity)
 function Closet.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Closet)
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-1}
+	self.abox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH+2}
 	return self
 end
 
@@ -188,14 +188,6 @@ function Closet:action()
 	openSkinSelection()
 end
 
-function Closet:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-1}
-end
-
-function Closet:getActionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH+2}
-end
-
 RecordPlayer = { actiontype = 5, solid = true, interactive = true }
 RecordPlayer.__index = RecordPlayer
 setmetatable(RecordPlayer,Entity)
@@ -203,19 +195,13 @@ setmetatable(RecordPlayer,Entity)
 function RecordPlayer.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,RecordPlayer)
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+	self.abox = {x = self.x*CELLW-2, y = self.y*CELLH-2, w = CELLW+4, h = CELLH+4}
 	return self
 end
 
 function RecordPlayer:draw()
 	love.graphics.drawq(imgTiles,quadRecordPlayer,self.x*CELLW,self.y*CELLH-17)
-end
-
-function RecordPlayer:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
-end
-
-function RecordPlayer:getActionBox()
-	return {x = self.x*CELLW-2, y = self.y*CELLH-2, w = CELLW+4, h = CELLH+4}
 end
 
 function RecordPlayer:action()
@@ -229,6 +215,7 @@ setmetatable(Telephone,Entity)
 function Telephone.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Telephone)
+	self.cbox = {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
 	return self
 end
 
@@ -236,12 +223,8 @@ function Telephone:draw()
 	love.graphics.drawq(imgTiles,quadTelephone,self.x*CELLW+3,self.y*CELLH-6)
 end
 
-function Telephone:getCollisionBox()
-	return {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
-end
-
 function Telephone:action()
-	loadMap("test")
+
 end
 
 PressurePlate = { solid = false, realtime = true, interactive = false }

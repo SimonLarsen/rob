@@ -42,7 +42,7 @@ function Menu:keypressed(k,uni)
 	elseif k == "down" then
 		self.selected = self.selected + 1
 		if self.selected > self.length then self.selected = 1 end
-	elseif k == "return" then
+	elseif k == "return" or k == ' ' then
 		self.functions[self.selected](self)
 	elseif k == "escape" then
 		if self.parent ~= nil then
@@ -57,18 +57,37 @@ end
 
 local parent_function = function(self) current_menu = self.parent end
 
-ingame_menu = Menu.create("Paused",
-	{"Resume","Settings","Load level", "Exit game"},
-	{function() gamestate = STATE_INGAME end,
-	 function() current_menu = settings_menu end,
-	 function() current_menu = loadlevel_menu end,
-	 function() love.event.push("q") end})
+function createMenus()
+	ingame_menu = Menu.create("Paused",
+		{"Resume","Settings","Load level", "Exit game"},
+		{function() gamestate = STATE_INGAME end,
+		 function() current_menu = settings_menu end,
+		 function() current_menu = loadlevel_menu end,
+		 function() love.event.push("q") end})
 
-loadlevel_menu = Menu.create("Load level",
-	{"Load \"home\"","Load \"test\"","Back"},
-	{function() loadMap("home") end, function() loadMap("test") end, parent_function}, ingame_menu)
+	loadlevel_menu = Menu.create("Load level",
+		{"Load \"home\"","Load \"test\"","Back"},
+		{function() loadMap("home") end, function() loadMap("test") end, parent_function}, ingame_menu)
 
-settings_menu = Menu.create("Settings",
-	{"Controls","Volume","Resolution","Back"},
-	{function() end, function() end, function() end, parent_function},
-	 ingame_menu)
+	settings_menu = Menu.create("Settings",
+		{"Controls","Video options","Sound options","Back"},
+		{function() end, function() current_menu = resolution_menu end, function() end,
+		 parent_function}, ingame_menu)
+
+	local modes = love.graphics.getModes()
+	local resolution_menu_names, resolution_menu_functions = {}, {}
+	table.sort(modes, function(a,b) return a.width*a.height > b.width*b.height end)
+	for i = 6,1,-1 do
+		if modes[i].width >= 800 and modes[i].height >= 600 then
+			table.insert(resolution_menu_names, modes[i].width .. "x" .. modes[i].height)
+			local set_res_func = function() WIDTH,HEIGHT = modes[i].width,modes[i].height applyMode() end
+			table.insert(resolution_menu_functions, set_res_func)
+		end
+	end
+	table.insert(resolution_menu_names, "Toggle fullscreen")
+	table.insert(resolution_menu_functions, function() FULLSCREEN = not FULLSCREEN applyMode() end)
+	table.insert(resolution_menu_names, "Back")
+	table.insert(resolution_menu_functions, parent_function)
+	resolution_menu = Menu.create("Resolution",
+	resolution_menu_names, resolution_menu_functions, settings_menu)
+end

@@ -5,18 +5,16 @@ keybinds[2] =  {"w","s","a","d"," "}
 Player = {}
 Player.__index = Player
 
-function Player.create(x,y,player)
+function Player.create(player)
 	local self = {}
 	setmetatable(self,Player)
 
-	self.x = x
-	self.y = y
 	self.xdir = 1 -- 1 = right, -1 = left
 	self.frame = 0
 	self.moving = false
-	self.skin = 2
+	self.skin = 1
 	self.player = player
-	self.actiontype = 0 -- indicates type of action to perform if any (0 for one)
+	self.actiontype = 0 -- indicates type of action to perform if any (0 for none)
 	self.state = 0
 	-- 0 = walking
 	-- 1 = crawling into vent (only Jamal)

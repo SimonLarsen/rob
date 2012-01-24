@@ -18,11 +18,13 @@ function loadMap(name)
 	local mapData = love.image.newImageData("maps/"..name..".png")
 	MAPW = mapData:getWidth()
 	MAPH = mapData:getHeight()
+	--[[
 	if MAPW*CELLW*4 <= WIDTH and MAPH*CELLH*4 <= HEIGHT then
 		SCALE = 4
 	else
 		SCALE = 2
 	end
+	--]]
 
 	-- clear entities and objects
 	entities = {}
@@ -31,11 +33,13 @@ function loadMap(name)
 	end
 	robots = {}
 	cameras = {}
-
 	map = {}
 	for i = -1,MAPW do
 		map[i] = {}
 	end
+
+	-- Perform full garbage collection
+	collectgarbage("collect")
 
 	-- load tiles from image
 	for ix = 0, MAPW-1 do

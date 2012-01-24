@@ -56,15 +56,12 @@ setmetatable(Watercooler,Entity)
 function Watercooler.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Watercooler)
+	self.cbox = {x = self.x*CELLW+3, y = self.y*CELLH+1, w = 11, h = 6}
 	return self
 end
 
 function Watercooler:draw()
 	love.graphics.drawq(imgTiles,quadWatercooler,self.x*CELLW+3,self.y*CELLH-17)
-end
-
-function Watercooler:getCollisionBox()
-	return {x = self.x*CELLW+3, y = self.y*CELLH+1, w = 11, h = 6}
 end
 
 Sofa = { solid = true, interactive = false }
@@ -75,6 +72,7 @@ function Sofa.create(x,y,dir)
 	local self = Entity.create(x,y)
 	setmetatable(self,Sofa)
 	self.dir = mymath.strToDir(dir) -- 1 = back, 3 = front
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
 	return self
 end
 
@@ -86,10 +84,6 @@ function Sofa:draw()
 	end
 end
 
-function Sofa:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
-end
-
 BossDesk = { solid = true, interactive = false }
 BossDesk.__index = BossDesk
 setmetatable(BossDesk,Entity)
@@ -97,15 +91,12 @@ setmetatable(BossDesk,Entity)
 function BossDesk.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,BossDesk)
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH+3, w = 3*CELLW, h = 13}
 	return self
 end
 
 function BossDesk:draw()
 	love.graphics.drawq(imgTiles,quadBossDesk,self.x*CELLW,self.y*CELLH-13)
-end
-
-function BossDesk:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH+3, w = 3*CELLW, h = 13}
 end
 
 Bed = { solid = true, interactive = false }
@@ -115,11 +106,8 @@ setmetatable(Bed,Entity)
 function Bed.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Bed)
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
 	return self
-end
-
-function Bed:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
 end
 
 function Bed:draw()
@@ -133,15 +121,12 @@ setmetatable(Shower,Entity)
 function Shower.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Shower)
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
 	return self
 end
 
 function Shower:draw()
 	love.graphics.drawq(imgTiles,quadShower,self.x*CELLW,self.y*CELLH-24)
-end
-
-function Shower:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
 end
 
 Television = { actiontype = 2, solid = true, interactive = true, realtime = true }
@@ -153,6 +138,7 @@ function Television.create(x,y)
 	setmetatable(self,Television)
 	self.on = false
 	self.frame = 0
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH+1, w = CELLW, h = CELLH-2}
 	return self
 end
 
@@ -171,10 +157,6 @@ function Television:draw()
 		love.graphics.drawq(imgTiles,quadTVFrames[0],self.x*CELLW+3, self.y*CELLH-5)
 	end
 	love.graphics.drawq(imgTiles,quadTelevision,self.x*CELLW, self.y*CELLH-13)
-end
-
-function Television:getCollisionBox()
-	return {x = self.x*CELLW, y = self.y*CELLH+1, w = CELLW, h = CELLH-2}
 end
 
 Entrance = { solid = false, interactive = false }
@@ -203,15 +185,12 @@ function Projector.create(x,y)
 			break
 		end
 	end
+	self.cbox = {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
 	return self
 end
 
 function Projector:draw()
 	love.graphics.drawq(imgTiles,quadProjector,self.x*CELLW+1,self.y*CELLH-14)
-end
-
-function Projector:getCollisionBox()
-	return {x = self.x*CELLW+3, y = self.y*CELLH+2, w = 10, h = 4}
 end
 
 function Projector:action()
