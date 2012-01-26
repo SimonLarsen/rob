@@ -88,15 +88,20 @@ BossDesk = { solid = true, interactive = false }
 BossDesk.__index = BossDesk
 setmetatable(BossDesk,Entity)
 
-function BossDesk.create(x,y)
+function BossDesk.create(x,y,dir)
 	local self = Entity.create(x,y)
 	setmetatable(self,BossDesk)
 	self.cbox = {x = self.x*CELLW, y = self.y*CELLH+3, w = 3*CELLW, h = 13}
+	self.dir = mymath.strToDir(dir)
 	return self
 end
 
 function BossDesk:draw()
-	love.graphics.drawq(imgTiles,quadBossDesk,self.x*CELLW,self.y*CELLH-13)
+	if self.dir == 3 then
+		love.graphics.drawq(imgTiles,quadBossDeskFront,self.x*CELLW,self.y*CELLH-13)
+	elseif self.dir == 1 then
+		love.graphics.drawq(imgTiles,quadBossDeskBack,self.x*CELLW,self.y*CELLH-7)
+	end
 end
 
 Bed = { solid = true, interactive = false }

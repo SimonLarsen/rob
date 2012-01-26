@@ -18,13 +18,6 @@ function loadMap(name)
 	local mapData = love.image.newImageData("maps/"..name..".png")
 	MAPW = mapData:getWidth()
 	MAPH = mapData:getHeight()
-	--[[
-	if MAPW*CELLW*4 <= WIDTH and MAPH*CELLH*4 <= HEIGHT then
-		SCALE = 4
-	else
-		SCALE = 2
-	end
-	--]]
 
 	-- clear entities and objects
 	entities = {}
@@ -62,10 +55,17 @@ function loadMap(name)
 				map[ix][iy] = TILE_TABLE
 			elseif r == 0 and g == 255 and b == 0 then -- kitchen table
 				map[ix][iy] = TILE_KITCHEN
+			elseif r == 0 and g == 255 and b == 255 then -- test floor
+				map[ix][iy] = TILE_TESTFLOOR
+			elseif r == 0 and g == 128 and b == 0 then -- grass
+				map[ix][iy] = TILE_GRASS
+			elseif r == 0 and g == 0 and b == 255 then -- slab
+				map[ix][iy] = TILE_SLABS
+			elseif r == 255 and g == 0 and b == 255 then -- window wall
+				map[ix][iy] = TILE_WINDOW
 
 			-- default to black cell
-			else
-				map[ix][iy] = 0
+			else map[ix][iy] = 0
 			end
 		end
 	end
@@ -108,6 +108,7 @@ local consts = {
 	plant = Plant.create,
 	watercooler = Watercooler.create,
 	-- Table decorations
+	tabledecor = TableDecor.create,
 	sink = function(x,y) return TableDecor.create(x,y,0) end,
 	typewriter = function(x,y) return TableDecor.create(x,y,1) end,
 	chair = function(x,y) return TableDecor.create(x,y,2) end,
@@ -116,6 +117,7 @@ local consts = {
 	desklamp = function(x,y) return TableDecor.create(x,y,5) end,
 	chairfront = function(x,y) return TableDecor.create(x,y,6) end,
 	oven = function(x,y) return TableDecor.create(x,y,7) end,
+	plate = function(x,y) return TableDecor.create(x,y,8) end,
 }
 
 function add(t,x,y,...)

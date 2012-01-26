@@ -66,8 +66,8 @@ function createMenus()
 		 function() love.event.push("q") end})
 
 	loadlevel_menu = Menu.create("Load level",
-		{"Load \"home\"","Load \"test\"","Load \"test2\"","Back"},
-		{function() loadMap("home") end, function() loadMap("test") end, function() loadMap("test2") end,
+		{"Load \"home\"","Load \"los\"","Back"},
+		{function() loadMap("home") end, function() loadMap("los") end,
 		parent_function}, ingame_menu)
 
 	settings_menu = Menu.create("Settings",
@@ -75,14 +75,16 @@ function createMenus()
 		{function() end, function() current_menu = resolution_menu end, function() end,
 		 parent_function}, ingame_menu)
 
-	local modes = love.graphics.getModes()
 	local resolution_menu_names, resolution_menu_functions = {}, {}
-	table.sort(modes, function(a,b) return a.width*a.height > b.width*b.height end)
-	for i = 6,1,-1 do
-		if modes[i].width >= 800 and modes[i].height >= 600 then
-			table.insert(resolution_menu_names, modes[i].width .. "x" .. modes[i].height)
-			local set_res_func = function() WIDTH,HEIGHT = modes[i].width,modes[i].height applyMode() end
-			table.insert(resolution_menu_functions, set_res_func)
+	local modes = love.graphics.getModes()
+	if modes ~= nil then
+		table.sort(modes, function(a,b) return a.width*a.height > b.width*b.height end)
+		for i = 6,1,-1 do
+			if modes[i].width >= 800 and modes[i].height >= 600 then
+				table.insert(resolution_menu_names, modes[i].width .. "x" .. modes[i].height)
+				local set_res_func = function() WIDTH,HEIGHT = modes[i].width,modes[i].height applyMode() end
+				table.insert(resolution_menu_functions, set_res_func)
+			end
 		end
 	end
 	table.insert(resolution_menu_names, "Toggle fullscreen")

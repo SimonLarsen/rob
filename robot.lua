@@ -58,7 +58,7 @@ function Robot:canSeePlayer(pl)
 	local fromx, fromy = mymath.dirToVector(self.dir)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
 
-	if angle > 0.3 or angle < -0.3 then
+	if angle > 0.2 or angle < -0.2 then
 		return false
 	end
 
@@ -101,7 +101,7 @@ end
 local fl = math.floor
 function Robot:canSee(x0,y0,x1,y1,pl)
 	local xvec, yvec = x1-x0, y1-y0
-	local steps = 2*math.ceil(math.sqrt(math.pow(xvec,2) + math.pow(yvec,2)))
+	local steps = 4*math.ceil(math.sqrt(math.pow(xvec,2) + math.pow(yvec,2)))
 	if steps <= 0 then return true end
 
 	local xstep, ystep = xvec/steps, yvec/steps
@@ -112,8 +112,7 @@ function Robot:canSee(x0,y0,x1,y1,pl)
 		if fl(ix) ~= fl(ox) or fl(iy) ~= fl(oy) then
 			local val = map[fl(ix)][fl(iy)]
 
-			if val == TILE_WALL or val == TILE_DOOR
-			or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
+			if val >= 9 and val < 20 or (pl.isHerbie and val == TILE_CRATE) then
 				return false
 			end
 		end
@@ -176,7 +175,7 @@ function RotatingRobot:canSeePlayer(pl)
 	local fromx, fromy = mymath.dirToVector(math.floor(self.rot)%4)
 	local angle = mymath.angle(toplx,toply,fromx,fromy)
 
-	if angle > 0.3 or angle < -0.3 then
+	if angle > 0.2 or angle < -0.2 then
 		return false
 	end
 

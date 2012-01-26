@@ -67,10 +67,15 @@ end
 function drawIngame()
 	lg.push()
 
-	-- Round off some decimal to, hopefully remove artifacts
-	-- Scratch that. Still a problem. :(
+	-- Calculate center of screen
 	local cx = (pl1.x+pl2.x)/2
 	local cy = (pl1.y+pl2.y)/2
+
+	-- Find the corners of the furthest visible tiles on screen
+	local stx = math.max(math.floor((cx - (WIDTH/SCALE)/2)/16)-3, 0)
+	local edx = math.min(math.floor((cx + (WIDTH/SCALE)/2)/16)+3, MAPW-1)
+	local sty = math.max(math.floor((cy - (HEIGHT/SCALE)/2)/8)-3, 0)
+	local edy = math.min(math.floor((cy + (HEIGHT/SCALE)/2)/8)+3, MAPH-1)
 
 	-- Clear light framebuffer
 	lg.setRenderTarget(fb)
@@ -88,8 +93,8 @@ function drawIngame()
 	local pl1y, pl2y = math.floor(pl1.y/CELLH), math.floor(pl2.y/CELLH)
 
 	-- draw all floor stuff first:
-	for iy = 0,MAPH-1 do
-		for ix = 0,MAPW-1 do
+	for iy = sty,edy do
+		for ix = stx,edx do
 			if map[ix][iy] < 10 then
 				lg.drawq(imgTiles,quadTiles[map[ix][iy]],ix*CELLW,iy*CELLH)
 			end
@@ -97,8 +102,8 @@ function drawIngame()
 	end
 
 	-- draw walls, decorations and entities
-	for iy = 0,MAPH-1 do
-		for ix = 0,MAPW-1 do
+	for iy = sty,edy do
+		for ix = stx,edx do
 			if map[ix][iy] == TILE_WALL then
 				drawWall(ix,iy)
 			elseif map[ix][iy] == TILE_CRATE then
@@ -110,6 +115,8 @@ function drawIngame()
 				drawTable(ix,iy)
 			elseif map[ix][iy] == TILE_KITCHEN then
 				drawKitchenTable(ix,iy)
+			elseif map[ix][iy] == TILE_WINDOW  then
+				lg.drawq(imgTiles,quadWindowWall,ix*CELLW,iy*CELLH-24)
 			end
 		end
 
@@ -189,12 +196,12 @@ end
 function drawWall(x,y)
 	local topx, topy = x*CELLW, (y-3)*CELLH
 
-	if x > 0 and map[x-1][y] == TILE_WALL then
+	if x > 0 and map[x-1][y] == TILE_WALL or map[x-1][y] == TILE_WINDOW then
 		lg.drawq(imgTiles, quadWall[1], topx, topy)
 	else
 		lg.drawq(imgTiles, quadWall[0], topx, topy)
 	end
-	if x < MAPW-1 and map[x+1][y] == TILE_WALL then
+	if x < MAPW-1 and map[x+1][y] == TILE_WALL or map[x+1][y] == TILE_WINDOW then
 		lg.drawq(imgTiles, quadWall[1], topx+CELLW/2, topy)
 	else
 		lg.drawq(imgTiles, quadWall[2], topx+CELLW/2, topy)

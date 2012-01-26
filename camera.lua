@@ -66,8 +66,7 @@ function Camera:canSee(x0,y0,x1,y1,pl)
 		if fl(ix) ~= fl(ox) or fl(iy) ~= fl(oy) then
 			local val = map[fl(ix)][fl(iy)]
 
-			if val == TILE_WALL or val == TILE_DOOR
-			or val == TILE_DOUBLECRATE or (pl.isHerbie and val == TILE_CRATE) then
+			if val >= 9 and val < 20 or (pl.isHerbie and val == TILE_CRATE) then
 				return false
 			end
 		end

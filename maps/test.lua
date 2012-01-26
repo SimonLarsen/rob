@@ -22,6 +22,7 @@ add("vent",4,13,"up",2,1)
 
 local dr1 = add("door",21,12,"vert",1337)
 local tv1= add("television",24,13)
+tv1.interactive = false
 add("pressureplate",22,13,{dr1,tv1})
 
 add("chair",4,16)

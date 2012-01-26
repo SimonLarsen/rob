@@ -25,3 +25,8 @@
 * Cleaned up some entity code to avoid a lot of unnecessary garbage collection
 * Added wall lasers and timed wall lasers.
 * Added switches which can be hooked up to doors, laser and etc. like pressure plates
+
+[ 25/01/12 ]
+* Minor changes to drawing code to avoid drawing stuff off-screen
+* Added windows and some more floor types (grass and stone slabs)
+* Added test level "los".

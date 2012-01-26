@@ -56,6 +56,7 @@ function createQuads()
 	quadWall[0] = lg.newQuad(0, 128, 8, 32, tilew, tileh)
 	quadWall[1] = lg.newQuad(4, 128, 8, 32, tilew, tileh)
 	quadWall[2] = lg.newQuad(8, 128, 8, 32, tilew, tileh)
+	quadWindowWall = lg.newQuad(48,16,16,32,tilew,tileh)
 
 	quadHerbie = {}
 	quadJamal = {}
@@ -105,10 +106,10 @@ function createQuads()
 	quadSafeOpen     = lg.newQuad(64,128,16,24,tilew,tileh)
 	quadCabinet      = lg.newQuad(0,48,32,24,tilew,tileh)
 	quadCabinetOpen  = lg.newQuad(32,48,32,27,tilew,tileh)
-	quadLockerFront  = lg.newQuad(80,48,32,30,tilew,tileh)
-	quadLockerFrontDoor = lg.newQuad(112,48,12,27,tilew,tileh)
-	quadLockerSide   = lg.newQuad(80,80,12,32,tilew,tileh)
-	quadLockerSideDoor = lg.newQuad(92,81,8,24,tilew,tileh)
+	quadLockerFront  = lg.newQuad(80,48,14,49,tilew,tileh)
+	quadLockerFrontDoor = lg.newQuad(94,48,13,27,tilew,tileh)
+	quadLockerSide   = lg.newQuad(107,48,12,32,tilew,tileh)
+	quadLockerSideDoor = lg.newQuad(119,49,8,24,tilew,tileh)
 	quadFridgeClosed = lg.newQuad(96,128,16,32,tilew,tileh)
 	quadFridgeOpen   = lg.newQuad(112,128,16,35,tilew,tileh)
 	quadCloset       = lg.newQuad(64,48,16,31,tilew,tileh)
@@ -125,7 +126,8 @@ function createQuads()
 	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)
 	quadEntrance     = lg.newQuad(160,88,34,40,tilew,tileh)
 	quadTelephone    = lg.newQuad(160,156,10,12,tilew,tileh)
-	quadBossDesk     = lg.newQuad(80,19,48,29,tilew,tileh)
+	quadBossDeskFront= lg.newQuad(80,19,48,28,tilew,tileh)
+	quadBossDeskBack = lg.newQuad(176,16,48,22,tilew,tileh)
 	quadPressurePlateUp = lg.newQuad(176,160,10,7,tilew,tileh)
 	quadPressurePlateDown = lg.newQuad(176,167,10,7,tilew,tileh)
 	quadSwitchFront = lg.newQuad(192,160,7,8,tilew,tileh)
@@ -151,11 +153,11 @@ function createQuads()
 	end
 
 	quadPainting = {}
-	for i = 0,6 do
+	for i = 0,9 do
 		quadPainting[i] = lg.newQuad(i*16,176,16,16,tilew,tileh)
 	end
 	quadTableDecor = {}
-	for i = 0,7 do
+	for i = 0,8 do
 		quadTableDecor[i] = lg.newQuad(i*16,208,16,24,tilew,tileh)
 	end
 	quadPlant = {}

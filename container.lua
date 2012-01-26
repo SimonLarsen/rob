@@ -68,23 +68,20 @@ function Locker.create(x,y,dir,storage)
 	setmetatable(self,Locker)
 	self.dir = mymath.strToDir(dir)
 	if self.dir == 3 then -- front
-		self.cbox = {x = self.x*CELLW,y = self.y*CELLH, w = CELLW+CELLW, h = CELLH-1}
+		self.cbox = {x = self.x*CELLW,y = self.y*CELLH, w = CELLW, h = CELLH-1}
 	elseif self.dir == 2 then -- left
 		self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 12, h = 8}
 	else -- right
 		self.cbox = {x = self.x*CELLW+4, y = self.y*CELLH, w = 12, h = 8}
-	end
-	if self.dir == 3 then -- front, default to normal abox if sides
-		self.abox= {x = self.x*CELLW+15, y = self.y*CELLH+2, w = 4, h = CELLH}
 	end
 	return self
 end
 
 function Locker:draw()
 	if self.dir == 3 then -- front
-		love.graphics.drawq(imgTiles,quadLockerFront,self.x*CELLW,self.y*CELLH-24)
+		love.graphics.drawq(imgTiles,quadLockerFront,self.x*CELLW+1,self.y*CELLH-23)
 		if self.open then
-			love.graphics.drawq(imgTiles,quadLockerFrontDoor,self.x*CELLW+9,self.y*CELLH-17)
+			love.graphics.drawq(imgTiles,quadLockerFrontDoor,self.x*CELLW+2,self.y*CELLH-16)
 		end
 	elseif self.dir == 2 then --left
 		love.graphics.drawq(imgTiles,quadLockerSide,self.x*CELLW,self.y*CELLH-24)

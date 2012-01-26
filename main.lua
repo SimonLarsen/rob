@@ -26,7 +26,7 @@ function love.load(arg)
 	pl1 = Herbie.create(1)
 	pl2 =  Jamal.create(2)
 	if arg[2] then loadMap(arg[2])
-	else loadMap("test2") end
+	else loadMap("home") end
 
 	messages = {}
 	messagecolor = {}
@@ -36,6 +36,11 @@ function love.load(arg)
 end
 
 function love.update(dt)
+	-- TURBO MODE CHEAT YEAH FED
+	if love.keyboard.isDown("-") then
+		dt = 3*dt
+	end
+
 	-- STATE_INGAME
 	if gamestate == STATE_INGAME then
 		if alarmtime > 0 then alarmtime = alarmtime - dt end

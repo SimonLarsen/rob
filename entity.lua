@@ -276,10 +276,10 @@ function Laser.create(x0,y0,x1,y1)
 	self.on = true
 	if x0 ~= x1 then
 		self.dir = 0 -- left to right
-		self.cbox = {x = self.x*CELLW, y = self.y*CELLH+3, w = self.length*CELLW, h = 1}
+		self.cbox = {x = self.x*CELLW, y = self.y*CELLH+3, w = (self.length+1)*CELLW, h = 1}
 	else
 		self.dir = 3 -- vertical, far to near
-		self.cbox = {x = self.x*CELLW+4, y = self.y*CELLH, w = 7, h = self.length*CELLH}
+		self.cbox = {x = self.x*CELLW+4, y = self.y*CELLH, w = 7, h = (self.length+1)*CELLH}
 	end
 
 	return self
