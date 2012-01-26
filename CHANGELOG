@@ -18,7 +18,6 @@
 [ 22/01/12 ]
 * Added menu system
 * Fixed annoying bug where standing in certain places would produce artifacts on walls.
-  Was caused by a floating point error when using love.graphics.translate()
   - Nevermind. It's still a problem.
 
 [ 24/01/12 ]
@@ -29,4 +28,5 @@
 [ 25/01/12 ]
 * Minor changes to drawing code to avoid drawing stuff off-screen
 * Added windows and some more floor types (grass and stone slabs)
+* Added some other decorative items like windows and glass doors.
 * Added test level "los".

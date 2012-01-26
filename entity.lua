@@ -56,24 +56,15 @@ end
 
 function Door:draw()
 	if self.dir == 1 then
-		if self.open then
-			love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+12,self.y*CELLH-23)
-		else
-			love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
-		end
+		if self.open then love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+12,self.y*CELLH-23)
+		else love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH) end
 	else
 		if self.dir == 0 then
-			if self.open then
-				love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
-			else
-				love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21)
-			end
+			if self.open then love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW-1,self.y*CELLH-21) end
 		elseif self.dir == 2 then
-			if self.open then
-				love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
-			else
-				love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1)
-			end
+			if self.open then love.graphics.drawq(imgTiles,quadDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else love.graphics.drawq(imgTiles,quadDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1) end
 		end
 		love.graphics.drawq(imgTiles,quadDoorGradient,self.x*CELLW-3,self.y*CELLH,0,-1,1,3)
 		love.graphics.drawq(imgTiles,quadDoorGradient,(self.x+1)*CELLW,self.y*CELLH)
@@ -124,6 +115,33 @@ function Door:movePlayer(pl)
 			if xdist < 0 then pl.x = pl.x + 9 + xdist
 			else pl.x = pl.x - 9.5 + xdist end
 		end
+	end
+end
+
+GlassDoor = {}
+GlassDoor.__index = GlassDoor
+setmetatable(GlassDoor,Door)
+
+function GlassDoor.create(...)
+	local self = Door.create(...)
+	setmetatable(self,GlassDoor)
+	return self
+end
+
+function GlassDoor:draw()
+	if self.dir == 1 then
+		if self.open then love.graphics.drawq(imgTiles,quadGlassDoorOpen,self.x*CELLW+12,self.y*CELLH-23)
+		else love.graphics.drawq(imgTiles,quadGlassDoorClosed,self.x*CELLW,(self.y-3)*CELLH) end
+	else
+		if self.dir == 0 then
+			if self.open then love.graphics.drawq(imgTiles,quadGlassDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else love.graphics.drawq(imgTiles,quadGlassDoorOpen,self.x*CELLW-1,self.y*CELLH-21) end
+		elseif self.dir == 2 then
+			if self.open then love.graphics.drawq(imgTiles,quadGlassDoorClosed,self.x*CELLW,(self.y-3)*CELLH)
+			else love.graphics.drawq(imgTiles,quadGlassDoorOpen,self.x*CELLW+17,self.y*CELLH-21,0,-1,1) end
+		end
+		love.graphics.drawq(imgTiles,quadDoorGradient,self.x*CELLW-3,self.y*CELLH,0,-1,1,3)
+		love.graphics.drawq(imgTiles,quadDoorGradient,(self.x+1)*CELLW,self.y*CELLH)
 	end
 end
 

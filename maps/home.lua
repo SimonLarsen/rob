@@ -30,4 +30,7 @@ add("oven",13,7)
 -- Misc. decorations
 add("painting",9,7,5) -- clock
 add("painting",12,1,6) -- bathroom mirror
-add("projector",5,11)
+local proj = add("projector",5,11)
+function proj:action()
+	addMessage("TODO Show level selection screen")
+end

@@ -29,7 +29,7 @@ addTimedLaser(6,25,6,29,1.0,1.0)
 add("pressureplate",17,8,{las1,las2})
 addRobot({{17,6},{21,6},{21,3},{17,3}})
 addRobot({{22,12},{22,8},{19,8},{19,12}})
-add("door",24,6,"right",1)
+add("door",24,6,"right")
 
 -- table room
 addRobot({{18,18},{25,18}})
@@ -53,6 +53,9 @@ add("door",12,21,"left")
 add("oven",10,19)
 add("sink",9,19)
 
+-- right of table room
+add("glassdoor",31,15,"vert")
+
 -- meeting room
 addCamera(39,5,"down")
 addCamera(45,5,"down")
@@ -67,7 +70,7 @@ add("cabinet",26,5)
 add("painting",29,5,0)
 add("painting",31,5,1)
 add("plant",32,5,2)
-add("door",33,6,"left")
+add("door",33,6,"left",1)
 
 -- big meeting room
 add("projector",42,7)
@@ -85,7 +88,7 @@ local halllaser = addLaser(52,25,54,25)
 
 -- top right
 add("door",50,6,"right")
-add("switch",53,5,{halllaser})
+add("switch",53,5,{halllaser,function(state) if state == true then addMessage("You hear lasers turning off somewhere") end end})
 add("locker",51,5,"front")
 add("locker",52,5,"front")
 
@@ -95,13 +98,14 @@ add("door",37,26,"vert")
 local tlas1 = addLaser(40,22,40,25)
 local tlas2 = addLaser(44,22,44,25)
 local tlas3 = addLaser(48,22,48,25)
+add("glassdoor",15,30,"vert",666)
 
 -- big button crate lol room of pasta galore
 add("door",50,31,"left")
 add("door",34,27,"left")
-add("pressureplate",35,31,{tlas3})
+add("pressureplate",35,31,{tlas1})
 add("pressureplate",44,28,{tlas2})
-add("pressureplate",48,32,{tlas1})
+add("pressureplate",48,32,{tlas3})
 
 addRotatingRobot({{43,33},{43,35},{45,35},{45,33}})
 addRobot({{40,38},{46,38}})
@@ -109,5 +113,5 @@ addRobot({{38,33},{38,38}})
 
 -- final room
 add("bossdesk",30,31,"up")
-add("safe",29,27)
+add("safe",29,27, function() addMessage("You got the loot!") end)
 add("painting",31,27,5)

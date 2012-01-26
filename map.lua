@@ -82,6 +82,7 @@ end
 local consts = {
 	-- Special entities
 	door = Door.create,
+	glassdoor = GlassDoor.create,
 	closet = Closet.create,
 	recordplayer = RecordPlayer.create,
 	telephone = Telephone.create,

@@ -39,6 +39,19 @@ function Safe:draw()
 	end
 end
 
+function Safe:action(pl)
+	if pl1:collideBox(self.abox) and pl2:collideBox(self.abox) then
+		self.open = not self.open
+		if self.storage and type(self.storage) == "function" then
+			if self.storage(self.open) ~= true then
+				self.storage = nil
+			end
+		end
+	else
+		addMessage("Opening the safe is a two-man job")
+	end
+end
+
 Cabinet = { actiontype = 1, solid = true, interactive = true }
 Cabinet.__index = Cabinet
 setmetatable(Cabinet,Container)

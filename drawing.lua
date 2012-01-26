@@ -244,7 +244,7 @@ function drawKitchenTable(x,y)
 end
 
 function applyMode()
-	lg.setMode(WIDTH,HEIGHT,FULLSCREEN)
+	lg.setMode(WIDTH,HEIGHT,FULLSCREEN,true,0)
 
 	fbw = math.pow(2,math.ceil(math.log(WIDTH)/math.log(2)))
 	fbh = math.pow(2,math.ceil(math.log(HEIGHT)/math.log(2)))
