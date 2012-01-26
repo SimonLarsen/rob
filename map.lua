@@ -89,6 +89,7 @@ local consts = {
 	vent = Vent.create,
 	pressureplate = PressurePlate.create,
 	switch = Switch.create,
+	sign = Sign.create,
 	-- Containers
 	toilet = Toilet.create,
 	fridge = Fridge.create,

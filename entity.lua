@@ -405,3 +405,22 @@ function Switch:action()
 		end
 	end
 end
+
+Sign = { actiontype = 2, solid = false, interactive = true }
+Sign.__index = Sign
+setmetatable(Sign,Entity)
+
+function Sign.create(x,y,msg)
+	local self = Entity.create(x,y)
+	setmetatable(self,Sign)
+	self.msg = msg
+	return self
+end
+
+function Sign:draw()
+	love.graphics.drawq(imgTiles,quadSign,self.x*CELLW+2,self.y*CELLH-8)
+end
+
+function Sign:action()
+	addMessage(self.msg)
+end

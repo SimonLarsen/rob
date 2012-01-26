@@ -165,6 +165,8 @@ function createQuads()
 
 	quadTelevision  = lg.newQuad(80,156,16,20,tilew,tileh)
 
+	quadSign = lg.newQuad(161,69,12,14,tilew,tileh)
+
 	quadProjectorImage = {}
 	for i=0,2 do
 		quadProjectorImage[i] = lg.newQuad(i*27,237,27,19,tilew,tileh)
