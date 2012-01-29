@@ -1,11 +1,11 @@
 function love.keypressed(k,uni)
-	if k == '1' then
+	if k == 'f1' then
 		SCALE = 1
-	elseif k == '2' then
+	elseif k == 'f2' then
 		SCALE = 2
-	elseif k == '3' then
+	elseif k == 'f3' then
 		SCALE = 3
-	elseif k == '4' then
+	elseif k == 'f4' then
 		SCALE = 4
 	elseif k == 'f5' then
 		gamestate = STATE_INGAME

@@ -145,7 +145,7 @@ function GlassDoor:draw()
 	end
 end
 
-Vent = { actiontype = 4, solid = false, interactive = true }
+Vent = { actiontype = 4, solid = false, interactive = true, herbieEnabled = false }
 Vent.__index = Vent
 setmetatable(Vent,Entity)
 

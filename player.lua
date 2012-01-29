@@ -61,7 +61,14 @@ function Player:updateplayer(dt)
 	-- find current action
 	local e = self:findActionEntity()
 	self.actiontype = 0
-	if e ~= nil then self.actiontype = e.actiontype end
+	if e ~= nil then
+		if self.isHerbie and e.herbieEnabled == false or
+		   self.isJamal  and e.jamalEnabled == false then
+			self.actiontype = 6
+		else
+				self.actiontype = e.actiontype
+		end
+	end
 end
 
 function Player:keypressed(k)

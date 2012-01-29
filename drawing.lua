@@ -79,9 +79,9 @@ function drawIngame()
 
 	-- Clear light framebuffer
 	lg.setRenderTarget(fb)
-	lg.setColor(255,255,255,235)
+	lg.setColor(235,235,235,255)
 	lg.rectangle("fill",0,0,fbw,fbh)
-	lg.setColor(255,255,255)
+	lg.setColor(255,255,255,255)
 	-- scale and draw light cones
 	lg.scale(SCALE)
 	lg.translate(-cx+(WIDTH/2)/SCALE, -cy+(HEIGHT/2)/SCALE)

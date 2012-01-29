@@ -33,3 +33,9 @@
 
 [ 26/01/12 ]
 * Added signs
+
+[ 28/01/12 ]
+* Added ability to set custom resolution from video options menu
+
+[ 29/01/12 ]
+* Player now has a red X above their head when standing near an entity they can't interact with

@@ -87,10 +87,51 @@ function createMenus()
 			end
 		end
 	end
+	table.insert(resolution_menu_names, "Custom resolution")
+	table.insert(resolution_menu_functions, function() current_menu = custom_res_menu end)
 	table.insert(resolution_menu_names, "Toggle fullscreen")
 	table.insert(resolution_menu_functions, function() FULLSCREEN = not FULLSCREEN applyMode() end)
 	table.insert(resolution_menu_names, "Back")
 	table.insert(resolution_menu_functions, parent_function)
 	resolution_menu = Menu.create("Resolution",
 	resolution_menu_names, resolution_menu_functions, settings_menu)
+
+	custom_res_menu = Menu.create("Custom resolution",
+	{"Width: " .. WIDTH, "Height: " .. HEIGHT, "Apply", "Back"},
+	{function(self) self.selected = self.selected+1 end, function(self) self.selected = self.selected+1 end,
+	 function(self) WIDTH = self.newwidth HEIGHT = self.newheight applyMode() end,
+	 function(self) self.newwidth = WIDTH self.newheight = HEIGHT self:updatenames() parent_function(self) end},
+	 resolution_menu)
+	custom_res_menu.newwidth  = tostring(WIDTH)
+	custom_res_menu.newheight = tostring(HEIGHT)
+
+	custom_res_menu.oldkeypressed = custom_res_menu.keypressed
+	function custom_res_menu:keypressed(k,uni)
+		if uni >= 48 and uni <= 57 then
+			if self.selected == 1 then -- WIDTH selected
+				self.newwidth = self.newwidth .. tostring(uni - 48)
+				self:updatenames()
+			elseif self.selected == 2 then -- HEIGHT selected
+				self.newheight = self.newheight .. tostring(uni - 48)
+				self:updatenames()
+			end
+		elseif k == 'backspace' then
+			if self.selected == 1 and self.newwidth:len() > 0 then
+				self.newwidth = self.newwidth:sub(1,self.newwidth:len()-1)
+				self:updatenames()
+			elseif self.selected == 2 and self.newheight:len() > 0 then
+				self.newheight = self.newheight:sub(1,self.newheight:len()-1)
+				self:updatenames()
+			end
+		elseif k == 'escape' then
+			 self.newwidth = WIDTH self.newheight = HEIGHT self:updatenames() parent_function(self)
+		else
+			self:oldkeypressed(k,uni)
+		end
+	end
+	
+	function custom_res_menu:updatenames()
+		self.names[1] = "Width: " .. self.newwidth
+		self.names[2] = "Height: " .. self.newheight
+	end
 end
