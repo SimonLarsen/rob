@@ -1,0 +1,18 @@
+h1. Herbie and Jamal
+
+h2. Controls
+
+h3. Herbie
+* Movement: W, A, S and D
+* Action: Return
+
+h3. Jamal
+* Movement: Arrow keys
+* Action: Space
+
+h3. Debugging keys
+* 1-4: Set in-game zoom
+* F1: Toggle fog of war
+* F6: Open skin selection screen
+* Tab: Swap player 1 and 2 controls
+* M: Add random swear word to message log
