@@ -120,6 +120,15 @@ function drawIngame()
 		lg.setBlendMode("alpha")
 	end
 
+	if draw_hud == true then
+		lg.push()
+		lg.scale(2)
+		lg.setFont(serifFont)
+		lg.print(math.floor(time/60)..":"..string.format("%02d",math.floor(time%60)) ,10,10)
+		lg.printf("! "..alarms.."/"..alarms_allowed,WIDTH/4-10,10,WIDTH/4,"right")
+		lg.pop()
+	end
+
 	drawMessages()
 end
 

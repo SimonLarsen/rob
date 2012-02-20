@@ -39,3 +39,10 @@
 
 [ 29/01/12 ]
 * Player now has a red X above their head when standing near an entity they can't interact with
+
+[ 17/02/12 ]
+* Crappy but somewhat usable map editor in the works
+
+[ 21/02/12 ]
+* Added falling-through-floor animation when losing.
+  No animation for any skins other than the naked one yet.

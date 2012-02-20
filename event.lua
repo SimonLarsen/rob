@@ -52,9 +52,14 @@ function love.keypressed(k,uni)
 end
 
 function alarm()
-	if alarmtime <= 0 then
+	if alarmtime <= 0 and alarms > 0 then
 		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
 		alarmtime = 4.2
+		alarms = alarms - 1
+		if alarms == 0 then
+			pl1:lose()
+			pl2:lose()
+		end
 		return true
 	else
 		return false
@@ -111,6 +116,9 @@ function openSkinSelection()
 end
 
 function restartLevel()
+	pl1:reset()
+	pl2:reset()
+
 	pl1.x, pl1.y = p1start[1]*CELLW+8, p1start[2]*CELLH+4
 	pl2.x, pl2.y = p2start[1]*CELLW+8, p2start[2]*CELLH+4
 

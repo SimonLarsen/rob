@@ -20,11 +20,19 @@ function Player.create(player)
 	-- 1 = crawling into vent (only Jamal)
 	-- 2 = crawling out of vent (only Jamal)
 	-- 3 = rolling (only Herbie)
+	-- 4 = falling animation
 	return self
 end
 
 function Player:update(dt)
 	self:updateplayer(dt)
+end
+
+function Player:reset()
+	self.frame = 0
+	self.xdir = 1
+	self.actiontype = 0
+	self.state = 0
 end
 
 function Player:updateplayer(dt)
@@ -123,5 +131,12 @@ function Player:action()
 	local e = self:findActionEntity()
 	if e ~= nil then
 		e:action(self)
+	end
+end
+
+function Player:lose()
+	if self.state ~= 4 then
+		self.frame = 0
+		self.state = 4
 	end
 end

@@ -1,6 +1,8 @@
 p1start = {7, 2}
 p2start = {8, 2}
 
+draw_hud = false
+
 -- special items
 add("entrance",7,1)
 add("telephone",9,1)

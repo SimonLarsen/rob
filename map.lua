@@ -14,7 +14,14 @@ function createMaplist()
 end
 
 function loadMap(name)
+	time = 0
 	-- get map dimensions
+	if name == nil then
+		name = current_map
+	else
+		current_map = name
+	end
+
 	local mapData = love.image.newImageData("maps/"..name..".png")
 	MAPW = mapData:getWidth()
 	MAPH = mapData:getHeight()
@@ -71,8 +78,11 @@ function loadMap(name)
 	end
 
 	-- load entities and objects
+	draw_hud = true -- default to true
+	alarms_allowed = 3
 	local conf = love.filesystem.load("maps/"..name..".lua")
 	conf()
+	alarms = alarms_allowed
 
 	restartLevel()
 	print("Loaded map \""..name.."\"...")

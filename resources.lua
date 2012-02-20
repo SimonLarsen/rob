@@ -36,7 +36,7 @@ function loadImages()
 
 	serifFontImage = lg.newImage("res/font-serif.png")
 	serifFontImage:setFilter("nearest","nearest")
-	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$\":_-")
+	serifFont = lg.newImageFont(serifFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$\":_-/")
 	lg.setFont(sansFont)
 
 	print("Images loaded...")
@@ -84,6 +84,14 @@ function createQuads()
 		quadHerbieRollFront[i] = lg.newQuad(i*14,128,14,20,sprw,sprh)
 		quadHerbieRollBack[i] = lg.newQuad(i*14,160,14,20,sprw,sprh)
 	end
+	-- Falling animations
+	quadHerbieFall = {}
+	quadJamalFall = {}
+	for i=0,17 do
+		quadHerbieFall[i] = lg.newQuad(i*14,224,14,23,sprw,sprh)
+		quadJamalFall[i] = lg.newQuad(i*13,192,13,29,sprw,sprh)
+	end
+
 	-- robot
 	quadRobot = {}
 	for i=0,11 do

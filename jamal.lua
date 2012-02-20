@@ -24,6 +24,8 @@ function Jamal:update(dt)
 			self.frame = 0
 			self.state = 0
 		end
+	elseif self.state == 4 then -- falling state
+		self.frame = self.frame + dt*9
 	end
 end
 
@@ -62,6 +64,10 @@ function Jamal:draw()
 			love.graphics.drawq(imgSkins[self.skin],quadJamalOutVentSide[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
 		else
 			love.graphics.drawq(imgSkins[self.skin],quadJamalOutVentFront[math.floor(self.frame*8)],self.x,self.y,0,self.xdir,1,8,26)
+		end
+	elseif self.state == 4 then -- falling through hole
+		if self.frame < 18 then
+			love.graphics.drawq(imgSkins[self.skin],quadJamalFall[math.floor(self.frame)],self.x,self.y,0,self.xdir,1,6.5,26)
 		end
 	end
 end

@@ -59,8 +59,9 @@ local parent_function = function(self) current_menu = self.parent end
 
 function createMenus()
 	ingame_menu = Menu.create("Paused",
-		{"Resume","Settings","Load level", "Exit game"},
+		{"Resume","Restart level","Settings","Load level", "Exit game"},
 		{function() gamestate = STATE_INGAME end,
+		 function() loadMap() end,
 		 function() current_menu = settings_menu end,
 		 function() current_menu = loadlevel_menu end,
 		 function() love.event.push("q") end})

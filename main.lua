@@ -23,10 +23,12 @@ function love.load(arg)
 
 	loadResources()
 
+	current_map = "home"
+
 	pl1 = Herbie.create(1)
 	pl2 =  Jamal.create(2)
-	if arg[2] then loadMap(arg[2])
-	else loadMap("home") end
+
+	loadMap(arg[2])
 
 	messages = {}
 	messagecolor = {}
@@ -43,6 +45,7 @@ function love.update(dt)
 
 	-- STATE_INGAME
 	if gamestate == STATE_INGAME then
+		time = time + dt
 		if alarmtime > 0 then alarmtime = alarmtime - dt end
 		if messagefade > 0 then messagefade = messagefade - dt end
 
