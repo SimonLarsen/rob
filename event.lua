@@ -33,6 +33,9 @@ function love.keypressed(k,uni)
 	-- STATE INGAME MENU
 	elseif gamestate == STATE_INGAME_MENU then
 		current_menu:keypressed(k,uni)
+	-- STATE INGAME LOST
+	elseif gamestate == STATE_INGAME_LOST then
+		lost_menu:keypressed(k,uni)
 	-- STATE SKIN SELECTION MENU
 	elseif gamestate == STATE_SKINS then
 		if k == keybinds[1][3] then
@@ -59,6 +62,9 @@ function alarm()
 		if alarms == 0 then
 			pl1:lose()
 			pl2:lose()
+			gamestate = STATE_INGAME_LOST
+			current_menu = lost_menu
+			fade = 0
 		end
 		return true
 	else
@@ -128,4 +134,7 @@ function restartLevel()
 	fow = true
 
 	keys = {}
+	messages, messagecolor = {}, {}
+	messagefade = 0
+	fade = 0
 end

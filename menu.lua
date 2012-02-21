@@ -2,17 +2,17 @@ Menu = {}
 Menu.__index = Menu
 
 function Menu.create(title,names,functions,parent)
-	assert(#names == #functions)
-	local self = {}
-	setmetatable(self,Menu)
-	self.title = title
-	self.names = names
-	self.functions = functions
-	self.parent = parent
+assert(#names == #functions)
+local self = {}
+setmetatable(self,Menu)
+self.title = title
+self.names = names
+self.functions = functions
+self.parent = parent
 
-	self.selected = 1
-	self.length = #names
-	return self
+self.selected = 1
+self.length = #names
+return self
 end
 
 local lg = love.graphics
@@ -21,18 +21,18 @@ function Menu:draw()
 	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
 	lg.setColor(255,255,255,255)
 	drawTitle(self.title,true)
-	lg.push()
-	lg.scale(2)
-	lg.setFont(serifFont)
-	for i = 1,self.length do
-		lg.printf(self.names[i],0,40+30*i,WIDTH/2,"center")
-		if i == self.selected then
-			local selw = serifFont:getWidth(self.names[i])
-			lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,40+30*i,0,1,1,25,0)
-			lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,40+30*i,0,-1,1,25,0)
+		lg.push()
+		lg.scale(2)
+		lg.setFont(serifFont)
+		for i = 1,self.length do
+			lg.printf(self.names[i],0,40+30*i,WIDTH/2,"center")
+			if i == self.selected then
+				local selw = serifFont:getWidth(self.names[i])
+				lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,40+30*i,0,1,1,25,0)
+				lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,40+30*i,0,-1,1,25,0)
+			end
 		end
-	end
-	lg.pop()
+		lg.pop()
 end
 
 function Menu:keypressed(k,uni)
@@ -75,6 +75,29 @@ function createMenus()
 		{"Controls","Video options","Sound options","Back"},
 		{function() end, function() current_menu = resolution_menu end, function() end,
 		 parent_function}, ingame_menu)
+
+	lost_menu = Menu.create("You got caught!",
+	{"Retry","Return to apartment"},
+	{function() loadMap() end, function() loadMap("home") end})
+
+	function lost_menu:draw(alpha)
+		lg.setColor(0,0,0,alpha*0.9)
+		lg.rectangle("fill",0,0,WIDTH,HEIGHT)
+		lg.setColor(255,255,255,alpha)
+		drawTitle(self.title,true)
+			lg.push()
+			lg.scale(2)
+			lg.setFont(serifFont)
+			for i = 1,self.length do
+				lg.printf(self.names[i],0,40+30*i,WIDTH/2,"center")
+				if i == self.selected then
+					local selw = serifFont:getWidth(self.names[i])
+					lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,40+30*i,0,1,1,25,0)
+					lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,40+30*i,0,-1,1,25,0)
+				end
+			end
+			lg.pop()
+	end
 
 	local resolution_menu_names, resolution_menu_functions = {}, {}
 	local modes = love.graphics.getModes()
