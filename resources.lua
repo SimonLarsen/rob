@@ -145,6 +145,9 @@ function createQuads()
 	quadToiletOpen   = lg.newQuad(64,158,7,18,tilew,tileh)
 	quadToiletClosed = lg.newQuad(72,158,7,18,tilew,tileh)
 
+	quadStallOpen    = lg.newQuad(176,48,16,34,tilew,tileh)
+	quadStallClosed  = lg.newQuad(192,48,16,31,tilew,tileh)
+
 	quadRecordPlayer = lg.newQuad(128,48,16,25,tilew,tileh)
 
 	quadShower       = lg.newQuad(144,48,16,32,tilew,tileh)

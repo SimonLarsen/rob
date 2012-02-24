@@ -119,6 +119,7 @@ local consts = {
 	television = Television.create,
 	plant = Plant.create,
 	watercooler = Watercooler.create,
+	stall = Stall.create,
 	-- Table decorations
 	tabledecor = TableDecor.create,
 	sink = function(x,y) return TableDecor.create(x,y,0) end,

@@ -3,12 +3,12 @@ p2start = {8,3}
 
 -- start zone
 add("entrance",8,1)
-add("painting",10,1,5) -- clock
+add("painting",10,1,6) -- clock
 add("door",12,3,"left")
 add("door",9,7,"vert")
 add("door",15,24,"vert")
-add("painting",8,8,7)
-add("painting",10,8,8)
+add("painting",8,8,8)
+add("painting",10,8,9)
 
 add("vent",7,13,"left",1,2)
 add("vent",5,13,"right",2,1)
@@ -114,4 +114,4 @@ addRobot({{38,33},{38,38}})
 -- final room
 add("bossdesk",30,31,"up")
 add("safe",29,27, function() addMessage("You got the loot!") end)
-add("painting",31,27,5)
+add("painting",31,27,6) -- clock

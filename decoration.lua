@@ -23,11 +23,8 @@ function Plant.create(x,y,id)
 	local self = Entity.create(x,y)
 	setmetatable(self,Plant)
 	self.id = id
+	self.cbox = {x = self.x*CELLW+5, y = self.y*CELLH+3, w = 5, h = 3}
 	return self
-end
-
-function Plant:getCollisionBox()
-	return {x = self.x*CELLW+5, y = self.y*CELLH+3, w = 5, h = 3}
 end
 
 function Plant:draw()
@@ -111,7 +108,7 @@ setmetatable(Bed,Entity)
 function Bed.create(x,y)
 	local self = Entity.create(x,y)
 	setmetatable(self,Bed)
-	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH}
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 2*CELLW, h = CELLH-1}
 	return self
 end
 
@@ -219,4 +216,30 @@ end
 
 function ProjectorImage:switch()
 	self.image = (self.image+1)%3
+end
+
+Stall = { solid = true, interactive = true, actiontype = 2 }
+Stall.__index = Stall
+setmetatable(Stall,Entity)
+
+function Stall.create(x,y,open)
+	local self = Entity.create(x,y)
+	if open then self.open = open
+	else self.open = false end
+	self.cbox = { x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH }
+	self.abox = { x = self.x*CELLW+2, y = self.y*CELLH, w = CELLW-4, h = CELLH+2 }
+	setmetatable(self,Stall)
+	return self
+end
+
+function Stall:action()
+	self.open = not self.open
+end
+
+function Stall:draw()
+	if self.open then
+		love.graphics.drawq(imgTiles,quadStallOpen,self.x*CELLW,self.y*CELLH-23)
+	else
+		love.graphics.drawq(imgTiles,quadStallClosed,self.x*CELLW,self.y*CELLH-23)
+	end
 end

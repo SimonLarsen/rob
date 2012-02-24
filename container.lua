@@ -117,7 +117,7 @@ function Fridge.create(x,y,storage)
 	local self = Container.create(x,y,storage)
 	setmetatable(self,Fridge)
 	map[x][y] = TILE_DOOR
-	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH}
+	self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = CELLW, h = CELLH-1}
 	self.abox = {x = self.x*CELLW+4, y = (self.y+1)*CELLH, w = CELLW-8, h = CELLH-2}
 	return self
 end

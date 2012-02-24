@@ -26,6 +26,8 @@ function love.keypressed(k,uni)
 		elseif k == 'escape' then
 			current_menu = ingame_menu
 			gamestate = STATE_INGAME_MENU
+		elseif k == '+' then
+			alarms = alarms+1
 		else
 			pl1:keypressed(k)
 			pl2:keypressed(k)
