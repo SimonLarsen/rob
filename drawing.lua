@@ -9,7 +9,7 @@ function love.draw()
 	elseif gamestate == STATE_INGAME_LOST then
 		drawIngame()
 		if fade > 1.2 then
-			local fadealpha = math.min((fade-1.2)*0.25*255,255)
+			local fadealpha = math.min((fade-1.2)*0.5*255,255)
 			lost_menu:draw(fadealpha)
 		end
 	elseif gamestate == STATE_SKINS then

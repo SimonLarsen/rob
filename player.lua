@@ -38,7 +38,7 @@ function Player:reset()
 end
 
 function Player:addKey(num)
-	addMessage("You found a key!",self.player)
+	addMessage("# You found a key!",self.player)
 	self.keys[num] = true
 end
 

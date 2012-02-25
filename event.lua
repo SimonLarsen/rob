@@ -13,13 +13,13 @@ function love.keypressed(k,uni)
 		local tmp1 = keybinds[1]
 		keybinds[1] = keybinds[2]
 		keybinds[2] = tmp1
+	elseif k == 'm' then
+		toggleMute()
 	end
 
 	-- STATE_INGAME
 	if gamestate == STATE_INGAME then
-		if k == 'm' then
-			addMessage(getSwearword() .. "!")
-		elseif k == 'f5' then
+		if k == 'f5' then
 			fow = not fow
 		elseif k == 'escape' then
 			current_menu = ingame_menu

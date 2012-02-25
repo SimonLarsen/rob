@@ -137,12 +137,14 @@ function RotatingRobot.create(points)
 	local self = Robot.create(points)
 	setmetatable(self,RotatingRobot)
 	self.rot = 0
+	self.alarmed = 0
 	return self
 end
 
 function RotatingRobot:update(dt)
 	self.frame = (self.frame+dt*4)%4
 	self.rot = (self.rot + dt)%8
+	self.alarmed = math.max(0,self.alarmed-dt)
 
 	local toMove = dt*ROBOT_SPEED
 	local newDir = false
@@ -168,7 +170,9 @@ function RotatingRobot:update(dt)
 	end
 
 	if self:canSeePlayer(pl1) or self:canSeePlayer(pl2) then
-		alarm()
+		if alarm() == true then
+			self.alarmed = 4.2
+		end
 	end
 end
 
@@ -190,20 +194,16 @@ function RotatingRobot:canSeePlayer(pl)
 end
 
 function RotatingRobot:draw()
+	local fr = math.floor(self.frame)
+	local xsc = 1	if self.dir == 2 then xsc = -1 end
+	local offset = 8	if self.dir == 1 then offset = 4 elseif self.dir == 3 then offset = 0 end
+	local headoffset = 0	if self.alarmed > 0 then headoffset = 32 end	if fr%2==1 then headoffset = headoffset+16 end
 	-- Draw body
-	if self.dir == 0 then
-		love.graphics.drawq(imgSprites,quadRotRobotBody[8+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
-	elseif self.dir == 1 then
-		love.graphics.drawq(imgSprites,quadRotRobotBody[4+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
-	elseif self.dir == 2 then
-		love.graphics.drawq(imgSprites,quadRotRobotBody[8+math.floor(self.frame)],self.x,self.y,0,-1,1,5.5,13)
-	elseif self.dir == 3 then
-		love.graphics.drawq(imgSprites,quadRotRobotBody[math.floor(self.frame)],self.x,self.y,0,1,1,5.5,13)
-	end
+	love.graphics.drawq(imgSprites,quadRotRobotBody[offset+fr],self.x,self.y,0,xsc,1,5.5,13)
 	-- Draw rotating head
 	if self.rot % 1 < 0.9 then
-		love.graphics.drawq(imgSprites,quadRotRobotHead[2*math.floor(self.rot)],self.x,self.y,0,1,1,7.5,36)
+		love.graphics.drawq(imgSprites,quadRotRobotHead[headoffset+2*math.floor(self.rot)],self.x,self.y,0,1,1,7.5,36)
 	else
-		love.graphics.drawq(imgSprites,quadRotRobotHead[2*math.floor(self.rot)+1],self.x,self.y,0,1,1,7.5,36)
+		love.graphics.drawq(imgSprites,quadRotRobotHead[headoffset+2*math.floor(self.rot)+1],self.x,self.y,0,1,1,7.5,36)
 	end
 end

@@ -36,7 +36,7 @@ function loadImages()
 
 	sansFontImage = lg.newImage("res/font-white-big.png")
 	sansFontImage:setFilter("nearest","nearest")
-	sansFont = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$%")
+	sansFont = lg.newImageFont(sansFontImage," 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.,$%#")
 
 	serifFontImage = lg.newImage("res/font-serif.png")
 	serifFontImage:setFilter("nearest","nearest")
@@ -103,7 +103,7 @@ function createQuads()
 	end
 	quadRobotBlink = {}
 	for i=0,11 do
-		quadRobotBlink[i] = lg.newQuad(i*15,97,15,22,sprw,sprh)
+		quadRobotBlink[i] = lg.newQuad(i*15,63,15,22,sprw,sprh)
 	end
 	quadRotRobotBody = {}
 	for i=0,11 do
@@ -111,7 +111,16 @@ function createQuads()
 	end
 	quadRotRobotHead = {}
 	for i=0,15 do
-		quadRotRobotHead[i] = lg.newQuad(i*16,73,15,23,sprw,sprh)
+		quadRotRobotHead[i] = lg.newQuad(i*16,86,15,23,sprw,sprh)
+	end
+	for i=0,15 do
+		quadRotRobotHead[16+i] = lg.newQuad(i*16,111,15,23,sprw,sprh)
+	end
+	for i=0,15 do
+		quadRotRobotHead[32+i] = lg.newQuad(i*16,136,15,23,sprw,sprh)
+	end
+	for i=0,15 do
+		quadRotRobotHead[48+i] = lg.newQuad(i*16,161,15,23,sprw,sprh)
 	end
 
 	-- entity quads
@@ -237,7 +246,7 @@ function createQuads()
 	quadSkinJamal  = lg.newQuad(0,0,128,256,256,256)
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
-	quadMarker     = lg.newQuad(206,32,50,20,sprw,sprh)
+	quadMarker     = lg.newQuad(206,32,50,21,sprw,sprh)
 	quadMainMenu   = lg.newQuad(0,0,432,339,512,512)
 
 	print("Quads created...")
@@ -245,8 +254,8 @@ end
 
 local ls = love.sound
 function loadSounds()
-	TEsound.volume("music",0.5)
-	TEsound.volume("sfx",0.75)
+	TEsound.volume("music",music_volume)
+	TEsound.volume("sfx",sfx_volume)
 
 	sndAlarm = ls.newSoundData("res/sfx/alarm.wav")
 	sndDoor  = ls.newSoundData("res/sfx/door.wav")

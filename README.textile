@@ -11,8 +11,8 @@ h3. Jamal
 * Action: Space
 
 h3. Debugging keys
-* 1-4: Set in-game zoom
-* F1: Toggle fog of war
+* F1-F4: Set in-game zoom
+* F5: Toggle fog of war
 * F6: Open skin selection screen
 * Tab: Swap player 1 and 2 controls
-* M: Add random swear word to message log
+* M: Mute game
