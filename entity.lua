@@ -82,15 +82,18 @@ end
 function Door:action(pl,force)
 	if self.open == true and (self.lock == 0 or force == true) then
 		self.open = false
+		playSound("door")
 		map[self.x][self.y] = TILE_DOOR
 		self:movePlayer(pl1)
 		self:movePlayer(pl2)
 	elseif self.open == false then
 		if self.lock == 0 or force == true then
+			playSound("door")
 			self.open = true
 			map[self.x][self.y] = TILE_DARKFLOOR
 		elseif pl.keys[self.lock] then
 			addMessage("You unlocked the door")
+			playSound("door")
 			self.lock = 0
 			self.open = true
 			map[self.x][self.y] = TILE_DARKFLOOR
@@ -223,7 +226,8 @@ function RecordPlayer:draw()
 end
 
 function RecordPlayer:action()
-	addMessage("% TODO Skip song %")
+	local song = nextSong()
+	addMessage("% "..song.." %")
 end
 
 Telephone = { actiontype = 2, solid = true, interactive = true }

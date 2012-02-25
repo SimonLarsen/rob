@@ -196,7 +196,7 @@ end
 function drawMainMenu()
 	lg.push()
 	lg.scale(2)
-	lg.drawq(imgMainMenu,quadMainMenu,(WIDTH-800)/4,0)
+	lg.drawq(imgMainMenu,quadMainMenu,(WIDTH-864)/4,0)
 	lg.pop()
 end
 

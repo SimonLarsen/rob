@@ -13,6 +13,7 @@ function Robot.create(points)
 	self.points = points
 	self.point = 1
 	self:getDir()
+	self.alarmed = 0
 	-- dir: 0 - right, 1 - up, 2 - left, 3 - down
 
 	return self
@@ -20,6 +21,7 @@ end
 
 function Robot:update(dt)
 	self.frame = (self.frame+dt*4)%4
+	self.alarmed = math.max(0,self.alarmed-dt)
 
 	local toMove = dt*ROBOT_SPEED
 	local newDir = false
@@ -45,7 +47,9 @@ function Robot:update(dt)
 	end
 
 	if self:canSeePlayer(pl1) or self:canSeePlayer(pl2) then
-		alarm()
+		if alarm() == true then
+			self.alarmed = 4.2
+		end
 	end
 end
 
@@ -67,14 +71,16 @@ function Robot:canSeePlayer(pl)
 end
 
 function Robot:draw()
-	if self.dir == 0 then
-		love.graphics.drawq(imgSprites,quadRobot[8+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,31)
-	elseif self.dir == 1 then
-		love.graphics.drawq(imgSprites,quadRobot[4+math.floor(self.frame)],self.x,self.y,0,1,1,5.5,31)
-	elseif self.dir == 2 then
-		love.graphics.drawq(imgSprites,quadRobot[8+math.floor(self.frame)],self.x,self.y,0,-1,1,5.5,31)
-	elseif self.dir == 3 then
-		love.graphics.drawq(imgSprites,quadRobot[math.floor(self.frame)],self.x,self.y,0,1,1,5.5,31)
+	local fr = math.floor(self.frame)
+	local offset = 8
+	if self.dir == 1 then offset = 4 elseif self.dir == 3 then offset = 0 end
+	local xsc = 1	if self.dir == 2 then xsc = -1 end
+
+	love.graphics.drawq(imgSprites,quadRobot[offset+fr],self.x,self.y,0,xsc,1,5.5,31)
+
+	if self.alarmed > 0 then
+		local bfr = math.floor((self.frame*2)%4)
+		love.graphics.drawq(imgSprites,quadRobotBlink[offset+bfr],self.x,self.y,0,xsc,1,7.5,31)
 	end
 end
 

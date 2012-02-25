@@ -7,6 +7,7 @@ local lg = love.graphics
 function loadResources()
 	createMaplist()
 	loadImages()
+	loadSounds()
 	createQuads()
 	createMenus()
 end
@@ -99,6 +100,10 @@ function createQuads()
 	quadRobot = {}
 	for i=0,11 do
 		quadRobot[i] = lg.newQuad(i*16,0,11,32,sprw,sprh)
+	end
+	quadRobotBlink = {}
+	for i=0,11 do
+		quadRobotBlink[i] = lg.newQuad(i*15,97,15,22,sprw,sprh)
 	end
 	quadRotRobotBody = {}
 	for i=0,11 do
@@ -233,9 +238,18 @@ function createQuads()
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
 	quadMarker     = lg.newQuad(206,32,50,20,sprw,sprh)
-	quadMainMenu   = lg.newQuad(0,0,400,300,512,512)
+	quadMainMenu   = lg.newQuad(0,0,432,339,512,512)
 
 	print("Quads created...")
+end
+
+local ls = love.sound
+function loadSounds()
+	TEsound.volume("music",0.5)
+	TEsound.volume("sfx",0.75)
+
+	sndAlarm = ls.newSoundData("res/sfx/alarm.wav")
+	sndDoor  = ls.newSoundData("res/sfx/door.wav")
 end
 
 local lastswear = -1

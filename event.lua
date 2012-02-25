@@ -7,8 +7,6 @@ function love.keypressed(k,uni)
 		SCALE = 3
 	elseif k == 'f4' then
 		SCALE = 4
-	elseif k == 'f5' then
-		gamestate = STATE_INGAME
 	elseif k == 'f6' then
 		openSkinSelection()
 	elseif k == "tab" then
@@ -21,7 +19,7 @@ function love.keypressed(k,uni)
 	if gamestate == STATE_INGAME then
 		if k == 'm' then
 			addMessage(getSwearword() .. "!")
-		elseif k == 'f1' then
+		elseif k == 'f5' then
 			fow = not fow
 		elseif k == 'escape' then
 			current_menu = ingame_menu
@@ -61,6 +59,8 @@ end
 function alarm()
 	if alarmtime <= 0 and alarms > 0 then
 		addMessage(swearwords[math.random(1,#swearwords)].."! You set off the alarm!")
+		playSound("alarm")
+
 		alarmtime = 4.2
 		alarms = alarms - 1
 		if alarms == 0 then

@@ -3,6 +3,7 @@ require("mymath")
 require("event")
 require("resources")
 require("drawing")
+require("sound") require("TEsound")
 require("player")
 require("herbie")
 require("jamal")
@@ -22,6 +23,7 @@ function love.load(arg)
 	love.graphics.setLineWidth(SCALE)
 
 	loadResources()
+	nextSong()
 
 	current_map = "home"
 
@@ -40,6 +42,8 @@ function love.load(arg)
 end
 
 function love.update(dt)
+	updateSound()
+
 	-- TURBO MODE CHEAT YEAH FED
 	if love.keyboard.isDown("-") then
 		dt = 3*dt
