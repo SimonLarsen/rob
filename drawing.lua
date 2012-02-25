@@ -15,6 +15,9 @@ function love.draw()
 	elseif gamestate == STATE_SKINS then
 		drawIngame()
 		drawSkinSelection()
+	elseif gamestate == STATE_MAINMENU then
+		drawMainMenu()
+		current_menu:draw()
 	end
 end
 
@@ -188,6 +191,13 @@ function drawSkinSelection()
 		lg.drawq(imgSkinPreviews[pl2.skin],quadSkinJamal,
 			(WIDTH/2)-200,HEIGHT-(0.5-skinsel[2].scroll)*1024,0,2,2,64,0)
 	end
+end
+
+function drawMainMenu()
+	lg.push()
+	lg.scale(2)
+	lg.drawq(imgMainMenu,quadMainMenu,(WIDTH-800)/4,0)
+	lg.pop()
 end
 
 function drawMessages()

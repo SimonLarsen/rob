@@ -53,6 +53,8 @@ function love.keypressed(k,uni)
 		elseif k == keybinds[2][5] then
 			skinsel[2].confirmed = not skinsel[2].confirmed
 		end
+	elseif gamestate == STATE_MAINMENU then
+		current_menu:keypressed(k,uni)
 	end
 end
 
@@ -112,11 +114,6 @@ function addMessage(text,color)
 	else messagecolor[0] = nil end
 end
 
-function addKey(num)
-	addMessage("You found a key!")
-	keys[num] = true
-end
-
 function openSkinSelection()
 	gamestate = STATE_SKINS
 	skinsel[1].confirmed, skinsel[2].confirmed = false, false
@@ -135,7 +132,6 @@ function restartLevel()
 	alarmtime = 0
 	fow = true
 
-	keys = {}
 	messages, messagecolor = {}, {}
 	messagefade = 0
 	fade = 0

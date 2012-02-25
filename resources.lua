@@ -20,6 +20,9 @@ function loadImages()
 	imgLight = lg.newImage("res/lightbig.png")
 	imgLight:setFilter("nearest","nearest")
 
+	imgMainMenu = lg.newImage("res/title.png")
+	imgMainMenu:setFilter("nearest","nearest")
+
 	imgSkins = {}
 	imgSkinPreviews = {}
 	for i=1,#skins do
@@ -230,6 +233,7 @@ function createQuads()
 	quadSkinHerbie = lg.newQuad(128,0,128,256,256,256)
 	quadTriangle   = lg.newQuad(224,0,15,29,sprw,sprh)
 	quadMarker     = lg.newQuad(206,32,50,20,sprw,sprh)
+	quadMainMenu   = lg.newQuad(0,0,400,300,512,512)
 
 	print("Quads created...")
 end

@@ -79,7 +79,7 @@ function Door:getCollisionBox()
 	end
 end
 
-function Door:action(force)
+function Door:action(pl,force)
 	if self.open == true and (self.lock == 0 or force == true) then
 		self.open = false
 		map[self.x][self.y] = TILE_DOOR
@@ -89,7 +89,7 @@ function Door:action(force)
 		if self.lock == 0 or force == true then
 			self.open = true
 			map[self.x][self.y] = TILE_DARKFLOOR
-		elseif keys[self.lock] then
+		elseif pl.keys[self.lock] then
 			addMessage("You unlocked the door")
 			self.lock = 0
 			self.open = true
@@ -273,7 +273,7 @@ function PressurePlate:update(dt)
 		self.state = nstate
 		for i=1,#self.objs do
 			if type(self.objs[i]) == "table" then
-				self.objs[i]:action(true)
+				self.objs[i]:action(nil,true)
 			elseif type(self.objs[i]) == "function" then
 				self.objs[i](self.state)
 			end
@@ -395,11 +395,11 @@ function Switch:draw()
 	end
 end
 
-function Switch:action()
+function Switch:action(pl)
 	self.state = not self.state
 	for i=1,#self.objs do
 		if type(self.objs[i]) == "table" then
-			self.objs[i]:action(true)
+			self.objs[i]:action(pl,true)
 		elseif type(self.objs[i]) == "function" then
 			self.objs[i](self.state)
 		end

@@ -48,7 +48,7 @@ add("painting",18,16,3)
 add("painting",24,16,4)
 
 -- kitchen
-add("fridge",7,19,function() addKey(1) end)
+add("fridge",7,19,function(b,pl) pl:addKey(1) end)
 add("door",12,21,"left")
 add("oven",10,19)
 add("sink",9,19)

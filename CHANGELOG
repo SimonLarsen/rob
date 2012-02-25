@@ -46,3 +46,8 @@
 [ 21/02/12 ]
 * Added falling-through-floor animation when losing.
   No animation for any skins other than the naked one yet.
+
+[ 24/02/12 ]
+* Added bathroom stalls
+* Players now have separate keys.
+* Partially added main menu

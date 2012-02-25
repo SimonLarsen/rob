@@ -2,17 +2,17 @@ Menu = {}
 Menu.__index = Menu
 
 function Menu.create(title,names,functions,parent)
-assert(#names == #functions)
-local self = {}
-setmetatable(self,Menu)
-self.title = title
-self.names = names
-self.functions = functions
-self.parent = parent
+	assert(#names == #functions)
+	local self = {}
+	setmetatable(self,Menu)
+	self.title = title
+	self.names = names
+	self.functions = functions
+	self.parent = parent
 
-self.selected = 1
-self.length = #names
-return self
+	self.selected = 1
+	self.length = #names
+	return self
 end
 
 local lg = love.graphics
@@ -21,18 +21,18 @@ function Menu:draw()
 	lg.rectangle("fill",0,0,WIDTH,HEIGHT)
 	lg.setColor(255,255,255,255)
 	drawTitle(self.title,true)
-		lg.push()
-		lg.scale(2)
-		lg.setFont(serifFont)
-		for i = 1,self.length do
-			lg.printf(self.names[i],0,40+30*i,WIDTH/2,"center")
-			if i == self.selected then
-				local selw = serifFont:getWidth(self.names[i])
-				lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,40+30*i,0,1,1,25,0)
-				lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,40+30*i,0,-1,1,25,0)
-			end
+	lg.push()
+	lg.scale(2)
+	lg.setFont(serifFont)
+	for i = 1,self.length do
+		lg.printf(self.names[i],0,40+30*i,WIDTH/2,"center")
+		if i == self.selected then
+			local selw = serifFont:getWidth(self.names[i])
+			lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,40+30*i,0,1,1,25,0)
+			lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,40+30*i,0,-1,1,25,0)
 		end
-		lg.pop()
+	end
+	lg.pop()
 end
 
 function Menu:keypressed(k,uni)
@@ -42,7 +42,7 @@ function Menu:keypressed(k,uni)
 	elseif k == "down" then
 		self.selected = self.selected + 1
 		if self.selected > self.length then self.selected = 1 end
-	elseif k == "return" or k == ' ' then
+	elseif k == "return" or k == ' ' or k == 'kpenter' then
 		self.functions[self.selected](self)
 	elseif k == "escape" then
 		if self.parent ~= nil then
@@ -62,9 +62,11 @@ function createMenus()
 		{"Resume","Restart level","Settings","Load level", "Exit game"},
 		{function() gamestate = STATE_INGAME end,
 		 function() loadMap() end,
-		 function() current_menu = settings_menu end,
+		 function() settings_menu.parent = ingame_menu
+			 current_menu = settings_menu end,
 		 function() current_menu = loadlevel_menu end,
-		 function() love.event.push("q") end})
+		 function() gamestate = STATE_MAINMENU
+		 	current_menu = main_menu end})
 
 	loadlevel_menu = Menu.create("Load level",
 		{"Load \"home\"","Load \"los\"","Back"},
@@ -97,6 +99,35 @@ function createMenus()
 				end
 			end
 			lg.pop()
+	end
+
+	main_menu = Menu.create("",
+	{"Start game","How to play","Settings","Credits","Exit"},
+	{function() gamestate = STATE_INGAME
+		loadMap("home") end,
+	 function() end,
+	 function() settings_menu.parent = main_menu
+		 current_menu = settings_menu end,
+	 function() end,
+	 function() love.event.push('q') end })
+	
+	function main_menu:draw()
+		lg.setColor(255,255,255,255)
+		lg.push()
+		lg.scale(2)
+		lg.setFont(serifFont)
+		for i = 1,self.length do
+			lg.setColor(0,0,0,255)
+			lg.printf(self.names[i],1,81+30*i,WIDTH/2,"center")
+			lg.setColor(255,255,255,255)
+			lg.printf(self.names[i],0,80+30*i,WIDTH/2,"center")
+			if i == self.selected then
+				local selw = serifFont:getWidth(self.names[i])
+				lg.drawq(imgSprites,quadMarker,WIDTH/4-selw/2-42,80+30*i,0,1,1,25,0)
+				lg.drawq(imgSprites,quadMarker,WIDTH/4+selw/2+36,80+30*i,0,-1,1,25,0)
+			end
+		end
+		lg.pop()
 	end
 
 	local resolution_menu_names, resolution_menu_functions = {}, {}

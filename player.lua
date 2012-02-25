@@ -15,6 +15,7 @@ function Player.create(player)
 	self.skin = 1
 	self.player = player
 	self.actiontype = 0 -- indicates type of action to perform if any (0 for none)
+	self.keys = {}
 	self.state = 0
 	-- 0 = walking
 	-- 1 = crawling into vent (only Jamal)
@@ -33,6 +34,12 @@ function Player:reset()
 	self.xdir = 1
 	self.actiontype = 0
 	self.state = 0
+	self.keys = {}
+end
+
+function Player:addKey(num)
+	addMessage("You found a key!",self.player)
+	self.keys[num] = true
 end
 
 function Player:updateplayer(dt)
@@ -130,7 +137,7 @@ end
 function Player:action()
 	local e = self:findActionEntity()
 	if e ~= nil then
-		e:action(self)
+		e:action(self,false)
 	end
 end
 

@@ -28,7 +28,12 @@ function love.load(arg)
 	pl1 = Herbie.create(1)
 	pl2 =  Jamal.create(2)
 
-	loadMap(arg[2])
+	if arg[2] then
+		loadMap(arg[2])
+	else
+		gamestate = STATE_MAINMENU
+		current_menu = main_menu
+	end
 
 	hasSkin = {true, true, false}
 	skinsel = { {confirmed = false, last = 1, scroll = 0 }, {confirmed = false, last = 1, scroll = 0 }}

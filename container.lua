@@ -11,9 +11,15 @@ end
 
 function Container:action(pl)
 	self.open = not self.open
-	if self.storage and type(self.storage) == "function" then
-		if self.storage(self.open) ~= true then
-			self.storage = nil
+	if self.storage then
+		if type(self.storage) == "function" then
+			if self.storage(self.open,pl) ~= true then
+				self.storage = nil
+			end
+		elseif type(self.storage) == "string" then
+			if self.storage:sub(1,3) == "key" then
+				pl:addKey(tonumber(self.storage:sub(4)))
+			end
 		end
 	end
 end
@@ -84,8 +90,11 @@ function Locker.create(x,y,dir,storage)
 		self.cbox = {x = self.x*CELLW,y = self.y*CELLH, w = CELLW, h = CELLH-1}
 	elseif self.dir == 2 then -- left
 		self.cbox = {x = self.x*CELLW, y = self.y*CELLH, w = 12, h = 8}
-	else -- right
+	elseif self.dir == 0 then  -- right
 		self.cbox = {x = self.x*CELLW+4, y = self.y*CELLH, w = 12, h = 8}
+	else
+		self.dir = 3
+		self.cbox = {x = self.x*CELLW,y = self.y*CELLH, w = CELLW, h = CELLH-1}
 	end
 	return self
 end
