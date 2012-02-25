@@ -15,4 +15,4 @@ h3. Debugging keys
 * F5: Toggle fog of war
 * F6: Open skin selection screen
 * Tab: Swap player 1 and 2 controls
-* M: Mute game
+* M: Mute music and sounds game

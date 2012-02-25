@@ -11,6 +11,7 @@ end
 
 function Container:action(pl)
 	self.open = not self.open
+	playSound("door")
 	if self.storage then
 		if type(self.storage) == "function" then
 			if self.storage(self.open,pl) ~= true then

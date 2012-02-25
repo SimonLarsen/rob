@@ -1,6 +1,6 @@
-current_song = 1
-music_volume = 0.5
-sfx_volume = 0.75
+current_song = 0
+music_volume = 0.75
+sfx_volume = 0.85
 mute = false
 
 function playSound(snd)
@@ -40,6 +40,5 @@ function toggleMute()
 end
 
 SONG_LIST = {
-	"bossa.ogg",
 	"blues.ogg"
 }

@@ -105,7 +105,7 @@ function createMenus()
 	{"Start game","How to play","Settings","Credits","Exit"},
 	{function() gamestate = STATE_INGAME
 		loadMap("home") end,
-	 function() end,
+	 function(self) self.names[2] = "Im afraid I cant do that" end,
 	 function() settings_menu.parent = main_menu
 		 current_menu = settings_menu end,
 	 function() end,
