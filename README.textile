@@ -4,11 +4,11 @@ h2. Controls
 
 h3. Herbie
 * Movement: W, A, S and D
-* Action: Return
+* Action: Space
 
 h3. Jamal
 * Movement: Arrow keys
-* Action: Space
+* Action: Return
 
 h3. Debugging keys
 * F1-F4: Set in-game zoom
