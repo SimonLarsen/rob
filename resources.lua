@@ -254,9 +254,6 @@ end
 
 local ls = love.sound
 function loadSounds()
-	TEsound.volume("music",music_volume)
-	TEsound.volume("sfx",sfx_volume)
-
 	sndAlarm = ls.newSoundData("res/sfx/alarm.wav")
 	sndDoor  = ls.newSoundData("res/sfx/door.wav")
 end

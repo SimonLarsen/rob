@@ -75,8 +75,8 @@ function createMenus()
 
 	settings_menu = Menu.create("Settings",
 		{"Controls","Video options","Sound options","Back"},
-		{function() end, function() current_menu = resolution_menu end, function() end,
-		 parent_function}, ingame_menu)
+		{function() end, function() current_menu = resolution_menu end,
+		 function() current_menu = sound_menu end, parent_function}, ingame_menu)
 
 	lost_menu = Menu.create("You got caught!",
 	{"Retry","Return to apartment"},
@@ -189,4 +189,43 @@ function createMenus()
 		self.names[1] = "Width: " .. self.newwidth
 		self.names[2] = "Height: " .. self.newheight
 	end
+
+	sound_menu = Menu.create("Sound options",
+	{"Music volume: "..math.floor(music_volume*100),
+	 "Sound volume: "..math.floor(sfx_volume*100),
+	 "Mute: ",
+	 "Back"},
+	{function() end, function() end, function(self) toggleMute() self:update() end, parent_function}, settings_menu)
+
+	sound_menu.oldkeypressed = sound_menu.keypressed
+	function sound_menu:keypressed(k,uni)
+		if k == "left" then
+			if self.selected == 1 then
+				music_volume = math.max(0,music_volume-0.05)
+			elseif self.selected == 2 then
+				sfx_volume = math.max(0,sfx_volume-0.05)
+			end
+			self:update()
+			updateVolume()
+		elseif k == "right" then
+			if self.selected == 1 then
+				music_volume = math.min(1.0,music_volume+0.05)
+			elseif self.selected == 2 then
+				sfx_volume = math.min(1.0,sfx_volume+0.05)
+			end
+			self:update()
+			updateVolume()
+		elseif k == "m" then
+			self:update()
+		else
+			self:oldkeypressed(k,uni)
+		end
+	end
+
+	function sound_menu:update()
+		self.names[1] = "Music volume: " .. math.floor(music_volume*100)
+		self.names[2] = "Sound volume: " .. math.floor(sfx_volume*100)
+		if mute then self.names[3] = "Mute: Yes" else self.names[3] = "Mute: No" end
+	end
+	sound_menu:update()
 end

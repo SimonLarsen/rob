@@ -23,6 +23,7 @@ function love.load(arg)
 	love.graphics.setLineWidth(SCALE)
 
 	loadResources()
+	updateVolume()
 	nextSong()
 
 	current_map = "home"

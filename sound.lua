@@ -15,6 +15,11 @@ function updateSound()
 	TEsound.cleanup()
 end
 
+function updateVolume()
+	TEsound.volume("music",music_volume)
+	TEsound.volume("sfx",sfx_volume)
+end
+
 function nextSong()
 	current_song = current_song + 1
 	if current_song > #SONG_LIST then current_song = 1 end
@@ -26,8 +31,7 @@ end
 function toggleMute()
 	if mute == true then
 		mute = false
-		TEsound.volume("music",music_volume)
-		TEsound.volume("sfx",sfx_volume)
+		updateVolume()
 	else
 		mute = true
 		TEsound.volume("music",0)
