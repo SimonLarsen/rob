@@ -61,6 +61,7 @@ function createQuads()
 	quadWall[1] = lg.newQuad(4, 128, 8, 32, tilew, tileh)
 	quadWall[2] = lg.newQuad(8, 128, 8, 32, tilew, tileh)
 	quadWindowWall = lg.newQuad(48,16,16,32,tilew,tileh)
+	quadWallGrad = lg.newQuad(32,128,3,19,tilew,tileh)
 
 	quadHerbie = {}
 	quadJamal = {}

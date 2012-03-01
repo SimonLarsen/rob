@@ -240,6 +240,14 @@ function drawWall(x,y)
 		lg.rectangle("fill",topx+1,topy+CELLH-1,CELLW-2,1) end
 
 	lg.setColor(255,255,255)
+
+	-- add wall gradients
+	if x < MAPW-1 and y < MAPH-1 and map[x+1][y+1] == TILE_WALL then 
+		lg.drawq(imgTiles,quadWallGrad,topx+13,topy+12)
+	end
+	if x > 0 and y < MAPH-1 and map[x-1][y+1] == TILE_WALL then
+		lg.drawq(imgTiles,quadWallGrad,topx-13,topy+12,0,-1,1,16,0)
+	end
 end
 
 function drawTable(x,y)

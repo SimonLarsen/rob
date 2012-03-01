@@ -3,12 +3,13 @@
 * kameraer og robotter skal checke syn for entities også.
   Ungår idiotisk TILE_DOOR hack.
 
-* Mulighed for at tabe, indicator for antal alarmer tilbage
-  Herunder animationer for det
-
 * Flere fjender / bosser
 
 * Level selection (lav mockup først)
 * Main menu
 
 * Baner baner baner
+
+* Editor:
+	* Tilføj cameras også
+	* Brug 16x32 icons i stedet.

@@ -20,6 +20,7 @@ function Container:action(pl)
 		elseif type(self.storage) == "string" then
 			if self.storage:sub(1,3) == "key" then
 				pl:addKey(tonumber(self.storage:sub(4)))
+				self.storage = nil
 			end
 		end
 	end

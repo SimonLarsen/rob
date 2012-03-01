@@ -10,8 +10,8 @@ require("jamal")
 require("camera")
 require("robot")
 require("entity")
-	require("decoration")
-	require("container")
+require("decoration")
+require("container")
 require("map")
 require("menu")
 
@@ -45,7 +45,7 @@ end
 function love.update(dt)
 	updateSound()
 
-	-- TURBO MODE CHEAT YEAH FED
+	-- TURBO MODE CHEAT
 	if love.keyboard.isDown("-") then
 		dt = 3*dt
 	end

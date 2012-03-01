@@ -166,12 +166,13 @@ Entrance.__index = Entrance
 
 function Entrance.create(x,y)
 	local self = Entity.create(x,y)
+	print("Entrance y: " .. y)
 	setmetatable(self,Entrance)
 	return self
 end
 
 function Entrance:draw()
-	love.graphics.drawq(imgTiles,quadEntrance,self.x*CELLW-1,self.y*CELLW-40)
+	love.graphics.drawq(imgTiles,quadEntrance,self.x*CELLW-1,self.y*CELLH-32)
 end
 
 Projector = { actiontype = 2, solid = true, interactive = true }
